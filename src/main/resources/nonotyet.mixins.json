@@ -1,0 +1,9 @@
+{
+    "required": true,
+    "package": "mc.craig.software.notnotyet.mixin",
+    "refmap": "nonotyet.refmap.json",
+    "client": [
+      "BipedBodyMixin"
+    ],
+    "minVersion": "0.8"
+  }

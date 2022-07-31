@@ -32,6 +32,11 @@ public class StalkerEntity extends QuantumLockedLifeform {
     }
 
     @Override
+    public boolean shouldShowName() {
+        return false;
+    }
+
+    @Override
     public void invokeSeen(Player player) {
         super.invokeSeen(player);
         if (getSeenTime() == 1) {
