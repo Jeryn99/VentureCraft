@@ -1,9 +1,10 @@
 {
-    "required": true,
-    "package": "mc.craig.software.notnotyet.mixin",
-    "refmap": "nonotyet.refmap.json",
-    "client": [
-      "BipedBodyMixin"
-    ],
-    "minVersion": "0.8"
-  }
+  "required": true,
+  "package": "mc.craig.software.notnotyet.mixin",
+  "refmap": "nonotyet.refmap.json",
+  "client": [
+    "BipedBodyMixin",
+    "LocalPlayerMixin"
+  ],
+  "minVersion": "0.8"
+}

@@ -8,6 +8,9 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
@@ -24,6 +27,15 @@ public class StalkerEntity extends QuantumLockedLifeform {
     protected void defineSynchedData() {
         super.defineSynchedData();
         getEntityData().define(POSE, Pose.ANGRY.id());
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 40.0D).add(Attributes.MOVEMENT_SPEED, 0.8F).add(Attributes.KNOCKBACK_RESISTANCE, 0.6F).add(Attributes.ATTACK_KNOCKBACK, 1.0D).add(Attributes.ATTACK_DAMAGE, 6.0D);
+    }
+
+    @Override
+    public void knockback(double p_147241_, double p_147242_, double p_147243_) {
+        // No no
     }
 
     @Override

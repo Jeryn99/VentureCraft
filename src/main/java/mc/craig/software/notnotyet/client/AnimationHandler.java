@@ -1,30 +1,39 @@
 package mc.craig.software.notnotyet.client;
 
-import mc.craig.software.notnotyet.common.items.ParagliderItem;
-import net.minecraft.client.Minecraft;
+import mc.craig.software.notnotyet.util.GliderUtil;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 public class AnimationHandler {
-    public static void animate(LivingEntity livingEntity, HumanoidModel<LivingEntity> bipedModel) {
-        if (livingEntity.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof ParagliderItem && !livingEntity.isOnGround()) {
+    public static void setupAnim(LivingEntity livingEntity, HumanoidModel<LivingEntity> bipedModel, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (livingEntity.getType() != EntityType.PLAYER) return;
+        Player player = (Player) livingEntity;
 
-            if(livingEntity instanceof Player player){
-                if(player.getAbilities().flying){
-                   return;
-                }
+        if (GliderUtil.isGliding(livingEntity)) {
+            if (player.getAbilities().flying) {
+                return;
             }
 
-            bipedModel.leftArm.xRot = (livingEntity.level.getDayTime() / 2) ;
-            bipedModel.rightArm.xRot = (livingEntity.level.getDayTime() / 2);
+            double offset = Math.cos(player.tickCount * 0.1F) * -1.5F;
 
-            bipedModel.leftLeg.yRot = (float) Math.toRadians(-10);
-            bipedModel.rightLeg.yRot = (float) Math.toRadians(10);
+            bipedModel.leftArm.xRot = 0;
+            bipedModel.rightArm.xRot = 0;
+            bipedModel.leftArm.yRot = 0;
+            bipedModel.rightArm.yRot = 0;
 
-            bipedModel.leftLeg.zRot = (float) Math.toRadians(-10);
-            bipedModel.rightLeg.zRot = (float) Math.toRadians(10);
+            bipedModel.leftArm.zRot = (float) Math.toRadians(-165);
+            bipedModel.rightArm.zRot = (float) Math.toRadians(165);
+
+            bipedModel.leftLeg.xRot = (float) Math.toRadians(20);
+            bipedModel.rightLeg.xRot = (float) Math.toRadians(20);
+
+            bipedModel.leftLeg.yRot = (float) Math.toRadians(0);
+            bipedModel.rightLeg.yRot = (float) Math.toRadians(0);
+
+            bipedModel.leftLeg.zRot = (float) Math.toRadians(-5 + (offset * 2));
+            bipedModel.rightLeg.zRot = (float) Math.toRadians(5 + (-offset * 2));
 
         }
     }

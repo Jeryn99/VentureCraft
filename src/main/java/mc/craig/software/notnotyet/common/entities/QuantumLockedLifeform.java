@@ -7,7 +7,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
@@ -19,8 +18,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static net.minecraft.world.entity.monster.Zoglin.createAttributes;
-
 public class QuantumLockedLifeform extends Monster implements Enemy {
 
     private static final EntityDataAccessor<Integer> TIME_VIEWED = SynchedEntityData.defineId(QuantumLockedLifeform.class, EntityDataSerializers.INT);
@@ -30,10 +27,6 @@ public class QuantumLockedLifeform extends Monster implements Enemy {
     }
 
 
-    @Override
-    public @NotNull AttributeMap getAttributes() {
-        return new AttributeMap(createAttributes().build());
-    }
 
     @Override
     public void tick() {
