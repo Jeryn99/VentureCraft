@@ -77,10 +77,6 @@ public class ParagliderItem extends Item implements Wearable {
                 player.getCooldowns().addCooldown(this, 200);
             }
 
-            // Damage Glider as used
-            if (player.tickCount % 200 == 0) {
-                stack.hurtAndBreak(1, player, e -> e.broadcastBreakEvent(EquipmentSlot.CHEST));
-            }
 
         } else {
             // Reset Gliding status when on Ground
