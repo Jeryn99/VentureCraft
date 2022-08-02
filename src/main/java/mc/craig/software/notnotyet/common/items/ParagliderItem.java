@@ -37,7 +37,7 @@ public class ParagliderItem extends Item implements Wearable {
         CompoundTag compound = itemStack.getOrCreateTag();
         if (!compound.contains("glide")) return false;
 
-        int maxTime = 200;
+        float maxTime = 200;
         if (itemStack.getItem() instanceof ParagliderItem paragliderItem) {
             maxTime = paragliderItem.getFixedFlightTimeTicks();
         }
@@ -76,7 +76,6 @@ public class ParagliderItem extends Item implements Wearable {
             if (timeInAir(stack) >= getFixedFlightTimeTicks()) {
                 player.getCooldowns().addCooldown(this, 200);
             }
-            System.out.println(timeInAir(stack));
 
             // Damage Glider as used
             if (player.tickCount % 200 == 0) {
@@ -88,7 +87,7 @@ public class ParagliderItem extends Item implements Wearable {
             setGlide(stack, false);
 
             // Reset time in air when cooldown ends
-            if (!player.getCooldowns().isOnCooldown(this)) {
+            if (!player.getCooldowns().isOnCooldown(this) && player.isOnGround()) {
                 setTimeInAir(stack, 0);
             }
         }

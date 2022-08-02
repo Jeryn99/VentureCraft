@@ -26,8 +26,8 @@ public class ModItems {
     public static final RegistryObject<ParagliderItem> PARAGLIDER_WOOD = ITEMS.register("paraglider_wood", () -> new ParagliderItem((new Item.Properties()).durability(Tiers.WOOD.getUses()).tab(MAIN).rarity(Rarity.COMMON), 200));
     public static final RegistryObject<ParagliderItem> PARAGLIDER_IRON = ITEMS.register("paraglider_iron", () -> new ParagliderItem((new Item.Properties()).durability(Tiers.IRON.getUses()).tab(MAIN).rarity(Rarity.UNCOMMON), 300));
     public static final RegistryObject<ParagliderItem> PARAGLIDER_GOLD = ITEMS.register("paraglider_gold", () -> new ParagliderItem((new Item.Properties()).durability(Tiers.GOLD.getUses()).tab(MAIN).rarity(Rarity.UNCOMMON), 500));
-    public static final RegistryObject<ParagliderItem> PARAGLIDER_DIAMOND = ITEMS.register("paraglider_diamond", () -> new ParagliderItem((new Item.Properties()).durability(Tiers.DIAMOND.getUses()).tab(MAIN).rarity(Rarity.RARE), 10000));
-    public static final RegistryObject<ParagliderItem> PARAGLIDER_NETHERITE = ITEMS.register("paraglider_netherite", () -> new ParagliderItem((new Item.Properties()).durability(Tiers.NETHERITE.getUses()).tab(MAIN).rarity(Rarity.EPIC), Integer.MAX_VALUE));
+    public static final RegistryObject<ParagliderItem> PARAGLIDER_DIAMOND = ITEMS.register("paraglider_diamond", () -> new ParagliderItem((new Item.Properties()).durability(Tiers.DIAMOND.getUses()).tab(MAIN).rarity(Rarity.RARE), 1000));
+    public static final RegistryObject<ParagliderItem> PARAGLIDER_NETHERITE = ITEMS.register("paraglider_netherite", () -> new ParagliderItem((new Item.Properties()).durability(Tiers.NETHERITE.getUses()).tab(MAIN).rarity(Rarity.EPIC), 2000));
 
     // Re-inforced Paper
     public static final RegistryObject<Item> REINFORCED_PAPER = ITEMS.register("reinforced_paper", () -> new Item(new Item.Properties().tab(MAIN)));
