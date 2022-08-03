@@ -27,6 +27,10 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
 
         // Gliders
         ShapedRecipeBuilder.shaped(ModItems.PARAGLIDER_WOOD.get()).pattern("RRR").pattern("SWS").pattern("W W").define('R', ModItems.REINFORCED_PAPER.get()).define('W', Items.STICK).define('S', Items.STRING).group("gliders").unlockedBy("has_crafting_table", has(Blocks.CRAFTING_TABLE)).save(consumer);
+        ShapedRecipeBuilder.shaped(ModItems.PARAGLIDER_IRON.get()).pattern("RRR").pattern("SWS").pattern("W W").define('R', ModItems.REINFORCED_PAPER_IRON.get()).define('W', Items.STICK).define('S', Items.STRING).group("gliders").unlockedBy("has_crafting_table", has(Blocks.CRAFTING_TABLE)).save(consumer);
+        ShapedRecipeBuilder.shaped(ModItems.PARAGLIDER_GOLD.get()).pattern("RRR").pattern("SWS").pattern("W W").define('R', ModItems.REINFORCED_PAPER_GOLD.get()).define('W', Items.STICK).define('S', Items.STRING).group("gliders").unlockedBy("has_crafting_table", has(Blocks.CRAFTING_TABLE)).save(consumer);
+        ShapedRecipeBuilder.shaped(ModItems.PARAGLIDER_DIAMOND.get()).pattern("RRR").pattern("SWS").pattern("W W").define('R', ModItems.REINFORCED_PAPER_DIAMOND.get()).define('W', Items.STICK).define('S', Items.STRING).group("gliders").unlockedBy("has_crafting_table", has(Blocks.CRAFTING_TABLE)).save(consumer);
+        ShapedRecipeBuilder.shaped(ModItems.PARAGLIDER_NETHERITE.get()).pattern("RRR").pattern("SWS").pattern("W W").define('R', ModItems.REINFORCED_PAPER_NETHERITE.get()).define('W', Items.STICK).define('S', Items.STRING).group("gliders").unlockedBy("has_crafting_table", has(Blocks.CRAFTING_TABLE)).save(consumer);
 
     }
 }

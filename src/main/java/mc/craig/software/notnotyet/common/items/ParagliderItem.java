@@ -1,5 +1,6 @@
 package mc.craig.software.notnotyet.common.items;
 
+import mc.craig.software.notnotyet.util.GliderUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.stats.Stats;
@@ -64,7 +65,11 @@ public class ParagliderItem extends Item implements Wearable {
     @Override
     public void onArmorTick(ItemStack stack, Level level, Player player) {
         super.onArmorTick(stack, level, player);
-        if (!player.isOnGround() && !player.getAbilities().flying && glidingEnabled(stack) && !player.getCooldowns().isOnCooldown(this)) {
+
+        boolean playerCanGlide = !GliderUtil.isPlayerOnGroundOrWater(player) && !player.getAbilities().flying;
+        boolean gliderCanGlide = glidingEnabled(stack) && !player.getCooldowns().isOnCooldown(this);
+
+        if (playerCanGlide && gliderCanGlide) {
             player.fallDistance = 0;
 
             // Handle Movement
@@ -76,14 +81,14 @@ public class ParagliderItem extends Item implements Wearable {
             if (timeInAir(stack) >= getFixedFlightTimeTicks()) {
                 player.getCooldowns().addCooldown(this, 200);
             }
+        }
 
-
-        } else {
+        if (GliderUtil.isPlayerOnGroundOrWater(player)) {
             // Reset Gliding status when on Ground
             setGlide(stack, false);
 
             // Reset time in air when cooldown ends
-            if (!player.getCooldowns().isOnCooldown(this) && player.isOnGround()) {
+            if (!player.getCooldowns().isOnCooldown(this)) {
                 setTimeInAir(stack, 0);
             }
         }
@@ -98,7 +103,6 @@ public class ParagliderItem extends Item implements Wearable {
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level worldIn, @NotNull List<Component> tooltip, @NotNull TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(Component.literal(String.valueOf(glidingEnabled(stack))));
     }
 
     @Override

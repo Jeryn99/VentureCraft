@@ -20,7 +20,11 @@ public class GliderUtil {
         return false;
     }
 
-    public static boolean isGliding(LivingEntity livingEntity) {
+    public static boolean isPlayerOnGroundOrWater(LivingEntity livingEntity) {
+        return livingEntity.isOnGround() || livingEntity.isInWater();
+    }
+
+    public static boolean isGlidingWithActiveGlider(LivingEntity livingEntity) {
 
         if (livingEntity instanceof Player player) {
             if (player.getAbilities().flying) {

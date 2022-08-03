@@ -36,11 +36,11 @@ public class GlideLayer<T extends LivingEntity, M extends HumanoidModel<T>, A ex
         if (living.isInvisibleTo(Minecraft.getInstance().player)) return;
 
         // Render above players when gliding
-        if (GliderUtil.isGliding(living)) {
+        if (GliderUtil.isGlidingWithActiveGlider(living)) {
             ItemStack stack = living.getItemBySlot(EquipmentSlot.CHEST);
             poseStack.pushPose();
             poseStack.translate(0, -1.8, 0);
-            gliderModel.renderToBuffer(poseStack, p_117350_.getBuffer(RenderType.entityCutout(getGliderTexture(stack))), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            gliderModel.renderToBuffer(poseStack, p_117350_.getBuffer(RenderType.entityCutoutNoCull(getGliderTexture(stack))), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
             poseStack.popPose();
             return;
         }

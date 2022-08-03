@@ -8,7 +8,6 @@ import mc.craig.software.notnotyet.client.sound.GlideSound;
 import mc.craig.software.notnotyet.common.items.ParagliderItem;
 import mc.craig.software.notnotyet.util.GliderUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -17,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -33,15 +33,17 @@ public class ClientEvents {
         }
     }
 
+    @SubscribeEvent
+    public static void onRenderHand(RenderHandEvent event) {
+        PoseStack posestack = event.getPoseStack();
+
+    }
+
+
     public static final ResourceLocation TEX = new ResourceLocation(NoNotYet.MODID, "textures/gui/bar_widget.png");
 
     @SubscribeEvent
     public static void onRenderGameOverlayPre(RenderGuiOverlayEvent.Pre e) {
-
-        if (e.getOverlay().id() == VanillaGuiOverlay.EXPERIENCE_BAR.id()) {
-            e.setCanceled(true);
-            return;
-        }
 
         PoseStack stack = e.getPoseStack();
         LocalPlayer player = Minecraft.getInstance().player;
@@ -50,7 +52,13 @@ public class ClientEvents {
         Minecraft minecraft = Minecraft.getInstance();
         Window window = Minecraft.getInstance().getWindow();
 
-        if (itemStack.getItem() instanceof ParagliderItem paragliderItem && GliderUtil.isGliding(player)) {
+        if (itemStack.getItem() instanceof ParagliderItem paragliderItem && GliderUtil.isGlidingWithActiveGlider(player)) {
+
+            if (e.getOverlay().id() == VanillaGuiOverlay.EXPERIENCE_BAR.id()) {
+                e.setCanceled(true);
+                return;
+            }
+
             int allowedDuration = paragliderItem.getFixedFlightTimeTicks();
             int durationUsed = ParagliderItem.timeInAir(itemStack);
             float progress = (float) durationUsed / allowedDuration;

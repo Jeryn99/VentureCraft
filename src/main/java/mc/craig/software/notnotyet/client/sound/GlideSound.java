@@ -20,7 +20,7 @@ public class GlideSound extends AbstractTickableSoundInstance {
 
     @Override
     public void tick() {
-        if (GliderUtil.isGliding(this.player)) {
+        if (GliderUtil.isGlidingWithActiveGlider(this.player)) {
             this.x = (float) this.player.getX();
             this.y = (float) this.player.getY();
             this.z = (float) this.player.getZ();
