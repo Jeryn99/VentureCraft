@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Player;
 
 public class AnimationHandler {
     public static void setupAnim(LivingEntity livingEntity, HumanoidModel<LivingEntity> bipedModel, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (livingEntity.getType() != EntityType.PLAYER) return;
+      /*  if (livingEntity.getType() != EntityType.PLAYER) return;
         Player player = (Player) livingEntity;
         LocalPlayer clientPlayer = Minecraft.getInstance().player;
 
@@ -47,6 +47,6 @@ public class AnimationHandler {
             bipedModel.leftLeg.zRot = (float) Math.toRadians(-5 + (offset * 2));
             bipedModel.rightLeg.zRot = (float) Math.toRadians(5 + (-offset * 2));
 
-        }
+        }*/
     }
 }

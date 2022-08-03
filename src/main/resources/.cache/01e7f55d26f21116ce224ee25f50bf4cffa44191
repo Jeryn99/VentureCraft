@@ -1,4 +1,8 @@
-// 1.19.1	2022-08-03T15:10:08.3915582	Item Models: nonotyet
+// 1.19.1	2022-08-03T18:01:27.6614208	Item Models: nonotyet
+f60b77770f1d39dadc9021bd49ecae3d17eabd61 assets/nonotyet/models/item/leather_armor_chest.json
+7a09528ee3a2f92902ddc750044f61cda2e20f22 assets/nonotyet/models/item/leather_armor_feet.json
+1952763374e99b0e4ea7e2e29663c4536f82853c assets/nonotyet/models/item/leather_armor_head.json
+7db3f7a8957615517baf03ef36f00903cd905998 assets/nonotyet/models/item/leather_armor_leggings.json
 02fa699d21486089cf6f4ad6aa5adadb5fb1eb8b assets/nonotyet/models/item/paraglider_diamond.json
 2acf10e32d1d67d80875be7600b6e3434a197053 assets/nonotyet/models/item/paraglider_gold.json
 949820378173a3b5662ff212b8a733e46132c39b assets/nonotyet/models/item/paraglider_iron.json

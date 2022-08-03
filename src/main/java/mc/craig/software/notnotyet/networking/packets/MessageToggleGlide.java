@@ -1,6 +1,7 @@
 package mc.craig.software.notnotyet.networking.packets;
 
 import mc.craig.software.notnotyet.common.items.ParagliderItem;
+import mc.craig.software.notnotyet.handlers.CommonEvents;
 import mc.craig.software.notnotyet.util.GliderUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,6 +28,8 @@ public class MessageToggleGlide {
                     ItemStack chestItem = sender.getItemBySlot(EquipmentSlot.CHEST);
                     ParagliderItem.setGlide(chestItem, !ParagliderItem.glidingEnabled(chestItem));
                     if (ParagliderItem.glidingEnabled(chestItem)) {
+                        CommonEvents.glideAnimation.start(sender.tickCount);
+
                         // Damage Glider as used
                         chestItem.hurtAndBreak(1, sender, e -> e.broadcastBreakEvent(EquipmentSlot.CHEST));
                     }

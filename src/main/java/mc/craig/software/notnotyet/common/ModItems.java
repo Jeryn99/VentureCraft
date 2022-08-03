@@ -1,7 +1,9 @@
 package mc.craig.software.notnotyet.common;
 
 import mc.craig.software.notnotyet.common.items.ParagliderItem;
+import mc.craig.software.notnotyet.common.items.TierArmor;
 import mc.craig.software.notnotyet.util.Utils;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
@@ -38,12 +40,12 @@ public class ModItems {
     public static final RegistryObject<Item> REINFORCED_PAPER_NETHERITE = ITEMS.register("reinforced_paper_netherite", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.EPIC)));
 
 
-/*
+
     public static final RegistryObject<TierArmor> LEATHER_ARMOR_HEAD = ITEMS.register("leather_armor_head", () -> new TierArmor(TierArmor.Tier.LEATHER, EquipmentSlot.HEAD, new Item.Properties().tab(MAIN)));
     public static final RegistryObject<TierArmor> LEATHER_ARMOR_CHEST = ITEMS.register("leather_armor_chest", () -> new TierArmor(TierArmor.Tier.LEATHER, EquipmentSlot.CHEST, new Item.Properties().tab(MAIN)));
     public static final RegistryObject<TierArmor> LEATHER_ARMOR_LEGGINGS = ITEMS.register("leather_armor_leggings", () -> new TierArmor(TierArmor.Tier.LEATHER, EquipmentSlot.LEGS, new Item.Properties().tab(MAIN)));
     public static final RegistryObject<TierArmor> LEATHER_ARMOR_FEET = ITEMS.register("leather_armor_feet", () -> new TierArmor(TierArmor.Tier.LEATHER, EquipmentSlot.FEET, new Item.Properties().tab(MAIN)));
-*/
+
 
 
 }
