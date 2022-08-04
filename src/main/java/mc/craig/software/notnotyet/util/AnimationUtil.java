@@ -1,6 +1,5 @@
 package mc.craig.software.notnotyet.util;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
@@ -12,7 +11,7 @@ import net.minecraft.world.entity.AnimationState;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
+import java.util.Objects;
 
 public class AnimationUtil {
 
@@ -20,36 +19,54 @@ public class AnimationUtil {
 
     public static ModelPart getAnyDescendantWithName(HumanoidModel<?> model, String partName) {
         return switch (partName) {
-            case "RightLeg" -> model.rightLeg;
-            case "LeftLeg" -> model.leftLeg;
+            case "RightLeg2" -> model.rightLeg;
+            case "LeftLeg2" -> model.leftLeg;
             case "LeftArm" -> model.leftArm;
             case "RightArm" -> model.rightArm;
-            case "THISISNOTTHEBODYTHISISSOMETHINGELSEIGNOREME" -> model.body;
+            case "Body" -> model.body;
             case "Head" -> model.head;
             default -> null;
         };
     }
 
-    public static void animate(HumanoidModel<?> p_232320_, AnimationDefinition p_232321_, long p_232322_, float p_232323_, Vector3f p_232324_) {
-        float f = getElapsedSeconds(p_232321_, p_232322_);
+    public static void animate(HumanoidModel<?> humanoidModel, AnimationDefinition animationDefinition, long p_232322_, float p_232323_, Vector3f p_232324_) {
+        float elapsedSeconds = getElapsedSeconds(animationDefinition, p_232322_);
 
-        System.out.println(f);
+        System.out.println(elapsedSeconds);
 
-        for (Map.Entry<String, List<AnimationChannel>> entry : p_232321_.boneAnimations().entrySet()) {
-            ModelPart optional = getAnyDescendantWithName(p_232320_, entry.getKey());
+
+        for (Map.Entry<String, List<AnimationChannel>> entry : animationDefinition.boneAnimations().entrySet()) {
+            ModelPart optional = getAnyDescendantWithName(humanoidModel, entry.getKey());
+
             List<AnimationChannel> list = entry.getValue();
 
             if (optional != null) {
-                System.out.println(entry.getKey());
+
+                optional.xRot = 0;
+                optional.yRot = 0;
+                optional.zRot = 0;
+
+                if(Objects.equals(entry.getKey(), "Body") || Objects.equals(entry.getKey(), "Head")) {
+                    optional.x = 0;
+                    optional.y = 0;
+                    optional.z = 0;
+                }
+
+                if(entry.getKey().toLowerCase().contains("leg")){
+                    optional.x = -0.312f;
+                    optional.y = 1.9f;
+                    optional.z = 12.0f;
+                }
+
                 list.forEach((p_232311_) -> {
                     Keyframe[] akeyframe = p_232311_.keyframes();
                     int i = Math.max(0, Mth.binarySearch(0, akeyframe.length, (p_232315_) -> {
-                        return f <= akeyframe[p_232315_].timestamp();
+                        return elapsedSeconds<= akeyframe[p_232315_].timestamp();
                     }) - 1);
                     int j = Math.min(akeyframe.length - 1, i + 1);
                     Keyframe keyframe = akeyframe[i];
                     Keyframe keyframe1 = akeyframe[j];
-                    float f1 = f - keyframe.timestamp();
+                    float f1 = elapsedSeconds - keyframe.timestamp();
                     float f2 = Mth.clamp(f1 / (keyframe1.timestamp() - keyframe.timestamp()), 0.0F, 1.0F);
                     keyframe1.interpolation().apply(p_232324_, f2, akeyframe, i, j, p_232323_);
                     p_232311_.target().apply(optional, p_232324_);

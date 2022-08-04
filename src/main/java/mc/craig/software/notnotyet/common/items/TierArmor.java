@@ -7,10 +7,10 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 
 public class TierArmor extends ArmorItem {
     public Tier armorTier;
+
 
     public TierArmor(Tier armorTier, EquipmentSlot equipmentSlot, Properties properties) {
         super(armorTier.getMaterial(), equipmentSlot, properties);
@@ -27,7 +27,6 @@ public class TierArmor extends ArmorItem {
 
     public boolean checkIfFullTier(LivingEntity livingEntity, Tier tier) {
         EquipmentSlot[] slots = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
-
         for (EquipmentSlot equipmentSlot : slots) {
             if (livingEntity.getItemBySlot(equipmentSlot).getItem() instanceof TierArmor tierArmor) {
                 if (tierArmor.getTier() != tier) {

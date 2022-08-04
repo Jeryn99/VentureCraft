@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mc.craig.software.notnotyet.NoNotYet;
 import mc.craig.software.notnotyet.client.sound.GlideSound;
+import mc.craig.software.notnotyet.common.capability.ModCapability;
 import mc.craig.software.notnotyet.common.items.ParagliderItem;
 import mc.craig.software.notnotyet.util.GliderUtil;
 import net.minecraft.client.Minecraft;
@@ -49,41 +50,44 @@ public class ClientEvents {
         LocalPlayer player = Minecraft.getInstance().player;
         ItemStack itemStack = player.getItemBySlot(EquipmentSlot.CHEST);
 
-        Minecraft minecraft = Minecraft.getInstance();
         Window window = Minecraft.getInstance().getWindow();
 
+        // Render Glider Duration
         if (itemStack.getItem() instanceof ParagliderItem paragliderItem && GliderUtil.isGlidingWithActiveGlider(player)) {
-
             if (e.getOverlay().id() == VanillaGuiOverlay.EXPERIENCE_BAR.id()) {
                 e.setCanceled(true);
                 return;
             }
-
             int allowedDuration = paragliderItem.getFixedFlightTimeTicks();
             int durationUsed = ParagliderItem.timeInAir(itemStack);
             float progress = (float) durationUsed / allowedDuration;
-
-            stack.pushPose();
-            RenderSystem.setShaderTexture(0, TEX);
-            int winWid = window.getGuiScaledWidth() / 2 - 91;
-            int winHeight = window.getGuiScaledHeight() - 32 + 3;
-
-            minecraft.gui.blit(stack, winWid, winHeight, 0, 64, 182, 5);
-
-            int status = (int) (progress * 182F);
-
-            if (status > 0) {
-                minecraft.gui.blit(stack, winWid + 182 - status, winHeight, 182 - status, 69, status, 5);
-            }
-
-         /*   String message = "Remaining Flight Time";
-            int messageWidth = minecraft.font.width(message);
-            drawStringWithOutline(stack, message, e.getWindow().getGuiScaledWidth() / 2 - messageWidth / 2, e.getWindow().getGuiScaledHeight() - 40, Color.GREEN.getRGB(), 0);
-
-*/
-            stack.popPose();
-
+            renderDurationBar(stack, window, progress);
         }
+
+        ModCapability.get(player).ifPresent(iClimb -> {
+            if (iClimb.isClimbing()) {
+                int allowedDuration = ModCapability.MAX_CLIMB_TIME;
+                int durationUsed = iClimb.timeClimbed();
+                float progress = (float) durationUsed / allowedDuration;
+                renderDurationBar(stack, window, progress);
+            }
+        });
+
+
+    }
+
+    public static void renderDurationBar(PoseStack stack, Window window, float progress) {
+        Minecraft minecraft = Minecraft.getInstance();
+        stack.pushPose();
+        RenderSystem.setShaderTexture(0, TEX);
+        int winWid = window.getGuiScaledWidth() / 2 - 91;
+        int winHeight = window.getGuiScaledHeight() - 32 + 3;
+        minecraft.gui.blit(stack, winWid, winHeight, 0, 64, 182, 5);
+        int status = (int) (progress * 182F);
+        if (status > 0) {
+            minecraft.gui.blit(stack, winWid + 182 - status, winHeight, 182 - status, 69, status, 5);
+        }
+        stack.popPose();
     }
 
     public static void drawStringWithOutline(PoseStack stack, String string, int posX, int posY, int fontColor, int outlineColor) {

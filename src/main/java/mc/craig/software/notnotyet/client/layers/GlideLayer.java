@@ -39,7 +39,7 @@ public class GlideLayer<T extends LivingEntity, M extends HumanoidModel<T>, A ex
         if (GliderUtil.isGlidingWithActiveGlider(living)) {
             ItemStack stack = living.getItemBySlot(EquipmentSlot.CHEST);
             poseStack.pushPose();
-            poseStack.translate(0, -1.8, 0);
+            poseStack.translate(0, -1.9, 0);
             gliderModel.renderToBuffer(poseStack, p_117350_.getBuffer(RenderType.entityCutoutNoCull(getGliderTexture(stack))), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
             poseStack.popPose();
             return;

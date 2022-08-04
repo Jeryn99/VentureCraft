@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import mc.craig.software.notnotyet.common.Blocks;
 import mc.craig.software.notnotyet.common.Entities;
 import mc.craig.software.notnotyet.common.ModItems;
+import mc.craig.software.notnotyet.common.capability.ICap;
 import mc.craig.software.notnotyet.common.entities.StalkerEntity;
 import mc.craig.software.notnotyet.data.LangProviderEnglish;
 import mc.craig.software.notnotyet.data.ModelProviderItem;
@@ -11,6 +12,7 @@ import mc.craig.software.notnotyet.data.RecipeProvider;
 import mc.craig.software.notnotyet.networking.Network;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -37,7 +39,12 @@ public class NoNotYet {
         Entities.ENTITY_TYPES.register(modBus);
         modBus.addListener(this::onAttributeAssign);
         modBus.addListener(this::onGatherData);
+        modBus.addListener(this::onAddCaps);
 
+    }
+
+    public void onAddCaps(RegisterCapabilitiesEvent capabilitiesEvent) {
+        capabilitiesEvent.register(ICap.class);
     }
 
     public void onAttributeAssign(EntityAttributeCreationEvent event) {

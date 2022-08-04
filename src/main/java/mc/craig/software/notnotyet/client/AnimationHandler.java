@@ -1,5 +1,6 @@
 package mc.craig.software.notnotyet.client;
 
+import mc.craig.software.notnotyet.common.capability.ModCapability;
 import mc.craig.software.notnotyet.util.GliderUtil;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
@@ -11,7 +12,7 @@ import net.minecraft.world.entity.player.Player;
 
 public class AnimationHandler {
     public static void setupAnim(LivingEntity livingEntity, HumanoidModel<LivingEntity> bipedModel, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-      /*  if (livingEntity.getType() != EntityType.PLAYER) return;
+        if (livingEntity.getType() != EntityType.PLAYER) return;
         Player player = (Player) livingEntity;
         LocalPlayer clientPlayer = Minecraft.getInstance().player;
 
@@ -19,13 +20,13 @@ public class AnimationHandler {
             return;
         }
 
+        double offset = Math.cos(player.tickCount * 0.1F) * -1.5F;
+
+
         if (GliderUtil.isGlidingWithActiveGlider(livingEntity)) {
             if (player.getAbilities().flying) {
                 return;
             }
-
-            double offset = Math.cos(player.tickCount * 0.1F) * -1.5F;
-
 
             // Arms
             bipedModel.leftArm.xRot = 0;
@@ -46,7 +47,36 @@ public class AnimationHandler {
 
             bipedModel.leftLeg.zRot = (float) Math.toRadians(-5 + (offset * 2));
             bipedModel.rightLeg.zRot = (float) Math.toRadians(5 + (-offset * 2));
+            return;
+        }
 
-        }*/
+        // Climbing
+        ModCapability.get(player).ifPresent(iClimb -> {
+
+            if(iClimb.isClimbing()){
+                bipedModel.rightArm.xRot = -90.0F;
+                bipedModel.leftArm.xRot = -90.0F;
+
+                bipedModel.leftLeg.xRot = -45;
+                bipedModel.rightLeg.xRot = -45;
+            }
+        });
+
+
+        // Falling Player
+        if (!player.isOnGround() && !player.isNoGravity() && !player.isPassenger() && !player.getAbilities().flying && !player.isFallFlying() && player.fallDistance > 1.5F) {
+            bipedModel.rightArm.xRot = -160.0F;
+            bipedModel.leftArm.xRot = -160.0F;
+
+            bipedModel.rightArm.zRot = (float) Math.toRadians(-5 + (offset * 2));
+            bipedModel.leftArm.zRot = (float) Math.toRadians(5 + (-offset * 2));
+
+            bipedModel.rightArm.yRot = (float) Math.toRadians(-5 + (offset * 2));
+            bipedModel.leftArm.yRot = (float) Math.toRadians(5 + (-offset * 2));
+
+            bipedModel.leftLeg.zRot = (float) Math.toRadians(-5 + (offset * 2));
+            bipedModel.rightLeg.zRot = (float) Math.toRadians(5 + (-offset * 2));
+        }
+
     }
 }

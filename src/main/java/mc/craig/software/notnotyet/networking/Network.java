@@ -1,6 +1,7 @@
 package mc.craig.software.notnotyet.networking;
 
 import mc.craig.software.notnotyet.NoNotYet;
+import mc.craig.software.notnotyet.networking.packets.MessageSyncCap;
 import mc.craig.software.notnotyet.networking.packets.MessageToggleGlide;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
@@ -14,6 +15,7 @@ public class Network {
     public static void init() {
         int id = 0;
         INSTANCE.registerMessage(id++, MessageToggleGlide.class, MessageToggleGlide::toBytes, MessageToggleGlide::new, MessageToggleGlide::handle);
+        INSTANCE.registerMessage(id++, MessageSyncCap.class, MessageSyncCap::toBytes, MessageSyncCap::new, MessageSyncCap::handle);
 
     }
 }
