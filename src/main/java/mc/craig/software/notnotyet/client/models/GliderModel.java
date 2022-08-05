@@ -3,50 +3,113 @@ package mc.craig.software.notnotyet.client.models;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.EntityModel;
+import mc.craig.software.notnotyet.client.Animations;
+import mc.craig.software.notnotyet.common.capability.ModCapability;
+import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 
-public class GliderModel<T extends Entity> extends EntityModel<T> {
+public class GliderModel<T extends LivingEntity> extends HierarchicalModel<T> {
 
-    private final ModelPart glider;
+    private final ModelPart CentreBrace;
+    private final ModelPart RMain;
+    private final ModelPart LMain;
+    private final ModelPart root;
 
     public GliderModel(ModelPart root) {
-        this.glider = root.getChild("glider");
+        this.root = root;
+        this.CentreBrace = root.getChild("CentreBrace");
+        this.RMain = root.getChild("RMain");
+        this.LMain = root.getChild("LMain");
     }
 
-    public static LayerDefinition createBodyLayer() {
+    public static LayerDefinition getModelData() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition glider = partdefinition.addOrReplaceChild("glider", CubeListBuilder.create().texOffs(48, 60).addBox(-1.0F, -2.1F, -8.0F, 2.0F, 1.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 16.0F, 0.0F));
+        PartDefinition CentreBrace = partdefinition.addOrReplaceChild("CentreBrace", CubeListBuilder.create().texOffs(25, 45).addBox(-1.0F, -0.1F, -8.0F, 2.0F, 1.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 14.0F, 0.0F));
 
-        PartDefinition LBrace_r1 = glider.addOrReplaceChild("LBrace_r1", CubeListBuilder.create().texOffs(24, 59).addBox(0.5F, -0.75F, -16.0F, 4.0F, 1.0F, 16.0F, new CubeDeformation(-0.02F)), PartPose.offsetAndRotation(6.0F, -3.0F, 8.0F, 0.0F, 0.0F, 0.3927F));
+        PartDefinition RMain = partdefinition.addOrReplaceChild("RMain", CubeListBuilder.create(), PartPose.offset(0.0F, 7.0F, 0.0F));
 
-        PartDefinition RBrace_r1 = glider.addOrReplaceChild("RBrace_r1", CubeListBuilder.create().texOffs(0, 58).addBox(-4.5F, -0.75F, -16.0F, 4.0F, 1.0F, 16.0F, new CubeDeformation(-0.02F)), PartPose.offsetAndRotation(-6.0F, -3.0F, 8.0F, 0.0F, 0.0F, -0.3927F));
+        PartDefinition RMain_r1 = RMain.addOrReplaceChild("RMain_r1", CubeListBuilder.create().texOffs(34, 0).addBox(-13.0F, 0.0F, -0.25F, 13.0F, 0.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, -7.75F, 0.0F, 0.0F, -0.3927F));
 
-        PartDefinition LStrut_r1 = glider.addOrReplaceChild("LStrut_r1", CubeListBuilder.create().texOffs(42, 42).addBox(-1.25F, 6.9F, -0.25F, 12.0F, 1.0F, 16.0F, new CubeDeformation(-0.01F)), PartPose.offsetAndRotation(0.0F, -9.0F, -7.75F, 0.0F, 0.0F, -0.2182F));
+        PartDefinition RStrut = RMain.addOrReplaceChild("RStrut", CubeListBuilder.create(), PartPose.offset(-12.0F, 5.0F, 0.0F));
 
-        PartDefinition RStrut_r1 = glider.addOrReplaceChild("RStrut_r1", CubeListBuilder.create().texOffs(42, 13).addBox(-10.75F, 6.9F, -0.25F, 12.0F, 1.0F, 16.0F, new CubeDeformation(-0.01F)), PartPose.offsetAndRotation(0.0F, -9.0F, -7.75F, 0.0F, 0.0F, 0.2182F));
+        PartDefinition RStrut_r1 = RStrut.addOrReplaceChild("RStrut_r1", CubeListBuilder.create().texOffs(2, 27).addBox(-0.1166F, -0.5788F, -0.25F, 12.0F, 1.0F, 16.0F, new CubeDeformation(-0.01F)), PartPose.offsetAndRotation(0.0F, 0.0F, -7.75F, 0.0F, 0.0F, 0.2182F));
 
-        PartDefinition LPole_r1 = glider.addOrReplaceChild("LPole_r1", CubeListBuilder.create().texOffs(0, 75).addBox(12.5F, -0.5F, -0.25F, 1.0F, 1.0F, 16.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 29).addBox(0.0F, 0.0F, -0.25F, 13.0F, 13.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -9.0F, -7.75F, 0.0F, 0.0F, 0.3927F));
+        PartDefinition RArm = RMain.addOrReplaceChild("RArm", CubeListBuilder.create(), PartPose.offset(-12.0F, 5.0F, 0.0F));
 
-        PartDefinition RPole_r1 = glider.addOrReplaceChild("RPole_r1", CubeListBuilder.create().texOffs(68, 59).addBox(-13.5F, -0.5F, -0.25F, 1.0F, 1.0F, 16.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 0).addBox(-13.0F, 0.0F, -0.25F, 13.0F, 13.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -9.0F, -7.75F, 0.0F, 0.0F, -0.3927F));
+        PartDefinition RPole_r1 = RArm.addOrReplaceChild("RPole_r1", CubeListBuilder.create().texOffs(43, 16).addBox(-13.5F, -0.5F, -0.25F, 1.0F, 1.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(12.0F, -5.0F, -7.75F, 0.0F, 0.0F, -0.3927F));
+
+        PartDefinition RMain_r2 = RArm.addOrReplaceChild("RMain_r2", CubeListBuilder.create().texOffs(5, 0).addBox(-1.9134F, 4.5922F, -0.25F, 1.0F, 13.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -5.0F, -7.75F, 0.0F, 0.0F, -0.3927F));
+
+        PartDefinition RBrace = RArm.addOrReplaceChild("RBrace", CubeListBuilder.create(), PartPose.offset(2.0F, 2.4F, 0.0F));
+
+        PartDefinition RBrace_r1 = RBrace.addOrReplaceChild("RBrace_r1", CubeListBuilder.create().texOffs(0, 46).mirror().addBox(-0.2687F, -0.5127F, -16.0F, 4.0F, 1.0F, 16.0F, new CubeDeformation(-0.02F)).mirror(false), PartPose.offsetAndRotation(0.0F, 0.0F, 8.0F, 0.0F, 0.0F, -0.3927F));
+
+        PartDefinition LMain = partdefinition.addOrReplaceChild("LMain", CubeListBuilder.create(), PartPose.offset(0.0F, 7.0F, 0.0F));
+
+        PartDefinition LMain_r1 = LMain.addOrReplaceChild("LMain_r1", CubeListBuilder.create().texOffs(8, 0).addBox(0.0F, 0.0F, -0.25F, 13.0F, 0.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, -7.75F, 0.0F, 0.0F, 0.3927F));
+
+        PartDefinition LStrut = LMain.addOrReplaceChild("LStrut", CubeListBuilder.create(), PartPose.offset(12.0F, 5.0F, -7.75F));
+
+        PartDefinition LStrut_r1 = LStrut.addOrReplaceChild("LStrut_r1", CubeListBuilder.create().texOffs(9, 44).addBox(-11.8834F, -0.5788F, -0.25F, 12.0F, 1.0F, 16.0F, new CubeDeformation(-0.01F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.2182F));
+
+        PartDefinition LArm = LMain.addOrReplaceChild("LArm", CubeListBuilder.create(), PartPose.offset(12.0F, 5.0F, 0.0F));
+
+        PartDefinition LPole_r1 = LArm.addOrReplaceChild("LPole_r1", CubeListBuilder.create().texOffs(43, 16).addBox(12.5F, -0.5F, -0.25F, 1.0F, 1.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-12.0F, -5.0F, -7.75F, 0.0F, 0.0F, 0.3927F));
+
+        PartDefinition LMain_r2 = LArm.addOrReplaceChild("LMain_r2", CubeListBuilder.create().texOffs(22, 0).addBox(-1.0F, -0.0272F, -0.25F, 1.0F, 13.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, -7.75F, 0.0F, 0.0F, 0.3927F));
+
+        PartDefinition LBrace = LArm.addOrReplaceChild("LBrace", CubeListBuilder.create(), PartPose.offset(-2.0F, 2.4F, 0.0F));
+
+        PartDefinition LBrace_r1 = LBrace.addOrReplaceChild("LBrace_r1", CubeListBuilder.create().texOffs(0, 46).addBox(-3.7313F, -0.5127F, -16.0F, 4.0F, 1.0F, 16.0F, new CubeDeformation(-0.02F)), PartPose.offsetAndRotation(0.0F, 0.0F, 8.0F, 0.0F, 0.0F, 0.3927F));
 
         return LayerDefinition.create(meshdefinition, 128, 128);
     }
-
     @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        ModCapability.get(entity).ifPresent(iCap -> {
 
+     /*       CentreBrace.x = 0;
+            CentreBrace.y = 14;
+            CentreBrace.z = 0;
+
+            CentreBrace.xRot = 0;
+            CentreBrace.yRot = 0;
+            CentreBrace.zRot = 0;
+
+            RMain.x = 0.0f;
+            RMain.y = 7.0f;
+            RMain.z = 0.0f;
+
+            RMain.xRot = 0.0f;
+            RMain.yRot = 0.0f;
+            RMain.zRot = 0.0f;
+
+
+            LMain.x = 0.0f;
+            LMain.y = 7.0f;
+            LMain.z = 0.0f;
+
+            LMain.xRot = 0.0f;
+            LMain.yRot = 0.0f;
+            LMain.zRot = 0.0f;
+            this.animate(iCap.getAnimation(ModCapability.AnimationStates.GLIDER_OPENING), Animations.OPENING, ageInTicks);*/
+        });
     }
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        glider.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        CentreBrace.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        RMain.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        LMain.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+    }
+
+    @Override
+    public ModelPart root() {
+        return root;
     }
 }

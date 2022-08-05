@@ -12,7 +12,7 @@ public class Models {
 
     public static void init(EntityRenderersEvent.RegisterLayerDefinitions registerLayerDefinitions) {
         registerLayerDefinitions.registerLayerDefinition(STALKER, StalkerModel::getModelData);
-        registerLayerDefinitions.registerLayerDefinition(GLIDER, GliderModel::createBodyLayer);
+        registerLayerDefinitions.registerLayerDefinition(GLIDER, GliderModel::getModelData);
     }
 
 }

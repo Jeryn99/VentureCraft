@@ -30,11 +30,12 @@ public class ModCapability implements ICap {
     private boolean falling = false;
 
     public enum AnimationStates {
-        FALLING, GLIDING
+        FALLING, GLIDING, GLIDER_OPENING
     }
 
     public AnimationState glideAnimation = new AnimationState();
     public AnimationState fallingAnimation = new AnimationState();
+    public AnimationState gliderOpeningAnimation = new AnimationState();
 
     public ModCapability() {
 
@@ -52,17 +53,24 @@ public class ModCapability implements ICap {
     @Override
     public void tick(LivingEntity livingEntity) {
 
-        if (!player.level.isClientSide()) {
-            setFalling(player.getDeltaMovement().y < 0);
+
+        if(!livingEntity.level.isClientSide){
+            setFalling(player.fallDistance > 0 && !GliderUtil.isGlidingWithActiveGlider(livingEntity));
         }
 
         if (GliderUtil.isGlidingWithActiveGlider(livingEntity)) {
             if (!glideAnimation.isStarted()) {
                 glideAnimation.start(livingEntity.tickCount);
             }
+
+            if (!gliderOpeningAnimation.isStarted()) {
+                gliderOpeningAnimation.start(livingEntity.tickCount);
+            }
+
             return;
         } else {
             glideAnimation.stop();
+            gliderOpeningAnimation.stop();
         }
 
         if (isFalling()) {
@@ -148,6 +156,7 @@ public class ModCapability implements ICap {
         return switch (animationStates) {
             case FALLING -> fallingAnimation;
             case GLIDING -> glideAnimation;
+            case GLIDER_OPENING -> gliderOpeningAnimation;
         };
     }
 

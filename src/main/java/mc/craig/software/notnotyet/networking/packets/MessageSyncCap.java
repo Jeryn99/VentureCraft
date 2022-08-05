@@ -38,8 +38,9 @@ public class MessageSyncCap {
         ctx.get().enqueueWork(() -> {
             if (entity != null)
                 ModCapability.get(entity).ifPresent((c) -> c.deserializeNBT(message.nbt));
-                System.out.println(message.nbt);
             ctx.get().setPacketHandled(true);
         });
+        ctx.get().setPacketHandled(true);
+
     }
 }

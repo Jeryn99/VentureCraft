@@ -13,9 +13,8 @@ public class Network {
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(NoNotYet.MODID, "main"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 
     public static void init() {
-        int id = 0;
-        INSTANCE.registerMessage(id++, MessageToggleGlide.class, MessageToggleGlide::toBytes, MessageToggleGlide::new, MessageToggleGlide::handle);
-        INSTANCE.registerMessage(id++, MessageSyncCap.class, MessageSyncCap::toBytes, MessageSyncCap::new, MessageSyncCap::handle);
+        INSTANCE.registerMessage(0, MessageToggleGlide.class, MessageToggleGlide::toBytes, MessageToggleGlide::new, MessageToggleGlide::handle);
+        INSTANCE.registerMessage(1, MessageSyncCap.class, MessageSyncCap::toBytes, MessageSyncCap::new, MessageSyncCap::handle);
 
     }
 }

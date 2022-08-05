@@ -1,8 +1,6 @@
 package mc.craig.software.notnotyet.client.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
-import mc.craig.software.notnotyet.NoNotYet;
 import mc.craig.software.notnotyet.client.models.GliderModel;
 import mc.craig.software.notnotyet.client.models.Models;
 import mc.craig.software.notnotyet.util.GliderUtil;
@@ -21,11 +19,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class GlideLayer<T extends LivingEntity, M extends HumanoidModel<T>, A extends HumanoidModel<T>> extends RenderLayer<T, M> {
 
-    public final GliderModel gliderModel;
+    public final GliderModel<T> gliderModel;
 
     public GlideLayer(RenderLayerParent<T, M> p_117346_) {
         super(p_117346_);
-        gliderModel = new GliderModel(Minecraft.getInstance().getEntityModels().bakeLayer(Models.GLIDER));
+        gliderModel = new GliderModel<T>(Minecraft.getInstance().getEntityModels().bakeLayer(Models.GLIDER));
     }
 
     public static ResourceLocation getGliderTexture(ItemStack stack) {
@@ -42,6 +40,7 @@ public class GlideLayer<T extends LivingEntity, M extends HumanoidModel<T>, A ex
             ItemStack stack = living.getItemBySlot(EquipmentSlot.CHEST);
             poseStack.pushPose();
             poseStack.translate(0, -1.9, 0);
+            gliderModel.setupAnim(living, 0, 0, living.tickCount, 0,0);
             gliderModel.renderToBuffer(poseStack, p_117350_.getBuffer(RenderType.entityCutoutNoCull(getGliderTexture(stack))), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
             poseStack.popPose();
             return;

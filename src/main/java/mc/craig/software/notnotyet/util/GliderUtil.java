@@ -21,7 +21,7 @@ public class GliderUtil {
     }
 
     public static boolean isPlayerOnGroundOrWater(LivingEntity livingEntity) {
-        return livingEntity.isOnGround() || livingEntity.isInWater() || livingEntity.isUnderWater();
+        return livingEntity.isOnGround() || livingEntity.isInWater() || livingEntity.isUnderWater() || livingEntity.isSwimming();
     }
 
     public static boolean isGlidingWithActiveGlider(LivingEntity livingEntity) {

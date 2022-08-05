@@ -71,7 +71,7 @@ public class ParagliderItem extends Item implements Wearable {
 
         if (playerCanGlide && gliderCanGlide) {
             player.fallDistance = 0;
-
+            player.getAbilities().mayfly = true;
             // Handle Movement
             Vec3 m = player.getDeltaMovement();
             if (m.y < -0.05) player.setDeltaMovement(new Vec3(m.x, -0.05, m.z));
@@ -81,6 +81,8 @@ public class ParagliderItem extends Item implements Wearable {
             if (timeInAir(stack) >= getFixedFlightTimeTicks()) {
                 player.getCooldowns().addCooldown(this, 200);
             }
+        } else {
+            player.getAbilities().mayfly = false;
         }
 
         if (GliderUtil.isPlayerOnGroundOrWater(player)) {

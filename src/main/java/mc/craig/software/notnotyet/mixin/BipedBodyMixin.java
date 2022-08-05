@@ -30,9 +30,13 @@ public class BipedBodyMixin {
 
             // Falling Animation
             if (livingEntity instanceof Player player) {
-                AnimationUtil.animate(bipedModel, iCap.getAnimation(ModCapability.AnimationStates.FALLING), Animations.FALLING, ageInTicks, 1);
-                fixLayers(bipedModel);
-                callbackInfo.cancel();
+                ModCapability.get(player).ifPresent(iCap1 -> {
+                    if (iCap1.isFalling()) {
+                        AnimationUtil.animate(bipedModel, iCap.getAnimation(ModCapability.AnimationStates.FALLING), Animations.FALLING, ageInTicks, 1);
+                        fixLayers(bipedModel);
+                        callbackInfo.cancel();
+                    }
+                });
             }
         });
     }

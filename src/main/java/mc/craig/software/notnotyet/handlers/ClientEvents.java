@@ -16,6 +16,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.MovementInputUpdateEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
@@ -34,10 +35,19 @@ public class ClientEvents {
         }
     }
 
+
+
     @SubscribeEvent
     public static void onRenderHand(RenderHandEvent event) {
         PoseStack posestack = event.getPoseStack();
 
+    }
+
+    @SubscribeEvent
+    public static void onMovement(MovementInputUpdateEvent event){
+        if(GliderUtil.isGlidingWithActiveGlider(Minecraft.getInstance().player)){
+            event.getInput().shiftKeyDown = false;
+        }
     }
 
 

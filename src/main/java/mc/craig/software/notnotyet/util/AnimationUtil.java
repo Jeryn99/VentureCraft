@@ -1,17 +1,21 @@
 package mc.craig.software.notnotyet.util;
 
 import com.mojang.math.Vector3f;
+import mc.craig.software.notnotyet.client.models.GliderModel;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
+import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.Entity;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public class AnimationUtil {
 
@@ -27,6 +31,7 @@ public class AnimationUtil {
             case "Head" -> model.head;
             default -> null;
         };
+
     }
 
     public static void animate(HumanoidModel<?> humanoidModel, AnimationDefinition animationDefinition, long p_232322_, float p_232323_, Vector3f p_232324_) {
@@ -76,6 +81,14 @@ public class AnimationUtil {
                 System.out.println("Could not find:" + entry.getKey());
             }
         }
+    }
+
+    public static Optional<ModelPart> getAnyDescendantWithName(HierarchicalModel<?> hierarchicalModel, String p_233394_) {
+        return hierarchicalModel.root().getAllParts().filter((p_233400_) -> {
+            return p_233400_.hasChild(p_233394_);
+        }).findFirst().map((p_233397_) -> {
+            return p_233397_.getChild(p_233394_);
+        });
     }
 
     private static float getElapsedSeconds(AnimationDefinition p_232317_, long p_232318_) {
