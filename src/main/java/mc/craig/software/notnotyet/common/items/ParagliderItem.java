@@ -23,7 +23,7 @@ import java.util.List;
 public class ParagliderItem extends Item implements Wearable {
 
 
-    private int fixedFlightTimeTicks;
+    private final int fixedFlightTimeTicks;
 
     public ParagliderItem(Properties itemProperties, int fixedFlightTime) {
         super(itemProperties);
@@ -82,7 +82,7 @@ public class ParagliderItem extends Item implements Wearable {
                 player.getCooldowns().addCooldown(this, 200);
             }
         } else {
-            player.getAbilities().mayfly = false;
+            player.getAbilities().mayfly = player.isCreative();
         }
 
         if (GliderUtil.isPlayerOnGroundOrWater(player)) {

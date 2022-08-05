@@ -18,7 +18,7 @@ public class BipedBodyMixin {
 
     @Inject(at = @At("HEAD"), cancellable = true, method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V")
     private void setupAnimHead(LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo callbackInfo) {
-        HumanoidModel<LivingEntity> bipedModel = (HumanoidModel) (Object) this;
+        HumanoidModel<?> bipedModel = (HumanoidModel<?>) (Object) this;
 
         ModCapability.get(livingEntity).ifPresent(iCap -> {
             // Gliding Animation
@@ -41,8 +41,8 @@ public class BipedBodyMixin {
         });
     }
 
-    private void fixLayers(HumanoidModel<LivingEntity> bipedModel) {
-        if (bipedModel instanceof PlayerModel<LivingEntity> playerModel) {
+    private void fixLayers(HumanoidModel<?> bipedModel) {
+        if (bipedModel instanceof PlayerModel<?> playerModel) {
             playerModel.jacket.copyFrom(bipedModel.body);
             playerModel.leftPants.copyFrom(bipedModel.leftLeg);
             playerModel.rightPants.copyFrom(bipedModel.rightLeg);

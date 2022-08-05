@@ -55,7 +55,11 @@ public class ModCapability implements ICap {
 
 
         if(!livingEntity.level.isClientSide){
+            boolean prev = isFalling();
             setFalling(player.fallDistance > 0 && !GliderUtil.isGlidingWithActiveGlider(livingEntity));
+            if(isFalling() != prev){
+                sync();
+            }
         }
 
         if (GliderUtil.isGlidingWithActiveGlider(livingEntity)) {
