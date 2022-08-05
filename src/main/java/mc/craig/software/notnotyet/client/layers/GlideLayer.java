@@ -1,6 +1,8 @@
 package mc.craig.software.notnotyet.client.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
+import mc.craig.software.notnotyet.NoNotYet;
 import mc.craig.software.notnotyet.client.models.GliderModel;
 import mc.craig.software.notnotyet.client.models.Models;
 import mc.craig.software.notnotyet.util.GliderUtil;
@@ -45,14 +47,15 @@ public class GlideLayer<T extends LivingEntity, M extends HumanoidModel<T>, A ex
             return;
         }
 
-     /*   // Render on players back
+ /*      // Render on players back
         if (GliderUtil.hasParagliderEquipped(living)) {
+            ItemStack stack = living.getItemBySlot(EquipmentSlot.CHEST);
             poseStack.pushPose();
             poseStack.mulPose(Vector3f.XP.rotationDegrees(-90));
             poseStack.translate(0, -0.8, 0.5);
-            poseStack.scale(0.8F, 0.8F,0.8F);
+            poseStack.scale(0.4F, 0.4F,0.4F);
             //gliderModel.handles.visible = false;
-            gliderModel.renderToBuffer(poseStack, p_117350_.getBuffer(RenderType.entityCutout(new ResourceLocation(NoNotYet.MODID, "textures/entity/glider/glider.png"))), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            gliderModel.renderToBuffer(poseStack, p_117350_.getBuffer(RenderType.entityCutoutNoCull(getGliderTexture(stack))), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
             poseStack.popPose();
         }*/
     }

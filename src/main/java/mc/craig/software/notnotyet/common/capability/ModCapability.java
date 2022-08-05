@@ -2,9 +2,10 @@ package mc.craig.software.notnotyet.common.capability;
 
 import mc.craig.software.notnotyet.networking.Network;
 import mc.craig.software.notnotyet.networking.packets.MessageSyncCap;
-import net.minecraft.core.BlockPos;
+import mc.craig.software.notnotyet.util.GliderUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
@@ -26,6 +27,14 @@ public class ModCapability implements ICap {
     private Player player;
     private boolean isClimbing = false;
     private int timeClimbing = 0;
+    private boolean falling = false;
+
+    public enum AnimationStates {
+        FALLING, GLIDING
+    }
+
+    public AnimationState glideAnimation = new AnimationState();
+    public AnimationState fallingAnimation = new AnimationState();
 
     public ModCapability() {
 
@@ -43,7 +52,29 @@ public class ModCapability implements ICap {
     @Override
     public void tick(LivingEntity livingEntity) {
 
-        if(!player.level.isClientSide) {
+        if (!player.level.isClientSide()) {
+            setFalling(player.getDeltaMovement().y < 0);
+        }
+
+        if (GliderUtil.isGlidingWithActiveGlider(livingEntity)) {
+            if (!glideAnimation.isStarted()) {
+                glideAnimation.start(livingEntity.tickCount);
+            }
+            return;
+        } else {
+            glideAnimation.stop();
+        }
+
+        if (isFalling()) {
+            if (!fallingAnimation.isStarted()) {
+                fallingAnimation.start(livingEntity.tickCount);
+            }
+            return;
+        } else {
+            fallingAnimation.stop();
+        }
+
+        if (!player.level.isClientSide) {
             setClimbing(canClimb(livingEntity));
             if (isClimbing()) {
                 setTimeClimbed(timeClimbed() + 1);
@@ -103,10 +134,30 @@ public class ModCapability implements ICap {
     }
 
     @Override
+    public boolean isFalling() {
+        return falling;
+    }
+
+    @Override
+    public void setFalling(boolean falling) {
+        this.falling = falling;
+    }
+
+    @Override
+    public AnimationState getAnimation(AnimationStates animationStates) {
+        return switch (animationStates) {
+            case FALLING -> fallingAnimation;
+            case GLIDING -> glideAnimation;
+        };
+    }
+
+
+    @Override
     public CompoundTag serializeNBT() {
         CompoundTag compoundTag = new CompoundTag();
         compoundTag.putInt("climbTime", timeClimbing);
         compoundTag.putBoolean("isClimbing", isClimbing);
+        compoundTag.putBoolean("isFalling", falling);
         return compoundTag;
     }
 
@@ -114,5 +165,6 @@ public class ModCapability implements ICap {
     public void deserializeNBT(CompoundTag nbt) {
         isClimbing = nbt.getBoolean("isClimbing");
         timeClimbing = nbt.getInt("climbTime");
+        falling = nbt.getBoolean("isFalling");
     }
 }

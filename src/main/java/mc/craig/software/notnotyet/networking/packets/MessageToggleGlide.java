@@ -28,8 +28,6 @@ public class MessageToggleGlide {
                     ItemStack chestItem = sender.getItemBySlot(EquipmentSlot.CHEST);
                     ParagliderItem.setGlide(chestItem, !ParagliderItem.glidingEnabled(chestItem));
                     if (ParagliderItem.glidingEnabled(chestItem)) {
-                        CommonEvents.glideAnimation.start(sender.tickCount);
-
                         // Damage Glider as used
                         chestItem.hurtAndBreak(1, sender, e -> e.broadcastBreakEvent(EquipmentSlot.CHEST));
                     }

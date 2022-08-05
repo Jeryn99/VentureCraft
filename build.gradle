@@ -52,6 +52,25 @@ minecraft {
             }
         }
 
+        client_2 {
+            workingDirectory project.file('run')
+
+            if (project.hasProperty('mc_username')) {
+                args '--username', project.getProperty('mc_username') + "_2"
+            }
+
+            arg "-mixin.config=nonotyet.mixins.json"
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', 'nonotyet'
+
+            mods {
+                nonotyet {
+                    source sourceSets.main
+                }
+            }
+        }
+
         server {
             workingDirectory project.file('run')
 
@@ -113,8 +132,6 @@ repositories {
         }
     }
 
-    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
-
 }
 
 dependencies {
@@ -123,7 +140,6 @@ dependencies {
 
     implementation fg.deobf("curse.maven:jei-238222:3905244")
     implementation fg.deobf("curse.maven:configured-457570:3903908")
-    implementation fg.deobf("curse.maven:geckolib-388172:3909987")
 
 }
 

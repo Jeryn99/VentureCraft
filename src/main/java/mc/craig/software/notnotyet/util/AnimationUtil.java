@@ -19,8 +19,8 @@ public class AnimationUtil {
 
     public static ModelPart getAnyDescendantWithName(HumanoidModel<?> model, String partName) {
         return switch (partName) {
-            case "RightLeg2" -> model.rightLeg;
-            case "LeftLeg2" -> model.leftLeg;
+            case "RightLeg" -> model.rightLeg;
+            case "LeftLeg" -> model.leftLeg;
             case "LeftArm" -> model.leftArm;
             case "RightArm" -> model.rightArm;
             case "Body" -> model.body;
@@ -32,8 +32,14 @@ public class AnimationUtil {
     public static void animate(HumanoidModel<?> humanoidModel, AnimationDefinition animationDefinition, long p_232322_, float p_232323_, Vector3f p_232324_) {
         float elapsedSeconds = getElapsedSeconds(animationDefinition, p_232322_);
 
-        System.out.println(elapsedSeconds);
+        humanoidModel.rightLeg.z = 0.1F;
+        humanoidModel.leftLeg.z = 0.1F;
+        humanoidModel.rightLeg.y = 12.0F;
+        humanoidModel.leftLeg.y = 12.0F;
 
+        humanoidModel.body.x = 0F;
+        humanoidModel.body.y = 0F;
+        humanoidModel.body.z = 0F;
 
         for (Map.Entry<String, List<AnimationChannel>> entry : animationDefinition.boneAnimations().entrySet()) {
             ModelPart optional = getAnyDescendantWithName(humanoidModel, entry.getKey());
@@ -52,11 +58,6 @@ public class AnimationUtil {
                     optional.z = 0;
                 }
 
-                if(entry.getKey().toLowerCase().contains("leg")){
-                    optional.x = -0.312f;
-                    optional.y = 1.9f;
-                    optional.z = 12.0f;
-                }
 
                 list.forEach((p_232311_) -> {
                     Keyframe[] akeyframe = p_232311_.keyframes();
