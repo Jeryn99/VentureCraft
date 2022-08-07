@@ -63,7 +63,7 @@ public class ClientEvents {
         Window window = Minecraft.getInstance().getWindow();
 
         // Render Glider Duration
-        if (itemStack.getItem() instanceof ParagliderItem paragliderItem && GliderUtil.isGlidingWithActiveGlider(player)) {
+        if (itemStack.getItem() instanceof ParagliderItem paragliderItem && (GliderUtil.isGlidingWithActiveGlider(player) || player.isOnGround() && ParagliderItem.timeInAir(itemStack) < paragliderItem.getFixedFlightTimeTicks())) {
             if (e.getOverlay().id() == VanillaGuiOverlay.EXPERIENCE_BAR.id()) {
                 e.setCanceled(true);
                 return;
@@ -74,6 +74,7 @@ public class ClientEvents {
             renderDurationBar(stack, window, progress);
         }
 
+        // Climbing
         ModCapability.get(player).ifPresent(iClimb -> {
             if (iClimb.isClimbing()) {
                 int allowedDuration = ModCapability.MAX_CLIMB_TIME;

@@ -51,6 +51,17 @@ public class ParagliderItem extends Item implements Wearable {
         compound.putBoolean("glide", canGlide);
     }
 
+    public static void setStruck(ItemStack itemStack, boolean isStruck) {
+        CompoundTag compound = itemStack.getOrCreateTag();
+        compound.putBoolean("struck", isStruck);
+    }
+
+    public static boolean hasBeenStruck(ItemStack itemStack) {
+        CompoundTag compound = itemStack.getOrCreateTag();
+        if (!compound.contains("struck")) return false;
+        return compound.getBoolean("struck");
+    }
+
     public static int timeInAir(ItemStack itemStack) {
         CompoundTag compound = itemStack.getOrCreateTag();
         if (!compound.contains("timeInAir")) return 0;
@@ -67,20 +78,22 @@ public class ParagliderItem extends Item implements Wearable {
         super.onArmorTick(stack, level, player);
 
         boolean playerCanGlide = !GliderUtil.isPlayerOnGroundOrWater(player) && !player.getAbilities().flying;
-        boolean gliderCanGlide = glidingEnabled(stack) && !player.getCooldowns().isOnCooldown(this);
+        boolean gliderCanGlide = glidingEnabled(stack) && timeInAir(stack) < getFixedFlightTimeTicks();
 
         if (playerCanGlide && gliderCanGlide) {
-            player.fallDistance = 0;
-            player.getAbilities().mayfly = true;
+            player.resetFallDistance();
+            player.getAbilities().mayfly = true; // Stop Servers kicking survival players
             // Handle Movement
             Vec3 m = player.getDeltaMovement();
             if (m.y < -0.05) player.setDeltaMovement(new Vec3(m.x, -0.05, m.z));
 
+            // Speed up player if they have been struck by lightning
+            if (hasBeenStruck(stack)) {
+                player.setDeltaMovement(player.getDeltaMovement().multiply(new Vec3(1, 0, 1)));
+            }
+
             // Handle Cooldown
             setTimeInAir(stack, timeInAir(stack) + 1);
-            if (timeInAir(stack) >= getFixedFlightTimeTicks()) {
-                player.getCooldowns().addCooldown(this, 200);
-            }
         } else {
             player.getAbilities().mayfly = player.isCreative();
         }
@@ -88,11 +101,9 @@ public class ParagliderItem extends Item implements Wearable {
         if (GliderUtil.isPlayerOnGroundOrWater(player)) {
             // Reset Gliding status when on Ground
             setGlide(stack, false);
-
+            setStruck(stack, false);
             // Reset time in air when cooldown ends
-            if (!player.getCooldowns().isOnCooldown(this)) {
-                setTimeInAir(stack, 0);
-            }
+            setTimeInAir(stack, timeInAir(stack) - 1);
         }
     }
 

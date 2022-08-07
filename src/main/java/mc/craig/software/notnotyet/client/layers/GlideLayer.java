@@ -1,8 +1,11 @@
 package mc.craig.software.notnotyet.client.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import mc.craig.software.notnotyet.NoNotYet;
 import mc.craig.software.notnotyet.client.models.GliderModel;
 import mc.craig.software.notnotyet.client.models.Models;
+import mc.craig.software.notnotyet.common.items.ParagliderItem;
 import mc.craig.software.notnotyet.util.GliderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -20,6 +23,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class GlideLayer<T extends LivingEntity, M extends HumanoidModel<T>, A extends HumanoidModel<T>> extends RenderLayer<T, M> {
 
     public final GliderModel<T> gliderModel;
+    private static final ResourceLocation POWER_LOCATION = new ResourceLocation("textures/entity/creeper/creeper_armor.png");
+
+    ResourceLocation COPPER_EMBED = new ResourceLocation(NoNotYet.MODID, "textures/entity/glider/copper_overlay.png");
+
 
     public GlideLayer(RenderLayerParent<T, M> p_117346_) {
         super(p_117346_);
@@ -32,20 +39,37 @@ public class GlideLayer<T extends LivingEntity, M extends HumanoidModel<T>, A ex
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource p_117350_, int p_117351_, T living, float p_117353_, float p_117354_, float p_117355_, float p_117356_, float p_117357_, float p_117358_) {
+    public void render(PoseStack poseStack, MultiBufferSource bufferSource, int p_117351_, T living, float p_117353_, float p_117354_, float p_117355_, float p_117356_, float p_117357_, float p_117358_) {
         if (living.isInvisibleTo(Minecraft.getInstance().player)) return;
+
+        ItemStack stack = living.getItemBySlot(EquipmentSlot.CHEST);
 
         // Render above players when gliding
         if (GliderUtil.isGlidingWithActiveGlider(living)) {
-            ItemStack stack = living.getItemBySlot(EquipmentSlot.CHEST);
             poseStack.pushPose();
             poseStack.translate(0, -1.9, 0);
-            gliderModel.setupAnim(living, 0, 0, living.tickCount, 0,0);
-            gliderModel.renderToBuffer(poseStack, p_117350_.getBuffer(RenderType.entityCutoutNoCull(getGliderTexture(stack))), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            gliderModel.setupAnim(living, 0, 0, living.tickCount, 0, 0);
+            gliderModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityCutoutNoCull(getGliderTexture(stack))), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+
+            // Has Coppered Embedded
+            if (true) {
+                gliderModel.setupAnim(living, 0, 0, living.tickCount, 0, 0);
+                gliderModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityCutoutNoCull(COPPER_EMBED)), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            }
+
+            // Struck by Lightning
+            if (ParagliderItem.hasBeenStruck(stack)) {
+                float f = (float) living.tickCount + p_117355_;
+                VertexConsumer vertexconsumer = bufferSource.getBuffer(RenderType.energySwirl(this.getEnergySwirlTexture(), this.xOffset(f) % 1.0F, f * 0.01F % 1.0F));
+                gliderModel.setupAnim(living, 0, 0, living.tickCount, 0, 0);
+                gliderModel.renderToBuffer(poseStack, vertexconsumer, p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            }
+
             poseStack.popPose();
-            return;
         }
 
+
+        
  /*      // Render on players back
         if (GliderUtil.hasParagliderEquipped(living)) {
             ItemStack stack = living.getItemBySlot(EquipmentSlot.CHEST);
@@ -57,6 +81,14 @@ public class GlideLayer<T extends LivingEntity, M extends HumanoidModel<T>, A ex
             gliderModel.renderToBuffer(poseStack, p_117350_.getBuffer(RenderType.entityCutoutNoCull(getGliderTexture(stack))), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
             poseStack.popPose();
         }*/
+    }
+
+    private float xOffset(float f) {
+        return f * 0.01F;
+    }
+
+    private ResourceLocation getEnergySwirlTexture() {
+        return POWER_LOCATION;
     }
 
 }
