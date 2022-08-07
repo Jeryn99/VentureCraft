@@ -20,6 +20,10 @@ public class BipedBodyMixin {
     private void setupAnimHead(LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo callbackInfo) {
         HumanoidModel<?> bipedModel = (HumanoidModel<?>) (Object) this;
 
+        bipedModel.body.x = 0;
+        bipedModel.body.y = 0;
+        bipedModel.body.z = 0;
+
         ModCapability.get(livingEntity).ifPresent(iCap -> {
             // Gliding Animation
             if (GliderUtil.isGlidingWithActiveGlider(livingEntity)) {

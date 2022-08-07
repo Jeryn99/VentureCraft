@@ -11,5 +11,7 @@
   "item.minecraft_plus.reinforced_paper_iron": "Re-Inforced Paper (Iron)",
   "item.minecraft_plus.reinforced_paper_netherite": "Re-Inforced Paper (Netherite)",
   "item.minecraft_plus.stalker_spawn_egg": "Stalker",
-  "itemGroup.minecraft_plus": "No..Not yet!"
+  "itemGroup.minecraft_plus": "Minecraft+",
+  "tooltip.minecraft_plus.copper_mod": "Copper Wires",
+  "tooltip.minecraft_plus.installed_mods": "§lInstalled Modifications"
 }

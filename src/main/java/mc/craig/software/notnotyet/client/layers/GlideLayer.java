@@ -2,7 +2,7 @@ package mc.craig.software.notnotyet.client.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import mc.craig.software.notnotyet.NoNotYet;
+import mc.craig.software.notnotyet.MinecraftPlus;
 import mc.craig.software.notnotyet.client.models.GliderModel;
 import mc.craig.software.notnotyet.client.models.Models;
 import mc.craig.software.notnotyet.common.items.ParagliderItem;
@@ -24,12 +24,12 @@ public class GlideLayer<T extends LivingEntity, M extends HumanoidModel<T>, A ex
 
     public final GliderModel<T> gliderModel;
     private static final ResourceLocation POWER_LOCATION = new ResourceLocation("textures/entity/creeper/creeper_armor.png");
+    private static final ResourceLocation COPPER_EMBED = new ResourceLocation(MinecraftPlus.MODID, "textures/entity/glider/copper_overlay.png");
+    private static final ResourceLocation COPPER_EMBED_CHARGED = new ResourceLocation(MinecraftPlus.MODID, "textures/entity/glider/copper_overlay_charged.png");
 
-    ResourceLocation COPPER_EMBED = new ResourceLocation(NoNotYet.MODID, "textures/entity/glider/copper_overlay.png");
 
-
-    public GlideLayer(RenderLayerParent<T, M> p_117346_) {
-        super(p_117346_);
+    public GlideLayer(RenderLayerParent<T, M> renderLayerParent) {
+        super(renderLayerParent);
         gliderModel = new GliderModel<T>(Minecraft.getInstance().getEntityModels().bakeLayer(Models.GLIDER));
     }
 
@@ -52,18 +52,18 @@ public class GlideLayer<T extends LivingEntity, M extends HumanoidModel<T>, A ex
             gliderModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityCutoutNoCull(getGliderTexture(stack))), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 
             // Has Coppered Embedded
-            if (true) {
+            if (ParagliderItem.hasCopperMod(stack)) {
                 gliderModel.setupAnim(living, 0, 0, living.tickCount, 0, 0);
-                gliderModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityCutoutNoCull(COPPER_EMBED)), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+                gliderModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.eyes(ParagliderItem.hasBeenStruck(stack) ? COPPER_EMBED_CHARGED : COPPER_EMBED)), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
             }
 
-            // Struck by Lightning
+       /*     // Struck by Lightning
             if (ParagliderItem.hasBeenStruck(stack)) {
                 float f = (float) living.tickCount + p_117355_;
                 VertexConsumer vertexconsumer = bufferSource.getBuffer(RenderType.energySwirl(this.getEnergySwirlTexture(), this.xOffset(f) % 1.0F, f * 0.01F % 1.0F));
                 gliderModel.setupAnim(living, 0, 0, living.tickCount, 0, 0);
                 gliderModel.renderToBuffer(poseStack, vertexconsumer, p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            }
+            }*/
 
             poseStack.popPose();
         }

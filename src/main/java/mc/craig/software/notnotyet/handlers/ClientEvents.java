@@ -63,7 +63,7 @@ public class ClientEvents {
         Window window = Minecraft.getInstance().getWindow();
 
         // Render Glider Duration
-        if (itemStack.getItem() instanceof ParagliderItem paragliderItem && (GliderUtil.isGlidingWithActiveGlider(player) || player.isOnGround() && ParagliderItem.timeInAir(itemStack) < paragliderItem.getFixedFlightTimeTicks())) {
+        if (itemStack.getItem() instanceof ParagliderItem paragliderItem && (GliderUtil.isGlidingWithActiveGlider(player) || !GliderUtil.isGlidingWithActiveGlider(player) && ParagliderItem.timeInAir(itemStack) < paragliderItem.getFixedFlightTimeTicks() && ParagliderItem.timeInAir(itemStack) > 0)) {
             if (e.getOverlay().id() == VanillaGuiOverlay.EXPERIENCE_BAR.id()) {
                 e.setCanceled(true);
                 return;
@@ -96,7 +96,7 @@ public class ClientEvents {
         minecraft.gui.blit(stack, winWid, winHeight, 0, 64, 182, 5);
         int status = (int) (progress * 182F);
         if (status > 0) {
-            minecraft.gui.blit(stack, winWid + 182 - status, winHeight, 182 - status, 69, status, 5);
+            minecraft.gui.blit(stack, winWid, winHeight, 0, 69, status, 5);
         }
         stack.popPose();
     }

@@ -1,6 +1,7 @@
 package mc.craig.software.notnotyet.common.items;
 
 import mc.craig.software.notnotyet.util.GliderUtil;
+import mc.craig.software.notnotyet.util.ModConstants;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.stats.Stats;
@@ -8,6 +9,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,15 +22,32 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class ParagliderItem extends Item implements Wearable {
 
+    private final double SPEED_INCREASE = 1;
+    private final AttributeModifier SPEED_MODIFIER = new AttributeModifier("b44790fb-65c0-4ec7-8b63-a1749c614b1e", SPEED_INCREASE, AttributeModifier.Operation.MULTIPLY_BASE);
+
 
     private final int fixedFlightTimeTicks;
+    private final Supplier<Item> repairItem;
 
-    public ParagliderItem(Properties itemProperties, int fixedFlightTime) {
+    public ParagliderItem(Properties itemProperties, int fixedFlightTime, Supplier<Item> itemSupplier) {
         super(itemProperties);
         fixedFlightTimeTicks = fixedFlightTime;
+        this.repairItem = itemSupplier;
+    }
+
+    public static void setCopper(ItemStack itemStack, boolean copper) {
+        CompoundTag compound = itemStack.getOrCreateTag();
+        compound.putBoolean("copper_mod", copper);
+    }
+
+    public static boolean hasCopperMod(ItemStack itemStack) {
+        CompoundTag compound = itemStack.getOrCreateTag();
+        if (!compound.contains("copper_mod")) return false;
+        return compound.getBoolean("copper_mod");
     }
 
     public int getFixedFlightTimeTicks() {
@@ -64,13 +84,13 @@ public class ParagliderItem extends Item implements Wearable {
 
     public static int timeInAir(ItemStack itemStack) {
         CompoundTag compound = itemStack.getOrCreateTag();
-        if (!compound.contains("timeInAir")) return 0;
-        return compound.getInt("timeInAir");
+        if (!compound.contains("airtime")) return 0;
+        return compound.getInt("airtime");
     }
 
     public static void setTimeInAir(ItemStack itemStack, int timeLeft) {
         CompoundTag compound = itemStack.getOrCreateTag();
-        compound.putInt("timeInAir", timeLeft);
+        compound.putInt("airtime", timeLeft);
     }
 
     @Override
@@ -81,32 +101,50 @@ public class ParagliderItem extends Item implements Wearable {
         boolean gliderCanGlide = glidingEnabled(stack) && timeInAir(stack) < getFixedFlightTimeTicks();
 
         if (playerCanGlide && gliderCanGlide) {
-            player.resetFallDistance();
-            player.getAbilities().mayfly = true; // Stop Servers kicking survival players
-            // Handle Movement
-            Vec3 m = player.getDeltaMovement();
-            if (m.y < -0.05) player.setDeltaMovement(new Vec3(m.x, -0.05, m.z));
-
-            // Speed up player if they have been struck by lightning
-            if (hasBeenStruck(stack)) {
-                player.setDeltaMovement(player.getDeltaMovement().multiply(new Vec3(1, 0, 1)));
-            }
 
             // Handle Cooldown
             setTimeInAir(stack, timeInAir(stack) + 1);
-        } else {
-            player.getAbilities().mayfly = player.isCreative();
+
+            player.resetFallDistance();
+
+            player.getAbilities().mayfly = true; // Stop Servers kicking survival players
+            // Handle Movement
+            Vec3 m = player.getDeltaMovement();
+            boolean hasSpeedMods = hasCopperMod(stack) && hasBeenStruck(stack);
+
+            if (hasSpeedMods) {
+                if (!player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(SPEED_MODIFIER)) {
+                    player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(SPEED_MODIFIER);
+                }
+            }
+
+            if (m.y < -0.05) player.setDeltaMovement(new Vec3(m.x, -0.05, m.z));
+            return;
         }
 
+        player.getAbilities().mayfly = player.isCreative();
+
         if (GliderUtil.isPlayerOnGroundOrWater(player)) {
+
+            if (player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(SPEED_MODIFIER)) {
+                player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_MODIFIER);
+            }
+
             // Reset Gliding status when on Ground
             setGlide(stack, false);
             setStruck(stack, false);
-            // Reset time in air when cooldown ends
-            setTimeInAir(stack, timeInAir(stack) - 1);
+            if (timeInAir(stack) > 0) {
+                // Reset time in air when cooldown ends
+                setTimeInAir(stack, timeInAir(stack) - 1);
+            }
         }
+
     }
 
+    @Override
+    public boolean isValidRepairItem(ItemStack p_41402_, ItemStack material) {
+        return material.getItem() == repairItem.get();
+    }
 
     @Override
     public @Nullable EquipmentSlot getEquipmentSlot(ItemStack stack) {
@@ -116,6 +154,12 @@ public class ParagliderItem extends Item implements Wearable {
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level worldIn, @NotNull List<Component> tooltip, @NotNull TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
+
+
+        if (hasCopperMod(stack)) {
+            tooltip.add(Component.translatable(ModConstants.INSTALLED_MODS));
+            tooltip.add(Component.literal("- ").append(Component.translatable(ModConstants.COPPER_MOD)));
+        }
     }
 
     @Override

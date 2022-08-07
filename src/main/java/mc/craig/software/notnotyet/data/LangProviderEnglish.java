@@ -3,6 +3,8 @@ package mc.craig.software.notnotyet.data;
 import mc.craig.software.notnotyet.MinecraftPlus;
 import mc.craig.software.notnotyet.common.Entities;
 import mc.craig.software.notnotyet.common.ModItems;
+import mc.craig.software.notnotyet.util.ModConstants;
+import net.minecraft.ChatFormatting;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 
@@ -30,11 +32,17 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModItems.REINFORCED_PAPER_DIAMOND.get(), "Re-Inforced Paper (Diamond)");
         add(ModItems.REINFORCED_PAPER_NETHERITE.get(), "Re-Inforced Paper (Netherite)");
 
+        add(ModItems.COPPER_WIRE.get(), "Copper Wire");
+
         add(ModItems.STALKERS_EGG.get(), "Stalker");
+
+        // Messages
+        add(ModConstants.INSTALLED_MODS, ChatFormatting.BOLD + "Installed Modifications");
+        add(ModConstants.COPPER_MOD, "Copper Wires");
 
 
         // ===== Tabs =====
-        add("itemGroup." + MinecraftPlus.MODID, "No..Not yet!");
+        add("itemGroup." + MinecraftPlus.MODID, "Minecraft+");
 
   /*      add(ModItems.LEATHER_ARMOR_HEAD.get(), "Leather Helmet");
         add(ModItems.LEATHER_ARMOR_CHEST.get(), "Leather Chestplate");

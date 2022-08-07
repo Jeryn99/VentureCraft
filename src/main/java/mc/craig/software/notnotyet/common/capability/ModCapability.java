@@ -108,12 +108,11 @@ public class ModCapability implements ICap {
     }
 
     private void strikePlayerLightning(LivingEntity livingEntity, ItemStack chestItem) {
-        if(livingEntity.level.canSeeSky(livingEntity.blockPosition()) && !ParagliderItem.hasBeenStruck(chestItem) && livingEntity.level.isRainingAt(livingEntity.blockPosition())){
+        if (livingEntity.level.random.nextInt(10000) == 0 && GliderUtil.isGlidingWithActiveGlider(livingEntity) && livingEntity.level.canSeeSky(livingEntity.blockPosition()) && !ParagliderItem.hasBeenStruck(chestItem) && livingEntity.level.isRainingAt(livingEntity.blockPosition())) {
             LightningBolt lightningbolt = EntityType.LIGHTNING_BOLT.create(livingEntity.level);
             lightningbolt.moveTo(Vec3.atBottomCenterOf(livingEntity.blockPosition()));
             lightningbolt.setVisualOnly(false);
             livingEntity.level.addFreshEntity(lightningbolt);
-            ParagliderItem.setStruck(chestItem, true); //TODO Move to a Event if Possible
         }
     }
 
