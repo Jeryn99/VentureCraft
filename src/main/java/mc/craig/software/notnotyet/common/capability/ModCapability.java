@@ -1,13 +1,14 @@
 package mc.craig.software.notnotyet.common.capability;
 
+import mc.craig.software.notnotyet.common.items.ParagliderItem;
 import mc.craig.software.notnotyet.networking.Network;
 import mc.craig.software.notnotyet.networking.packets.MessageSyncCap;
 import mc.craig.software.notnotyet.util.GliderUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -56,10 +57,14 @@ public class ModCapability implements ICap {
 
         if(!livingEntity.level.isClientSide){
             boolean prev = isFalling();
-            setFalling(player.fallDistance > 0 && !GliderUtil.isGlidingWithActiveGlider(livingEntity));
+            setFalling(player.fallDistance > 1.1309066 && !GliderUtil.isGlidingWithActiveGlider(livingEntity));
             if(isFalling() != prev){
                 sync();
             }
+
+            ItemStack chestItem = player.getItemBySlot(EquipmentSlot.CHEST);
+
+            strikePlayerLightning(livingEntity, chestItem);
         }
 
         if (GliderUtil.isGlidingWithActiveGlider(livingEntity)) {
@@ -99,6 +104,16 @@ public class ModCapability implements ICap {
             player.resetFallDistance();
             Vec3 livingMovement = player.getDeltaMovement();
             player.setDeltaMovement(livingMovement.x, 0.2D, livingMovement.z);
+        }
+    }
+
+    private void strikePlayerLightning(LivingEntity livingEntity, ItemStack chestItem) {
+        if(livingEntity.level.canSeeSky(livingEntity.blockPosition()) && !ParagliderItem.hasBeenStruck(chestItem) && livingEntity.level.isRainingAt(livingEntity.blockPosition())){
+            LightningBolt lightningbolt = EntityType.LIGHTNING_BOLT.create(livingEntity.level);
+            lightningbolt.moveTo(Vec3.atBottomCenterOf(livingEntity.blockPosition()));
+            lightningbolt.setVisualOnly(false);
+            livingEntity.level.addFreshEntity(lightningbolt);
+            ParagliderItem.setStruck(chestItem, true); //TODO Move to a Event if Possible
         }
     }
 
