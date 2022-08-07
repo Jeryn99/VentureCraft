@@ -1,0 +1,15 @@
+{
+  "entity.minecraft_plus.stalker": "Stalker",
+  "item.minecraft_plus.paraglider_diamond": "Glider (Diamond)",
+  "item.minecraft_plus.paraglider_gold": "Glider (Gold)",
+  "item.minecraft_plus.paraglider_iron": "Glider (Iron)",
+  "item.minecraft_plus.paraglider_netherite": "Glider (Netherite)",
+  "item.minecraft_plus.paraglider_wood": "Glider (Wood)",
+  "item.minecraft_plus.reinforced_paper": "Re-Inforced Paper",
+  "item.minecraft_plus.reinforced_paper_diamond": "Re-Inforced Paper (Diamond)",
+  "item.minecraft_plus.reinforced_paper_gold": "Re-Inforced Paper (Gold)",
+  "item.minecraft_plus.reinforced_paper_iron": "Re-Inforced Paper (Iron)",
+  "item.minecraft_plus.reinforced_paper_netherite": "Re-Inforced Paper (Netherite)",
+  "item.minecraft_plus.stalker_spawn_egg": "Stalker",
+  "itemGroup.minecraft_plus": "No..Not yet!"
+}

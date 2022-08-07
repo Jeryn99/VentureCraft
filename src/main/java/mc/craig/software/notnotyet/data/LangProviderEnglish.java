@@ -1,6 +1,6 @@
 package mc.craig.software.notnotyet.data;
 
-import mc.craig.software.notnotyet.NoNotYet;
+import mc.craig.software.notnotyet.MinecraftPlus;
 import mc.craig.software.notnotyet.common.Entities;
 import mc.craig.software.notnotyet.common.ModItems;
 import net.minecraft.data.DataGenerator;
@@ -9,7 +9,7 @@ import net.minecraftforge.common.data.LanguageProvider;
 public class LangProviderEnglish extends LanguageProvider {
 
     public LangProviderEnglish(DataGenerator gen) {
-        super(gen, NoNotYet.MODID, "en_us");
+        super(gen, MinecraftPlus.MODID, "en_us");
     }
 
     @Override
@@ -34,7 +34,7 @@ public class LangProviderEnglish extends LanguageProvider {
 
 
         // ===== Tabs =====
-        add("itemGroup." + NoNotYet.MODID, "No..Not yet!");
+        add("itemGroup." + MinecraftPlus.MODID, "No..Not yet!");
 
   /*      add(ModItems.LEATHER_ARMOR_HEAD.get(), "Leather Helmet");
         add(ModItems.LEATHER_ARMOR_CHEST.get(), "Leather Chestplate");

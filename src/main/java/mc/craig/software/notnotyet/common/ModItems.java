@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
-import static mc.craig.software.notnotyet.NoNotYet.MODID;
+import static mc.craig.software.notnotyet.MinecraftPlus.MODID;
 
 public class ModItems {
 

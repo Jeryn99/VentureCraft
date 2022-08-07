@@ -13,8 +13,8 @@ plugins {
 }
 
 version = '1.0'
-group = 'mc.craig.software.nonotyet'
-archivesBaseName = 'nonotyet'
+group = 'mc.craig.software.minecraft_plus'
+archivesBaseName = 'minecraft_plus'
 
 apply plugin: 'org.spongepowered.mixin'
 
@@ -40,13 +40,13 @@ minecraft {
                 args '--accessToken', project.getProperty('mc_accessToken')
             }
 
-            arg "-mixin.config=nonotyet.mixins.json"
+            arg "-mixin.config=minecraft_plus.mixins.json"
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'nonotyet'
+            property 'forge.enabledGameTestNamespaces', 'minecraft_plus'
 
             mods {
-                nonotyet {
+                minecraft_plus {
                     source sourceSets.main
                 }
             }
@@ -59,13 +59,13 @@ minecraft {
                 args '--username', project.getProperty('mc_username') + "_2"
             }
 
-            arg "-mixin.config=nonotyet.mixins.json"
+            arg "-mixin.config=minecraft_plus.mixins.json"
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'nonotyet'
+            property 'forge.enabledGameTestNamespaces', 'minecraft_plus'
 
             mods {
-                nonotyet {
+                minecraft_plus {
                     source sourceSets.main
                 }
             }
@@ -78,10 +78,10 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'nonotyet'
+            property 'forge.enabledGameTestNamespaces', 'minecraft_plus'
 
             mods {
-                nonotyet {
+                minecraft_plus {
                     source sourceSets.main
                 }
             }
@@ -94,10 +94,10 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'nonotyet'
+            property 'forge.enabledGameTestNamespaces', 'minecraft_plus'
 
             mods {
-                nonotyet {
+                minecraft_plus {
                     source sourceSets.main
                 }
             }
@@ -111,10 +111,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'nonotyet', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'minecraft_plus', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                nonotyet {
+                minecraft_plus {
                     source sourceSets.main
                 }
             }
@@ -146,22 +146,22 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "nonotyet",
-                "Specification-Vendor"    : "nonotyetsareus",
+                "Specification-Title"     : "minecraft_plus",
+                "Specification-Vendor"    : "minecraft_plussareus",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "nonotyetsareus",
+                "Implementation-Vendor"   : "minecraft_plussareus",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs"            : "nonotyet.mixins.json"
+                "MixinConfigs"            : "minecraft_plus.mixins.json"
 
         ])
     }
 }
 
 mixin {
-    add sourceSets.main, "nonotyet.refmap.json"
-    config "nonotyet.mixins.json"
+    add sourceSets.main, "minecraft_plus.refmap.json"
+    config "minecraft_plus.mixins.json"
 }
 
 jar.finalizedBy('reobfJar')

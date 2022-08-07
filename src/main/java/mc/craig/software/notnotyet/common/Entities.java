@@ -7,7 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import static mc.craig.software.notnotyet.NoNotYet.MODID;
+import static mc.craig.software.notnotyet.MinecraftPlus.MODID;
 
 public class Entities {
 

@@ -3,7 +3,7 @@ package mc.craig.software.notnotyet.handlers;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import mc.craig.software.notnotyet.NoNotYet;
+import mc.craig.software.notnotyet.MinecraftPlus;
 import mc.craig.software.notnotyet.client.sound.GlideSound;
 import mc.craig.software.notnotyet.common.capability.ModCapability;
 import mc.craig.software.notnotyet.common.items.ParagliderItem;
@@ -24,7 +24,7 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = NoNotYet.MODID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = MinecraftPlus.MODID, value = Dist.CLIENT)
 public class ClientEvents {
 
     @SubscribeEvent
@@ -51,7 +51,7 @@ public class ClientEvents {
     }
 
 
-    public static final ResourceLocation TEX = new ResourceLocation(NoNotYet.MODID, "textures/gui/bar_widget.png");
+    public static final ResourceLocation TEX = new ResourceLocation(MinecraftPlus.MODID, "textures/gui/bar_widget.png");
 
     @SubscribeEvent
     public static void onRenderGameOverlayPre(RenderGuiOverlayEvent.Pre e) {

@@ -1,6 +1,6 @@
 package mc.craig.software.notnotyet.client.renderers;
 
-import mc.craig.software.notnotyet.NoNotYet;
+import mc.craig.software.notnotyet.MinecraftPlus;
 import mc.craig.software.notnotyet.client.models.Models;
 import mc.craig.software.notnotyet.client.models.StalkerModel;
 import mc.craig.software.notnotyet.common.entities.StalkerEntity;
@@ -16,6 +16,6 @@ public class RenderStalker extends LivingEntityRenderer<StalkerEntity, StalkerMo
 
     @Override
     public ResourceLocation getTextureLocation(StalkerEntity stalkerEntity) {
-       return new ResourceLocation(NoNotYet.MODID, "textures/entity/stalker/stalker_"+stalkerEntity.getStalkerPose().getEmotion().id()+".png");
+       return new ResourceLocation(MinecraftPlus.MODID, "textures/entity/stalker/stalker_"+stalkerEntity.getStalkerPose().getEmotion().id()+".png");
     }
 }

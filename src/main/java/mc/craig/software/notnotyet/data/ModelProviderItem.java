@@ -1,6 +1,6 @@
 package mc.craig.software.notnotyet.data;
 
-import mc.craig.software.notnotyet.NoNotYet;
+import mc.craig.software.notnotyet.MinecraftPlus;
 import mc.craig.software.notnotyet.common.ModItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Item;
@@ -12,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModelProviderItem extends ItemModelProvider {
 
     public ModelProviderItem(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, NoNotYet.MODID, existingFileHelper);
+        super(generator, MinecraftPlus.MODID, existingFileHelper);
     }
 
     @Override
