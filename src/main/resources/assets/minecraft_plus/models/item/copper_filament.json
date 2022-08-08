@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "minecraft_plus:item/copper_conductor"
+    "layer0": "minecraft_plus:item/copper_filament"
   }
 }

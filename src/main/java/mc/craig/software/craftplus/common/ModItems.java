@@ -39,7 +39,7 @@ public class ModItems {
     public static final RegistryObject<Item> REINFORCED_PAPER_DIAMOND = ITEMS.register("reinforced_paper_diamond", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.RARE)));
     public static final RegistryObject<Item> REINFORCED_PAPER_NETHERITE = ITEMS.register("reinforced_paper_netherite", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.EPIC)));
 
-    public static final RegistryObject<Item> COPPER_WIRE = ITEMS.register("copper_conductor", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
+    public static final RegistryObject<Item> COPPER_FILAMENT = ITEMS.register("copper_filament", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
 
 
     public static final RegistryObject<TierArmor> LEATHER_ARMOR_HEAD = ITEMS.register("leather_armor_head", () -> new TierArmor(TierArmor.Tier.LEATHER, EquipmentSlot.HEAD, new Item.Properties().tab(MAIN)));

@@ -36,7 +36,7 @@ public class CommonEvents {
     public static void onAnvil(AnvilUpdateEvent event) {
         ItemStack leftStack = event.getLeft();
         ItemStack rightStack = event.getRight();
-        if (leftStack.getItem() instanceof ParagliderItem && rightStack.getItem() == ModItems.COPPER_WIRE.get()) {
+        if (leftStack.getItem() instanceof ParagliderItem && rightStack.getItem() == ModItems.COPPER_FILAMENT.get()) {
             ItemStack copiedStack = leftStack.copy();
             ParagliderItem.setCopper(copiedStack, true);
             event.setCost(5);

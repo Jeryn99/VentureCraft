@@ -31,12 +31,12 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModItems.REINFORCED_PAPER_GOLD.get(), "Re-Inforced Paper (Gold)");
         add(ModItems.REINFORCED_PAPER_DIAMOND.get(), "Re-Inforced Paper (Diamond)");
         add(ModItems.REINFORCED_PAPER_NETHERITE.get(), "Re-Inforced Paper (Netherite)");
-        add(ModItems.COPPER_WIRE.get(), "Copper Conductor");
+        add(ModItems.COPPER_FILAMENT.get(), "Copper Filament");
         add(ModItems.STALKERS_EGG.get(), "Stalker");
 
         // Messages
         add(ModConstants.INSTALLED_MODS, ChatFormatting.BOLD + "Installed Modifications");
-        add(ModConstants.COPPER_MOD, "Copper Conductor");
+        add(ModConstants.COPPER_MOD, "Copper Filament");
 
 
         // ===== Tabs =====
