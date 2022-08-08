@@ -78,31 +78,33 @@ public class ClientEvents {
         LocalPlayer player = Minecraft.getInstance().player;
         ItemStack itemStack = player.getItemBySlot(EquipmentSlot.CHEST);
 
-        Window window = Minecraft.getInstance().getWindow();
+        ModCapability.get(player).ifPresent(iCap -> {
 
-        // Render Glider Duration
-        if (itemStack.getItem() instanceof ParagliderItem paragliderItem && (GliderUtil.isGlidingWithActiveGlider(player) || !GliderUtil.isGlidingWithActiveGlider(player) && ParagliderItem.timeInAir(itemStack) < paragliderItem.getFixedFlightTimeTicks() && ParagliderItem.timeInAir(itemStack) > 0)) {
-            if (e.getOverlay().id() == VanillaGuiOverlay.EXPERIENCE_BAR.id()) {
-                e.setCanceled(true);
-                return;
-            }
-            int allowedDuration = paragliderItem.getFixedFlightTimeTicks();
-            int durationUsed = ParagliderItem.timeInAir(itemStack);
-            float progress = (float) durationUsed / allowedDuration;
-            renderDurationBar(stack, window, progress);
-        }
+            Window window = Minecraft.getInstance().getWindow();
 
-        // Climbing
-        ModCapability.get(player).ifPresent(iClimb -> {
-            if (iClimb.isClimbing()) {
-                int allowedDuration = ModCapability.MAX_CLIMB_TIME;
-                int durationUsed = iClimb.timeClimbed();
+            // Render Glider Duration
+            if (itemStack.getItem() instanceof ParagliderItem paragliderItem && (GliderUtil.isGlidingWithActiveGlider(player) || !GliderUtil.isGlidingWithActiveGlider(player) && iCap.getStamina() > 0)) {
+                if (e.getOverlay().id() == VanillaGuiOverlay.EXPERIENCE_BAR.id()) {
+                    e.setCanceled(true);
+                    return;
+                }
+                int allowedDuration = iCap.getMaxStamina();
+                int durationUsed = iCap.getStamina();
                 float progress = (float) durationUsed / allowedDuration;
                 renderDurationBar(stack, window, progress);
             }
+
+            // Climbing
+            ModCapability.get(player).ifPresent(iClimb -> {
+                if (iClimb.isClimbing()) {
+                    int allowedDuration = ModCapability.MAX_CLIMB_TIME;
+                    int durationUsed = iClimb.timeClimbed();
+                    float progress = (float) durationUsed / allowedDuration;
+                    renderDurationBar(stack, window, progress);
+                }
+            });
+
         });
-
-
     }
 
     public static void renderDurationBar(PoseStack stack, Window window, float progress) {

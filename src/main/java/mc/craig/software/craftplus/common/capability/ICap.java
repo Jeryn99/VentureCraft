@@ -23,4 +23,9 @@ public interface ICap extends INBTSerializable<CompoundTag> {
 
     AnimationState getAnimation(ModCapability.AnimationStates animationStates);
 
+    void setStamina(int stamina);
+    int getStamina();
+
+    void setMaxStamina(int stamina);
+    int getMaxStamina();
 }

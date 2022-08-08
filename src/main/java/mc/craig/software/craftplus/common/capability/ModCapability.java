@@ -30,6 +30,9 @@ public class ModCapability implements ICap {
     private int timeClimbing = 0;
     private boolean falling = false;
 
+    private int stamina = 200;
+    private int maxStamina = 200;
+
     public enum AnimationStates {
         FALLING, GLIDING, GLIDER_OPENING
     }
@@ -179,6 +182,26 @@ public class ModCapability implements ICap {
         };
     }
 
+    @Override
+    public void setStamina(int stamina) {
+        this.stamina = stamina;
+    }
+
+    @Override
+    public int getStamina() {
+        return stamina;
+    }
+
+    @Override
+    public void setMaxStamina(int stamina) {
+        this.maxStamina = stamina;
+    }
+
+    @Override
+    public int getMaxStamina() {
+        return maxStamina;
+    }
+
 
     @Override
     public CompoundTag serializeNBT() {
@@ -186,6 +209,8 @@ public class ModCapability implements ICap {
         compoundTag.putInt("climbTime", timeClimbing);
         compoundTag.putBoolean("isClimbing", isClimbing);
         compoundTag.putBoolean("isFalling", falling);
+        compoundTag.putInt("stamina", stamina);
+        compoundTag.putInt("maxStamina", maxStamina);
         return compoundTag;
     }
 
@@ -194,5 +219,7 @@ public class ModCapability implements ICap {
         isClimbing = nbt.getBoolean("isClimbing");
         timeClimbing = nbt.getInt("climbTime");
         falling = nbt.getBoolean("isFalling");
+        stamina = nbt.getInt("stamina");
+        maxStamina = nbt.getInt("maxStamina");
     }
 }

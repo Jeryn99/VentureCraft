@@ -1,10 +1,13 @@
 package mc.craig.software.craftplus.util;
 
+import mc.craig.software.craftplus.common.capability.ModCapability;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GliderUtil {
 
@@ -13,11 +16,14 @@ public class GliderUtil {
     }
 
     public static boolean isGliderActive(LivingEntity livingEntity) {
-        ItemStack stack = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
-        if (stack.getItem() instanceof ParagliderItem) {
-            return ParagliderItem.glidingEnabled(stack);
-        }
-        return false;
+        AtomicBoolean atomicBoolean = new AtomicBoolean();
+        ModCapability.get(livingEntity).ifPresent(iCap -> {
+            ItemStack stack = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
+            if (stack.getItem() instanceof ParagliderItem) {
+                atomicBoolean.set(ParagliderItem.glidingEnabled(stack) && iCap.getStamina() > 0);
+            }
+        });
+        return atomicBoolean.get();
     }
 
     public static boolean isPlayerOnGroundOrWater(LivingEntity livingEntity) {

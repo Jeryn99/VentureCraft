@@ -1,5 +1,6 @@
 package mc.craig.software.craftplus.common.items;
 
+import mc.craig.software.craftplus.common.capability.ModCapability;
 import mc.craig.software.craftplus.util.GliderUtil;
 import mc.craig.software.craftplus.util.ModConstants;
 import net.minecraft.core.particles.ParticleTypes;
@@ -29,14 +30,10 @@ public class ParagliderItem extends Item implements Wearable {
 
     private final double SPEED_INCREASE = 2;
     private final AttributeModifier SPEED_MODIFIER = new AttributeModifier("b44790fb-65c0-4ec7-8b63-a1749c614b1e", SPEED_INCREASE, AttributeModifier.Operation.MULTIPLY_BASE);
-
-
-    private final int fixedFlightTimeTicks;
     private final Supplier<Item> repairItem;
 
-    public ParagliderItem(Properties itemProperties, int fixedFlightTime, Supplier<Item> itemSupplier) {
+    public ParagliderItem(Properties itemProperties, Supplier<Item> itemSupplier) {
         super(itemProperties);
-        fixedFlightTimeTicks = fixedFlightTime;
         this.repairItem = itemSupplier;
     }
 
@@ -51,20 +48,10 @@ public class ParagliderItem extends Item implements Wearable {
         return compound.getBoolean("copper_mod");
     }
 
-    public int getFixedFlightTimeTicks() {
-        return fixedFlightTimeTicks;
-    }
-
     public static boolean glidingEnabled(ItemStack itemStack) {
         CompoundTag compound = itemStack.getOrCreateTag();
         if (!compound.contains("glide")) return false;
-
-        float maxTime = 200;
-        if (itemStack.getItem() instanceof ParagliderItem paragliderItem) {
-            maxTime = paragliderItem.getFixedFlightTimeTicks();
-        }
-
-        return compound.getBoolean("glide") && itemStack.getMaxDamage() != itemStack.getDamageValue() && timeInAir(itemStack) < maxTime;
+        return compound.getBoolean("glide") && itemStack.getMaxDamage() != itemStack.getDamageValue();
     }
 
     public static void setGlide(ItemStack itemStack, boolean canGlide) {
@@ -83,28 +70,21 @@ public class ParagliderItem extends Item implements Wearable {
         return compound.getBoolean("struck");
     }
 
-    public static int timeInAir(ItemStack itemStack) {
-        CompoundTag compound = itemStack.getOrCreateTag();
-        if (!compound.contains("airtime")) return 0;
-        return compound.getInt("airtime");
-    }
-
-    public static void setTimeInAir(ItemStack itemStack, int timeLeft) {
-        CompoundTag compound = itemStack.getOrCreateTag();
-        compound.putInt("airtime", timeLeft);
-    }
-
     @Override
     public void onArmorTick(ItemStack stack, Level level, Player player) {
         super.onArmorTick(stack, level, player);
 
+        ModCapability.get(player).ifPresent(iCap -> {
+
         boolean playerCanGlide = !GliderUtil.isPlayerOnGroundOrWater(player) && !player.getAbilities().flying;
-        boolean gliderCanGlide = glidingEnabled(stack) && timeInAir(stack) < getFixedFlightTimeTicks();
+        boolean gliderCanGlide = glidingEnabled(stack) && iCap.getStamina() > 0;
 
         if (playerCanGlide && gliderCanGlide) {
 
             // Handle Cooldown
-            setTimeInAir(stack, timeInAir(stack) + 1);
+            if(!player.isCreative()) {
+                iCap.setStamina(iCap.getStamina() - 1);
+            }
 
             player.resetFallDistance();
 
@@ -137,13 +117,14 @@ public class ParagliderItem extends Item implements Wearable {
             // Reset Gliding status when on Ground
             setGlide(stack, false);
             setStruck(stack, false);
-            if (timeInAir(stack) > 0) {
+
+            if (iCap.getStamina() < iCap.getMaxStamina()) {
                 // Reset time in air when cooldown ends
-                setTimeInAir(stack, timeInAir(stack) - 1);
+                iCap.setStamina(iCap.getStamina() + 1);
             }
         }
-
-    }
+    });
+}
 
     @Override
     public boolean isValidRepairItem(ItemStack p_41402_, ItemStack material) {
@@ -158,7 +139,6 @@ public class ParagliderItem extends Item implements Wearable {
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level worldIn, @NotNull List<Component> tooltip, @NotNull TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-
 
         if (hasCopperMod(stack)) {
             tooltip.add(Component.translatable(ModConstants.INSTALLED_MODS));

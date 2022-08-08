@@ -26,11 +26,11 @@ public class ModItems {
     public static final RegistryObject<SpawnEggItem> STALKERS_EGG = ITEMS.register("stalker_spawn_egg", () -> new ForgeSpawnEggItem(Entities.STALKER, 0x000000, 0x3F0000, new Item.Properties().tab(MAIN)));
 
     // Gliders
-    public static final RegistryObject<ParagliderItem> PARAGLIDER_WOOD = ITEMS.register("paraglider_wood", () -> new ParagliderItem((new Item.Properties()).durability(30).tab(MAIN).rarity(Rarity.COMMON), Utils.secondsToTicks(10), ModItems.REINFORCED_PAPER));
-    public static final RegistryObject<ParagliderItem> PARAGLIDER_IRON = ITEMS.register("paraglider_iron", () -> new ParagliderItem((new Item.Properties()).durability(50).tab(MAIN).rarity(Rarity.UNCOMMON), Utils.secondsToTicks(13), ModItems.REINFORCED_PAPER_IRON));
-    public static final RegistryObject<ParagliderItem> PARAGLIDER_GOLD = ITEMS.register("paraglider_gold", () -> new ParagliderItem((new Item.Properties()).durability(70).tab(MAIN).rarity(Rarity.UNCOMMON), Utils.secondsToTicks(15), ModItems.REINFORCED_PAPER_GOLD));
-    public static final RegistryObject<ParagliderItem> PARAGLIDER_DIAMOND = ITEMS.register("paraglider_diamond", () -> new ParagliderItem((new Item.Properties()).durability(200).tab(MAIN).rarity(Rarity.RARE), Utils.secondsToTicks(20), ModItems.REINFORCED_PAPER_DIAMOND));
-    public static final RegistryObject<ParagliderItem> PARAGLIDER_NETHERITE = ITEMS.register("paraglider_netherite", () -> new ParagliderItem((new Item.Properties()).durability(350).tab(MAIN).rarity(Rarity.EPIC), Utils.secondsToTicks(25), ModItems.REINFORCED_PAPER_NETHERITE));
+    public static final RegistryObject<ParagliderItem> PARAGLIDER_WOOD = ITEMS.register("paraglider_wood", () -> new ParagliderItem((new Item.Properties()).durability(30).tab(MAIN).rarity(Rarity.COMMON), ModItems.REINFORCED_PAPER));
+    public static final RegistryObject<ParagliderItem> PARAGLIDER_IRON = ITEMS.register("paraglider_iron", () -> new ParagliderItem((new Item.Properties()).durability(50).tab(MAIN).rarity(Rarity.UNCOMMON), ModItems.REINFORCED_PAPER_IRON));
+    public static final RegistryObject<ParagliderItem> PARAGLIDER_GOLD = ITEMS.register("paraglider_gold", () -> new ParagliderItem((new Item.Properties()).durability(70).tab(MAIN).rarity(Rarity.UNCOMMON), ModItems.REINFORCED_PAPER_GOLD));
+    public static final RegistryObject<ParagliderItem> PARAGLIDER_DIAMOND = ITEMS.register("paraglider_diamond", () -> new ParagliderItem((new Item.Properties()).durability(200).tab(MAIN).rarity(Rarity.RARE), ModItems.REINFORCED_PAPER_DIAMOND));
+    public static final RegistryObject<ParagliderItem> PARAGLIDER_NETHERITE = ITEMS.register("paraglider_netherite", () -> new ParagliderItem((new Item.Properties()).durability(350).tab(MAIN).rarity(Rarity.EPIC), ModItems.REINFORCED_PAPER_NETHERITE));
 
     // Re-inforced Paper
     public static final RegistryObject<Item> REINFORCED_PAPER = ITEMS.register("reinforced_paper", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
