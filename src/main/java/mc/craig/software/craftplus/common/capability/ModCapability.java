@@ -58,6 +58,12 @@ public class ModCapability implements ICap {
     public void tick(LivingEntity livingEntity) {
         if (glideAndFallLogic(livingEntity)) return;
 
+        if(isRecharging()){
+            if(getStamina() < getMaxStamina()){
+                setStamina(getStamina() + 1);
+            }
+        }
+
         if (!player.level.isClientSide) {
             setClimbing(canClimb(livingEntity));
             if (isClimbing()) {
@@ -171,6 +177,11 @@ public class ModCapability implements ICap {
     @Override
     public void setFalling(boolean falling) {
         this.falling = falling;
+    }
+
+    @Override
+    public boolean isRecharging() {
+        return !GliderUtil.isGlidingWithActiveGlider(player) && getStamina() < getMaxStamina() && GliderUtil.isPlayerOnGroundOrWater(player);
     }
 
     @Override

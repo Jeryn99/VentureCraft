@@ -82,8 +82,10 @@ public class ClientEvents {
 
             Window window = Minecraft.getInstance().getWindow();
 
-            // Render Glider Duration
-            if (itemStack.getItem() instanceof ParagliderItem paragliderItem && (GliderUtil.isGlidingWithActiveGlider(player) || !GliderUtil.isGlidingWithActiveGlider(player) && iCap.getStamina() > 0)) {
+            boolean isGliding = itemStack.getItem() instanceof ParagliderItem && GliderUtil.isGlidingWithActiveGlider(player);
+            boolean isRecharging = iCap.isRecharging();
+            // Render Stamina Duration
+            if (isGliding || isRecharging) {
                 if (e.getOverlay().id() == VanillaGuiOverlay.EXPERIENCE_BAR.id()) {
                     e.setCanceled(true);
                     return;
@@ -93,17 +95,6 @@ public class ClientEvents {
                 float progress = (float) durationUsed / allowedDuration;
                 renderDurationBar(stack, window, progress);
             }
-
-            // Climbing
-            ModCapability.get(player).ifPresent(iClimb -> {
-                if (iClimb.isClimbing()) {
-                    int allowedDuration = ModCapability.MAX_CLIMB_TIME;
-                    int durationUsed = iClimb.timeClimbed();
-                    float progress = (float) durationUsed / allowedDuration;
-                    renderDurationBar(stack, window, progress);
-                }
-            });
-
         });
     }
 
