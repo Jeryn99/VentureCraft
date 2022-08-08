@@ -2,6 +2,7 @@ package mc.craig.software.notnotyet.common.items;
 
 import mc.craig.software.notnotyet.util.GliderUtil;
 import mc.craig.software.notnotyet.util.ModConstants;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.stats.Stats;
@@ -26,7 +27,7 @@ import java.util.function.Supplier;
 
 public class ParagliderItem extends Item implements Wearable {
 
-    private final double SPEED_INCREASE = 1;
+    private final double SPEED_INCREASE = 2;
     private final AttributeModifier SPEED_MODIFIER = new AttributeModifier("b44790fb-65c0-4ec7-8b63-a1749c614b1e", SPEED_INCREASE, AttributeModifier.Operation.MULTIPLY_BASE);
 
 
@@ -115,6 +116,9 @@ public class ParagliderItem extends Item implements Wearable {
             if (hasSpeedMods) {
                 if (!player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(SPEED_MODIFIER)) {
                     player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(SPEED_MODIFIER);
+                }
+                for (int i = 0; i < 2; ++i) {
+                    player.level.addParticle(ParticleTypes.GLOW, player.getRandomX(0.5D), player.getRandomY(), player.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
                 }
             }
 

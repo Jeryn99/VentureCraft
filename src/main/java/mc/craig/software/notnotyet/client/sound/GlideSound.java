@@ -10,9 +10,9 @@ import net.minecraft.world.entity.player.Player;
 public class GlideSound extends AbstractTickableSoundInstance {
     private final Player player;
 
-    public GlideSound(Player p_119673_) {
+    public GlideSound(Player player) {
         super(SoundEvents.ELYTRA_FLYING, SoundSource.PLAYERS, SoundInstance.createUnseededRandom());
-        this.player = p_119673_;
+        this.player = player;
         this.looping = true;
         this.delay = 0;
         this.volume = 0.1F;
@@ -20,7 +20,7 @@ public class GlideSound extends AbstractTickableSoundInstance {
 
     @Override
     public void tick() {
-        if (GliderUtil.isGlidingWithActiveGlider(this.player)) {
+        if (GliderUtil.isGlidingWithActiveGlider(this.player) && player.tickCount > 20) {
             this.x = (float) this.player.getX();
             this.y = (float) this.player.getY();
             this.z = (float) this.player.getZ();

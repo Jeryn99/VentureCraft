@@ -1,5 +1,10 @@
 {
   "entity.minecraft_plus.stalker": "Stalker",
+  "item.minecraft_plus.copper_conductor": "Copper Conductor",
+  "item.minecraft_plus.leather_armor_chest": "Leather Chestplate",
+  "item.minecraft_plus.leather_armor_feet": "Leather Feet",
+  "item.minecraft_plus.leather_armor_head": "Leather Helmet",
+  "item.minecraft_plus.leather_armor_leggings": "Leather Leggings",
   "item.minecraft_plus.paraglider_diamond": "Glider (Diamond)",
   "item.minecraft_plus.paraglider_gold": "Glider (Gold)",
   "item.minecraft_plus.paraglider_iron": "Glider (Iron)",
@@ -12,6 +17,6 @@
   "item.minecraft_plus.reinforced_paper_netherite": "Re-Inforced Paper (Netherite)",
   "item.minecraft_plus.stalker_spawn_egg": "Stalker",
   "itemGroup.minecraft_plus": "Minecraft+",
-  "tooltip.minecraft_plus.copper_mod": "Copper Wires",
+  "tooltip.minecraft_plus.copper_mod": "Copper Conductor",
   "tooltip.minecraft_plus.installed_mods": "§lInstalled Modifications"
 }

@@ -1,10 +1,9 @@
 package mc.craig.software.notnotyet.client.models;
 
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import mc.craig.software.notnotyet.client.Animations;
 import mc.craig.software.notnotyet.common.capability.ModCapability;
+import mc.craig.software.notnotyet.util.GliderUtil;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -72,40 +71,11 @@ public class GliderModel<T extends LivingEntity> extends HierarchicalModel<T> {
     @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         ModCapability.get(entity).ifPresent(iCap -> {
-
-     /*       CentreBrace.x = 0;
-            CentreBrace.y = 14;
-            CentreBrace.z = 0;
-
-            CentreBrace.xRot = 0;
-            CentreBrace.yRot = 0;
-            CentreBrace.zRot = 0;
-
-            RMain.x = 0.0f;
-            RMain.y = 7.0f;
-            RMain.z = 0.0f;
-
-            RMain.xRot = 0.0f;
-            RMain.yRot = 0.0f;
-            RMain.zRot = 0.0f;
-
-
-            LMain.x = 0.0f;
-            LMain.y = 7.0f;
-            LMain.z = 0.0f;
-
-            LMain.xRot = 0.0f;
-            LMain.yRot = 0.0f;
-            LMain.zRot = 0.0f;
-            this.animate(iCap.getAnimation(ModCapability.AnimationStates.GLIDER_OPENING), Animations.OPENING, ageInTicks);*/
+            this.root().getAllParts().forEach(ModelPart::resetPose);
+            if (GliderUtil.isGlidingWithActiveGlider(entity)) {
+                this.animate(iCap.getAnimation(ModCapability.AnimationStates.GLIDER_OPENING), Animations.OPENING, ageInTicks);
+            }
         });
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        CentreBrace.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        RMain.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        LMain.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
     @Override

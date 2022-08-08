@@ -6,6 +6,7 @@ import mc.craig.software.notnotyet.util.AnimationUtil;
 import mc.craig.software.notnotyet.util.GliderUtil;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,9 +21,12 @@ public class BipedBodyMixin {
     private void setupAnimHead(LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo callbackInfo) {
         HumanoidModel<?> bipedModel = (HumanoidModel<?>) (Object) this;
 
-        bipedModel.body.x = 0;
-        bipedModel.body.y = 0;
-        bipedModel.body.z = 0;
+       bipedModel.head.getAllParts().forEach(ModelPart::resetPose);
+       bipedModel.body.getAllParts().forEach(ModelPart::resetPose);
+       bipedModel.leftArm.getAllParts().forEach(ModelPart::resetPose);
+       bipedModel.rightArm.getAllParts().forEach(ModelPart::resetPose);
+       bipedModel.leftLeg.getAllParts().forEach(ModelPart::resetPose);
+       bipedModel.rightLeg.getAllParts().forEach(ModelPart::resetPose);
 
         ModCapability.get(livingEntity).ifPresent(iCap -> {
             // Gliding Animation
