@@ -21,10 +21,10 @@ public class LangProviderEnglish extends LanguageProvider {
 
         // ===== Items =====
         add(ModItems.PARAGLIDER_WOOD.get(), "Basic Paraglider");
-        add(ModItems.PARAGLIDER_IRON.get(), "Glider (Iron)");
-        add(ModItems.PARAGLIDER_DIAMOND.get(), "Glider (Diamond)");
-        add(ModItems.PARAGLIDER_GOLD.get(), "Glider (Gold)");
-        add(ModItems.PARAGLIDER_NETHERITE.get(), "Glider (Netherite)");
+        add(ModItems.PARAGLIDER_IRON.get(), "Iron Paraglider");
+        add(ModItems.PARAGLIDER_DIAMOND.get(), "Diamond Paraglider");
+        add(ModItems.PARAGLIDER_GOLD.get(), "Gold Paraglider");
+        add(ModItems.PARAGLIDER_NETHERITE.get(), "Netherite Paraglider");
 
         add(ModItems.REINFORCED_PAPER.get(), "Re-Inforced Paper");
         add(ModItems.REINFORCED_PAPER_IRON.get(), "Re-Inforced Paper (Iron)");
