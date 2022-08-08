@@ -3,11 +3,13 @@ package mc.craig.software.craftplus;
 import mc.craig.software.craftplus.common.Blocks;
 import mc.craig.software.craftplus.common.Entities;
 import mc.craig.software.craftplus.common.ModItems;
+import mc.craig.software.craftplus.common.ModSounds;
 import mc.craig.software.craftplus.common.capability.ICap;
 import mc.craig.software.craftplus.common.entities.StalkerEntity;
 import mc.craig.software.craftplus.data.LangProviderEnglish;
 import mc.craig.software.craftplus.data.ModelProviderItem;
 import mc.craig.software.craftplus.data.RecipeProvider;
+import mc.craig.software.craftplus.data.SoundProvider;
 import mc.craig.software.craftplus.networking.Network;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.MinecraftForge;
@@ -33,10 +35,14 @@ public class MinecraftPlus {
     public MinecraftPlus() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener(this::commonSetup);
+
         MinecraftForge.EVENT_BUS.register(this);
+
         ModItems.ITEMS.register(modBus);
         Blocks.BLOCKS.register(modBus);
         Entities.ENTITY_TYPES.register(modBus);
+        ModSounds.SOUNDS.register(modBus);
+
         modBus.addListener(this::onAttributeAssign);
         modBus.addListener(this::onGatherData);
         modBus.addListener(this::onAddCaps);
@@ -57,6 +63,7 @@ public class MinecraftPlus {
         generator.addProvider(true, new LangProviderEnglish(generator));
         generator.addProvider(true, new ModelProviderItem(generator, existingFileHelper));
         generator.addProvider(true, new RecipeProvider(generator));
+        generator.addProvider(true, new SoundProvider(generator, existingFileHelper));
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

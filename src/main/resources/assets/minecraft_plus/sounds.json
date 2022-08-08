@@ -1,0 +1,9 @@
+{
+  "glider_open": {
+    "sounds": [
+      "minecraft_plus:glider_open_0",
+      "minecraft_plus:glider_open_1"
+    ],
+    "subtitle": "subtitle.minecraft_plus.glider_open"
+  }
+}

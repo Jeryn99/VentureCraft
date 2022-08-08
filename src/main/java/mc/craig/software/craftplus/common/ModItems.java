@@ -15,7 +15,10 @@ import static mc.craig.software.craftplus.MinecraftPlus.MODID;
 
 public class ModItems {
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);    public static CreativeModeTab MAIN = new CreativeModeTab(MODID) {
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+
+
+    public static CreativeModeTab MAIN = new CreativeModeTab(MODID) {
         @Override
         public @NotNull ItemStack makeIcon() {
             return new ItemStack(ModItems.PARAGLIDER_WOOD.get());

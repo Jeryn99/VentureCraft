@@ -3,9 +3,11 @@ package mc.craig.software.craftplus.data;
 import mc.craig.software.craftplus.MinecraftPlus;
 import mc.craig.software.craftplus.common.Entities;
 import mc.craig.software.craftplus.common.ModItems;
+import mc.craig.software.craftplus.common.ModSounds;
 import mc.craig.software.craftplus.util.ModConstants;
 import net.minecraft.ChatFormatting;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.common.data.LanguageProvider;
 
 public class LangProviderEnglish extends LanguageProvider {
@@ -47,7 +49,14 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModItems.LEATHER_ARMOR_LEGGINGS.get(), "Leather Leggings");
         add(ModItems.LEATHER_ARMOR_FEET.get(), "Leather Feet");
 
+        // ===== Subtitles/Sounds =====
+        addSound(ModSounds.GLIDER_OPEN.get(), "Glider opens");
+
         // ===== Blocks =====
 
+    }
+
+    private void addSound(SoundEvent soundEvent, String subtitle) {
+        add("subtitle." + MinecraftPlus.MODID + "." + soundEvent.getLocation().getPath(), subtitle);
     }
 }
