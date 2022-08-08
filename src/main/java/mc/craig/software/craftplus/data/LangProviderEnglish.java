@@ -20,7 +20,7 @@ public class LangProviderEnglish extends LanguageProvider {
         add(Entities.STALKER.get(), "Stalker");
 
         // ===== Items =====
-        add(ModItems.PARAGLIDER_WOOD.get(), "Basic");
+        add(ModItems.PARAGLIDER_WOOD.get(), "Basic Paraglider");
         add(ModItems.PARAGLIDER_IRON.get(), "Glider (Iron)");
         add(ModItems.PARAGLIDER_DIAMOND.get(), "Glider (Diamond)");
         add(ModItems.PARAGLIDER_GOLD.get(), "Glider (Gold)");
