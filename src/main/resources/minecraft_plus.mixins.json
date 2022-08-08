@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "mc.craig.software.notnotyet.mixin",
+  "package": "mc.craig.software.craftplus.mixin",
   "refmap": "minecraft_plus.refmap.json",
   "client": [
     "BipedBodyMixin",
