@@ -1,5 +1,6 @@
 package mc.craig.software.craftplus.util;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import mc.craig.software.craftplus.MinecraftPlus;
 import net.minecraft.client.animation.AnimationChannel;
@@ -8,8 +9,10 @@ import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.AnimationState;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -68,9 +71,9 @@ public class AnimationUtil {
         });
     }
 
-    private static float getElapsedSeconds(AnimationDefinition p_232317_, long p_232318_) {
+    private static float getElapsedSeconds(AnimationDefinition animationDefinition, long p_232318_) {
         float f = (float) p_232318_ / 1000.0F;
-        return p_232317_.looping() ? f % p_232317_.lengthInSeconds() : f;
+        return animationDefinition.looping() ? f % animationDefinition.lengthInSeconds() : f;
     }
 
     public static void animate(HumanoidModel<?> model, AnimationState animationState, AnimationDefinition animationDefinition, float p_233388_, float p_233389_) {
@@ -80,4 +83,7 @@ public class AnimationUtil {
         });
     }
 
+    public static void setupRotations(AbstractClientPlayer abstractClientPlayer, PoseStack poseStack, float p_117804_, float p_117805_, float p_117806_, CallbackInfo callbackInfo) {
+
+    }
 }

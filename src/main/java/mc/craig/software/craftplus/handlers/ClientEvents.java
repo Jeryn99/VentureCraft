@@ -9,6 +9,9 @@ import mc.craig.software.craftplus.client.layers.GlideLayer;
 import mc.craig.software.craftplus.client.sound.GlideSound;
 import mc.craig.software.craftplus.common.capability.ModCapability;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
+import mc.craig.software.craftplus.networking.Network;
+import mc.craig.software.craftplus.networking.packets.MessageToggleClimb;
+import mc.craig.software.craftplus.networking.packets.MessageToggleGlide;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -20,9 +23,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.MovementInputUpdateEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.client.event.RenderHandEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -39,7 +40,17 @@ public class ClientEvents {
         }
     }
 
+    @SubscribeEvent
+    public static void onRenderPlayer(RenderPlayerEvent.Pre pre){
 
+    }
+
+    @SubscribeEvent
+    public static void on(InputEvent pre){
+     /*   if(Minecraft.getInstance().options.keyJump.isDown()){
+            Network.INSTANCE.sendToServer(new MessageToggleClimb());
+        }*/
+    }
 
     @SubscribeEvent
     public static void onRenderHand(RenderHandEvent event) {
@@ -85,7 +96,7 @@ public class ClientEvents {
             boolean isGliding = itemStack.getItem() instanceof ParagliderItem && GliderUtil.isGlidingWithActiveGlider(player);
             boolean isRecharging = iCap.isRecharging();
             // Render Stamina Duration
-            if (isGliding || isRecharging) {
+            if ((isGliding || isRecharging) && !player.isCreative()) {
                 if (e.getOverlay().id() == VanillaGuiOverlay.EXPERIENCE_BAR.id()) {
                     e.setCanceled(true);
                     return;

@@ -10,10 +10,7 @@ public interface ICap extends INBTSerializable<CompoundTag> {
     void tick(LivingEntity livingEntity);
     boolean isClimbing();
     void setClimbing(boolean climbing);
-    int timeClimbed();
-
-    void setTimeClimbed(int time);
-
+    void setClimbingEnabled(boolean climbing);
     boolean canClimb(LivingEntity livingEntity);
 
     void sync();

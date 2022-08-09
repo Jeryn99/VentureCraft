@@ -4,7 +4,11 @@
   "refmap": "minecraft_plus.refmap.json",
   "client": [
     "BipedBodyMixin",
-    "LocalPlayerMixin"
+    "LocalPlayerMixin",
+    "PlayerRendererMixin"
   ],
-  "minVersion": "0.8"
+  "minVersion": "0.8",
+  "mixins": [
+    "LivingEntityMixin"
+  ]
 }

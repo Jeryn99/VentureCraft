@@ -2,6 +2,7 @@ package mc.craig.software.craftplus.networking;
 
 import mc.craig.software.craftplus.MinecraftPlus;
 import mc.craig.software.craftplus.networking.packets.MessageSyncCap;
+import mc.craig.software.craftplus.networking.packets.MessageToggleClimb;
 import mc.craig.software.craftplus.networking.packets.MessageToggleGlide;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
@@ -15,6 +16,7 @@ public class Network {
     public static void init() {
         INSTANCE.registerMessage(0, MessageToggleGlide.class, MessageToggleGlide::toBytes, MessageToggleGlide::new, MessageToggleGlide::handle);
         INSTANCE.registerMessage(1, MessageSyncCap.class, MessageSyncCap::toBytes, MessageSyncCap::new, MessageSyncCap::handle);
+        INSTANCE.registerMessage(2, MessageToggleClimb.class, MessageToggleClimb::toBytes, MessageToggleClimb::new, MessageToggleClimb::handle);
 
     }
 }

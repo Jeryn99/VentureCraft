@@ -5,7 +5,6 @@ import mc.craig.software.craftplus.networking.Network;
 import mc.craig.software.craftplus.networking.packets.MessageSyncCap;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -23,11 +22,9 @@ public class ModCapability implements ICap {
 
     public static final Capability<ICap> CAPABILITY = CapabilityManager.get(new CapabilityToken<ICap>() {
     });
-
-    public static int MAX_CLIMB_TIME = 600;
     private Player player;
-    private boolean isClimbing = false;
-    private int timeClimbing = 0;
+    private boolean isClimbing = false, climbingEnabled = false;
+
     private boolean falling = false;
 
     private int stamina = 200;
@@ -58,26 +55,19 @@ public class ModCapability implements ICap {
     public void tick(LivingEntity livingEntity) {
         if (glideAndFallLogic(livingEntity)) return;
 
-        if(isRecharging()){
-            if(getStamina() < getMaxStamina()){
+        if (isRecharging()) {
+            if (getStamina() < getMaxStamina()) {
                 setStamina(getStamina() + 1);
             }
         }
 
-        if (!player.level.isClientSide) {
-            setClimbing(canClimb(livingEntity));
+       /* if (!player.level.isClientSide) {
+            setClimbing(player.onClimbable());
             if (isClimbing()) {
-                setTimeClimbed(timeClimbed() + 1);
-                sync();
+                setStamina(getStamina() - 1);
             }
-            return;
-        }
-
-        if (canClimb(livingEntity)) {
-            player.resetFallDistance();
-            Vec3 livingMovement = player.getDeltaMovement();
-            player.setDeltaMovement(livingMovement.x, 0.2D, livingMovement.z);
-        }
+            sync();
+        }*/
     }
 
     private boolean glideAndFallLogic(LivingEntity livingEntity) {
@@ -137,26 +127,13 @@ public class ModCapability implements ICap {
     }
 
     @Override
-    public int timeClimbed() {
-        return timeClimbing;
-    }
-
-    @Override
-    public void setTimeClimbed(int time) {
-        this.timeClimbing = time;
+    public void setClimbingEnabled(boolean climbing) {
+        this.climbingEnabled = climbing && getStamina() > 0;
     }
 
     @Override
     public boolean canClimb(LivingEntity livingEntity) {
-        return timeClimbing < MAX_CLIMB_TIME && collided(livingEntity) && livingEntity.isCrouching();
-    }
-
-    public boolean collided(LivingEntity livingEntity) {
-        Vec3 playerMovement = livingEntity.getDeltaMovement();
-        Vec3 collidedMovement = livingEntity.collide(playerMovement);
-        boolean collidedX = !Mth.equal(playerMovement.x, collidedMovement.x);
-        boolean collidedZ = !Mth.equal(playerMovement.z, collidedMovement.z);
-        return collidedX || collidedZ;
+        return climbingEnabled;
     }
 
     @Override
@@ -181,7 +158,7 @@ public class ModCapability implements ICap {
 
     @Override
     public boolean isRecharging() {
-        return !GliderUtil.isGlidingWithActiveGlider(player) && getStamina() < getMaxStamina() && GliderUtil.isPlayerOnGroundOrWater(player);
+        return !GliderUtil.isGlidingWithActiveGlider(player) && getStamina() < getMaxStamina() && GliderUtil.isPlayerOnGroundOrWater(player) && !isClimbing();
     }
 
     @Override
@@ -217,7 +194,6 @@ public class ModCapability implements ICap {
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag compoundTag = new CompoundTag();
-        compoundTag.putInt("climbTime", timeClimbing);
         compoundTag.putBoolean("isClimbing", isClimbing);
         compoundTag.putBoolean("isFalling", falling);
         compoundTag.putInt("stamina", stamina);
@@ -228,7 +204,6 @@ public class ModCapability implements ICap {
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         isClimbing = nbt.getBoolean("isClimbing");
-        timeClimbing = nbt.getInt("climbTime");
         falling = nbt.getBoolean("isFalling");
         stamina = nbt.getInt("stamina");
         maxStamina = nbt.getInt("maxStamina");
