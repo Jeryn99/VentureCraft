@@ -1,5 +1,6 @@
 package mc.craig.software.craftplus.common;
 
+import mc.craig.software.craftplus.common.entities.OwlEntity;
 import mc.craig.software.craftplus.common.entities.StalkerEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -20,5 +21,13 @@ public class Entities {
                     .setCustomClientFactory((ent, world) -> Entities.STALKER.get().create(world))
                     .setShouldReceiveVelocityUpdates(true)
                     .build(MODID + ":stalker"));
+
+    public static final RegistryObject<EntityType<OwlEntity>> OWL = ENTITY_TYPES.register("owl", () ->
+            EntityType.Builder.of(OwlEntity::new, MobCategory.AMBIENT)
+                    .setTrackingRange(80)
+                    .setUpdateInterval(3)
+                    .setCustomClientFactory((ent, world) -> Entities.OWL.get().create(world))
+                    .setShouldReceiveVelocityUpdates(true)
+                    .build(MODID + ":owl"));
 
 }

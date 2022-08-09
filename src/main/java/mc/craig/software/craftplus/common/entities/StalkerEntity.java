@@ -29,6 +29,11 @@ public class StalkerEntity extends QuantumLockedLifeform {
         getEntityData().define(POSE, Pose.ANGRY.id());
     }
 
+    @Override
+    public boolean isCustomNameVisible() {
+        return hasCustomName();
+    }
+
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 40.0D).add(Attributes.MOVEMENT_SPEED, 0.8F).add(Attributes.KNOCKBACK_RESISTANCE, 0.6F).add(Attributes.ATTACK_KNOCKBACK, 1.0D).add(Attributes.ATTACK_DAMAGE, 6.0D);
     }

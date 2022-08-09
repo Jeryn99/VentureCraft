@@ -2,6 +2,7 @@ package mc.craig.software.craftplus.handlers;
 
 import mc.craig.software.craftplus.client.layers.GlideLayer;
 import mc.craig.software.craftplus.client.models.Models;
+import mc.craig.software.craftplus.client.renderers.RenderOwl;
 import mc.craig.software.craftplus.client.renderers.RenderStalker;
 import mc.craig.software.craftplus.common.Entities;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
@@ -28,6 +29,7 @@ public class ModBusClientEvents {
     @SubscribeEvent
     public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(Entities.STALKER.get(), RenderStalker::new);
+        event.registerEntityRenderer(Entities.OWL.get(), RenderOwl::new);
     }
 
     @SubscribeEvent

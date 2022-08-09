@@ -9,10 +9,12 @@ public class Models {
 
     public static ModelLayerLocation STALKER = new ModelLayerLocation(new ResourceLocation(MinecraftPlus.MODID, "model"), "stalker");
     public static ModelLayerLocation GLIDER = new ModelLayerLocation(new ResourceLocation(MinecraftPlus.MODID, "model"), "glider");
+    public static ModelLayerLocation OWL = new ModelLayerLocation(new ResourceLocation(MinecraftPlus.MODID, "model"), "owl");
 
     public static void init(EntityRenderersEvent.RegisterLayerDefinitions registerLayerDefinitions) {
         registerLayerDefinitions.registerLayerDefinition(STALKER, StalkerModel::getModelData);
         registerLayerDefinitions.registerLayerDefinition(GLIDER, GliderModel::getModelData);
+        registerLayerDefinitions.registerLayerDefinition(OWL, OwlModel::createBodyLayer);
     }
 
 }

@@ -9,11 +9,11 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class OwlRenderer extends MobRenderer<OwlEntity, OwlModel<OwlEntity>> {
+public class RenderOwl extends MobRenderer<OwlEntity, OwlModel<OwlEntity>> {
 
     private static final ResourceLocation TEX = new ResourceLocation(MinecraftPlus.MODID, "textures/entity/owl/owl.png");
 
-    public OwlRenderer(EntityRendererProvider.Context p_174304_) {
+    public RenderOwl(EntityRendererProvider.Context p_174304_) {
         super(p_174304_, new OwlModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(Models.OWL)), 1);
     }
 

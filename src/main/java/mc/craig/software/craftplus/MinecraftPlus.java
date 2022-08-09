@@ -55,6 +55,7 @@ public class MinecraftPlus {
 
     public void onAttributeAssign(EntityAttributeCreationEvent event) {
         event.put(Entities.STALKER.get(), StalkerEntity.createAttributes().build());
+        event.put(Entities.OWL.get(), StalkerEntity.createAttributes().build());
     }
 
     public void onGatherData(GatherDataEvent e) {
