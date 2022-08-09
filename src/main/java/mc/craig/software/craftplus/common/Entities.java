@@ -25,7 +25,7 @@ public class Entities {
     public static final RegistryObject<EntityType<OwlEntity>> OWL = ENTITY_TYPES.register("owl", () ->
             EntityType.Builder.of(OwlEntity::new, MobCategory.AMBIENT)
                     .setTrackingRange(80)
-                    .setUpdateInterval(3)
+                    .setUpdateInterval(3).sized(0.5F, 0.9F)
                     .setCustomClientFactory((ent, world) -> Entities.OWL.get().create(world))
                     .setShouldReceiveVelocityUpdates(true)
                     .build(MODID + ":owl"));

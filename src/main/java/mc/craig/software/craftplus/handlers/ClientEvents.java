@@ -6,40 +6,25 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import mc.craig.software.craftplus.MinecraftPlus;
 import mc.craig.software.craftplus.client.layers.GlideLayer;
-import mc.craig.software.craftplus.client.sound.GlideSound;
 import mc.craig.software.craftplus.common.capability.ModCapability;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
-import mc.craig.software.craftplus.networking.Network;
-import mc.craig.software.craftplus.networking.packets.MessageToggleClimb;
-import mc.craig.software.craftplus.networking.packets.MessageToggleGlide;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = MinecraftPlus.MODID, value = Dist.CLIENT)
 public class ClientEvents {
 
-    @SubscribeEvent
-    public static void onJoinWorld(EntityJoinLevelEvent event) {
-        Entity living = event.getEntity();
-        if (living instanceof Player player) {
-            Minecraft.getInstance().getSoundManager().play(new GlideSound(player, true));
-            Minecraft.getInstance().getSoundManager().play(new GlideSound(player, false));
-        }
-    }
 
     @SubscribeEvent
     public static void onRenderPlayer(RenderPlayerEvent.Pre pre){

@@ -1,6 +1,7 @@
 package mc.craig.software.craftplus.networking;
 
 import mc.craig.software.craftplus.MinecraftPlus;
+import mc.craig.software.craftplus.networking.packets.MessagePlaySound;
 import mc.craig.software.craftplus.networking.packets.MessageSyncCap;
 import mc.craig.software.craftplus.networking.packets.MessageToggleClimb;
 import mc.craig.software.craftplus.networking.packets.MessageToggleGlide;
@@ -17,6 +18,7 @@ public class Network {
         INSTANCE.registerMessage(0, MessageToggleGlide.class, MessageToggleGlide::toBytes, MessageToggleGlide::new, MessageToggleGlide::handle);
         INSTANCE.registerMessage(1, MessageSyncCap.class, MessageSyncCap::toBytes, MessageSyncCap::new, MessageSyncCap::handle);
         INSTANCE.registerMessage(2, MessageToggleClimb.class, MessageToggleClimb::toBytes, MessageToggleClimb::new, MessageToggleClimb::handle);
+        INSTANCE.registerMessage(3, MessagePlaySound.class, MessagePlaySound::toBytes, MessagePlaySound::new, MessagePlaySound::handle);
 
     }
 }

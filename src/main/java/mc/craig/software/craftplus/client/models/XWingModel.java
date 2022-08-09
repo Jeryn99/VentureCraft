@@ -3,8 +3,6 @@ package mc.craig.software.craftplus.client.models;// Made with Blockbench 4.3.1
 // Paste this class into your mod and generate all required imports
 
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import mc.craig.software.craftplus.client.Animations;
 import mc.craig.software.craftplus.common.capability.ModCapability;
 import mc.craig.software.craftplus.util.GliderUtil;
@@ -166,17 +164,6 @@ public class XWingModel<T extends Entity> extends HierarchicalModel<T> {
                 }
             });
         }
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        bone.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        bone4.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        bone8.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        LW1.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        LW2.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        RW1.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        RW2.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
     @Override

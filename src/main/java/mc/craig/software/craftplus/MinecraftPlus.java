@@ -5,11 +5,9 @@ import mc.craig.software.craftplus.common.Entities;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.ModSounds;
 import mc.craig.software.craftplus.common.capability.ICap;
+import mc.craig.software.craftplus.common.entities.OwlEntity;
 import mc.craig.software.craftplus.common.entities.StalkerEntity;
-import mc.craig.software.craftplus.data.LangProviderEnglish;
-import mc.craig.software.craftplus.data.ModelProviderItem;
-import mc.craig.software.craftplus.data.RecipeProvider;
-import mc.craig.software.craftplus.data.SoundProvider;
+import mc.craig.software.craftplus.data.*;
 import mc.craig.software.craftplus.networking.Network;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.MinecraftForge;
@@ -55,7 +53,7 @@ public class MinecraftPlus {
 
     public void onAttributeAssign(EntityAttributeCreationEvent event) {
         event.put(Entities.STALKER.get(), StalkerEntity.createAttributes().build());
-        event.put(Entities.OWL.get(), StalkerEntity.createAttributes().build());
+        event.put(Entities.OWL.get(), OwlEntity.createAttributes().build());
     }
 
     public void onGatherData(GatherDataEvent e) {
@@ -65,6 +63,7 @@ public class MinecraftPlus {
         generator.addProvider(true, new ModelProviderItem(generator, existingFileHelper));
         generator.addProvider(true, new RecipeProvider(generator));
         generator.addProvider(true, new SoundProvider(generator, existingFileHelper));
+        generator.addProvider(true, new ModLootTableProvider(generator));
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

@@ -37,6 +37,10 @@ public class ParagliderItem extends Item implements Wearable {
         this.repairItem = itemSupplier;
     }
 
+    public static boolean isSpaceGlider(ItemStack stack) {
+        return stack.getDisplayName().getString().contains("xwing");
+    }
+
     public static void setCopper(ItemStack itemStack, boolean copper) {
         CompoundTag compound = itemStack.getOrCreateTag();
         compound.putBoolean("copper_mod", copper);

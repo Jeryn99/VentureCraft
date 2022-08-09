@@ -20,6 +20,7 @@ public class LangProviderEnglish extends LanguageProvider {
     protected void addTranslations() {
         // ===== Entities =====
         add(Entities.STALKER.get(), "Stalker");
+        add(Entities.OWL.get(), "Owl");
 
         // ===== Items =====
         add(ModItems.PARAGLIDER_WOOD.get(), "Basic Paraglider");
@@ -33,7 +34,9 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModItems.REINFORCED_PAPER_GOLD.get(), "Re-Inforced Paper (Gold)");
         add(ModItems.REINFORCED_PAPER_DIAMOND.get(), "Re-Inforced Paper (Diamond)");
         add(ModItems.REINFORCED_PAPER_NETHERITE.get(), "Re-Inforced Paper (Netherite)");
+
         add(ModItems.COPPER_FILAMENT.get(), "Copper Filament");
+
         add(ModItems.STALKERS_EGG.get(), "Stalker");
 
         // Messages

@@ -1,6 +1,7 @@
 package mc.craig.software.craftplus.handlers;
 
 import mc.craig.software.craftplus.client.layers.GlideLayer;
+import mc.craig.software.craftplus.client.layers.OwlShoulderLayer;
 import mc.craig.software.craftplus.client.models.Models;
 import mc.craig.software.craftplus.client.renderers.RenderOwl;
 import mc.craig.software.craftplus.client.renderers.RenderStalker;
@@ -42,6 +43,7 @@ public class ModBusClientEvents {
         addLayers.getSkins().forEach(skin -> {
             LivingEntityRenderer<? extends Player, ? extends EntityModel<? extends Player>> renderer = addLayers.getSkin(skin);
             renderer.addLayer(new GlideLayer(renderer));
+            renderer.addLayer(new OwlShoulderLayer(renderer, addLayers.getEntityModels()));
         });
     }
 
