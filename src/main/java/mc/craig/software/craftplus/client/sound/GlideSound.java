@@ -1,5 +1,6 @@
 package mc.craig.software.craftplus.client.sound;
 
+import mc.craig.software.craftplus.common.ModSounds;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -10,8 +11,8 @@ import net.minecraft.world.entity.player.Player;
 public class GlideSound extends AbstractTickableSoundInstance {
     private final Player player;
 
-    public GlideSound(Player player) {
-        super(SoundEvents.ELYTRA_FLYING, SoundSource.PLAYERS, SoundInstance.createUnseededRandom());
+    public GlideSound(Player player, boolean isXwing) {
+        super(isXwing ? SoundEvents.ELYTRA_FLYING : ModSounds.SPACE_GLIDE.get(), SoundSource.PLAYERS, SoundInstance.createUnseededRandom());
         this.player = player;
         this.looping = true;
         this.delay = 0;

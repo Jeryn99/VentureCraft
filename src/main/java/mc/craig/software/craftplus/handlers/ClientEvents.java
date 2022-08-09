@@ -36,7 +36,8 @@ public class ClientEvents {
     public static void onJoinWorld(EntityJoinLevelEvent event) {
         Entity living = event.getEntity();
         if (living instanceof Player player) {
-            Minecraft.getInstance().getSoundManager().play(new GlideSound(player));
+            Minecraft.getInstance().getSoundManager().play(new GlideSound(player, true));
+            Minecraft.getInstance().getSoundManager().play(new GlideSound(player, false));
         }
     }
 
