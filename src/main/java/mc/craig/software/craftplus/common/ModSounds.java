@@ -14,6 +14,7 @@ public class ModSounds {
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, MODID);
 
     public static final RegistryObject<SoundEvent> GLIDER_OPEN = SOUNDS.register("glider_open", () -> setUpSound("glider_open"));
+    public static final RegistryObject<SoundEvent> SPACE_GLIDE = SOUNDS.register("space_glide", () -> setUpSound("space_glide"));
 
     private static SoundEvent setUpSound(String soundName) {
         return new SoundEvent(new ResourceLocation(MinecraftPlus.MODID, soundName));

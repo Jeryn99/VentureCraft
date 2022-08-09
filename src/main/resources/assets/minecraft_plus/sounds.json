@@ -5,5 +5,11 @@
       "minecraft_plus:glider_open_1"
     ],
     "subtitle": "subtitle.minecraft_plus.glider_open"
+  },
+  "space_glide": {
+    "sounds": [
+      "minecraft_plus:space_glide"
+    ],
+    "subtitle": "subtitle.minecraft_plus.space_glide"
   }
 }

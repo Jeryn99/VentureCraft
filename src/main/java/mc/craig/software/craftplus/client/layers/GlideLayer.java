@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import mc.craig.software.craftplus.MinecraftPlus;
 import mc.craig.software.craftplus.client.models.GliderModel;
 import mc.craig.software.craftplus.client.models.Models;
+import mc.craig.software.craftplus.client.models.XWingModel;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.client.Minecraft;
@@ -14,6 +15,7 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -22,17 +24,22 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class GlideLayer<T extends LivingEntity, M extends HumanoidModel<T>, A extends HumanoidModel<T>> extends RenderLayer<T, M> {
 
     public static GliderModel gliderModel;
+    private final XWingModel<Entity> xWingModel;
+
     private static final ResourceLocation POWER_LOCATION = new ResourceLocation("textures/entity/creeper/creeper_armor.png");
     private static final ResourceLocation COPPER_EMBED = new ResourceLocation(MinecraftPlus.MODID, "textures/entity/glider/copper_overlay.png");
     private static final ResourceLocation COPPER_EMBED_CHARGED = new ResourceLocation(MinecraftPlus.MODID, "textures/entity/glider/copper_overlay_charged.png");
+    private static final ResourceLocation XWING_TEXTURE = new ResourceLocation(MinecraftPlus.MODID, "textures/entity/glider/xwing.png");
 
 
     public GlideLayer(RenderLayerParent<T, M> renderLayerParent) {
         super(renderLayerParent);
         gliderModel = new GliderModel(Minecraft.getInstance().getEntityModels().bakeLayer(Models.GLIDER));
+        xWingModel = new XWingModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(Models.X_WING));
     }
 
     public static ResourceLocation getGliderTexture(ItemStack stack) {
+        if (stack.getDisplayName().getString().contains("xwing")) return XWING_TEXTURE;
         ResourceLocation itemLoc = ForgeRegistries.ITEMS.getKey(stack.getItem());
         return new ResourceLocation(itemLoc.getNamespace(), "textures/entity/glider/" + itemLoc.getPath() + ".png");
     }
@@ -47,17 +54,25 @@ public class GlideLayer<T extends LivingEntity, M extends HumanoidModel<T>, A ex
         if (GliderUtil.isGlidingWithActiveGlider(living)) {
             poseStack.pushPose();
 
-            // Translate and render base glider
-            poseStack.translate(0, -1.9, 0);
-            gliderModel.setupAnim(living, 0, 0, living.tickCount, 0, 0);
-            gliderModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityCutoutNoCull(getGliderTexture(stack))), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 
-            // Has Coppered Embedded
-            if (ParagliderItem.hasCopperMod(stack)) {
+            if (stack.getDisplayName().getString().contains("xwing")) {
+                // Translate and render base glider
+                poseStack.translate(0, -1.9, -0.5);
+                xWingModel.setupAnim(living, 0, 0, living.tickCount, 0, 0);
+                xWingModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityCutoutNoCull(getGliderTexture(stack))), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            } else {
+
+                // Translate and render base glider
+                poseStack.translate(0, -1.9, 0);
                 gliderModel.setupAnim(living, 0, 0, living.tickCount, 0, 0);
-                gliderModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.eyes(ParagliderItem.hasBeenStruck(stack) ? COPPER_EMBED_CHARGED : COPPER_EMBED)), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            }
+                gliderModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityCutoutNoCull(getGliderTexture(stack))), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 
+                // Has Coppered Embedded
+                if (ParagliderItem.hasCopperMod(stack)) {
+                    gliderModel.setupAnim(living, 0, 0, living.tickCount, 0, 0);
+                    gliderModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.eyes(ParagliderItem.hasBeenStruck(stack) ? COPPER_EMBED_CHARGED : COPPER_EMBED)), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+                }
+            }
             poseStack.popPose();
         }
 
@@ -74,14 +89,6 @@ public class GlideLayer<T extends LivingEntity, M extends HumanoidModel<T>, A ex
             gliderModel.renderToBuffer(poseStack, p_117350_.getBuffer(RenderType.entityCutoutNoCull(getGliderTexture(stack))), p_117351_, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
             poseStack.popPose();
         }*/
-    }
-
-    private float xOffset(float f) {
-        return f * 0.01F;
-    }
-
-    private ResourceLocation getEnergySwirlTexture() {
-        return POWER_LOCATION;
     }
 
 }

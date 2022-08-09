@@ -23,6 +23,7 @@ public class SoundProvider extends SoundDefinitionsProvider {
     @Override
     public void registerSounds() {
         createDefinitionAndAdd(SoundDefinition.SoundType.SOUND, "glider_open", new SoundEvent(new ResourceLocation(MinecraftPlus.MODID, "glider_open_0")), new SoundEvent(new ResourceLocation(MinecraftPlus.MODID, "glider_open_1")));
+        createDefinitionAndAdd(ModSounds.SPACE_GLIDE.get(), SoundDefinition.SoundType.SOUND);
     }
 
     public void createDefinitionAndAdd(SoundDefinition.SoundType soundType, String subtitle, SoundEvent... soundEvent) {
@@ -36,6 +37,6 @@ public class SoundProvider extends SoundDefinitionsProvider {
     public void createDefinitionAndAdd(SoundEvent soundEvent, SoundDefinition.SoundType soundType) {
         SoundDefinition def = SoundDefinition.definition().subtitle("subtitle." + MinecraftPlus.MODID + "." + soundEvent.getLocation().getPath());
         def.with(SoundDefinition.Sound.sound(soundEvent.getLocation(), soundType));
-        add(ModSounds.GLIDER_OPEN, def);
+        add(soundEvent, def);
     }
 }

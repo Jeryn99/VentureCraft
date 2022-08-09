@@ -51,6 +51,7 @@ public class LangProviderEnglish extends LanguageProvider {
 
         // ===== Subtitles/Sounds =====
         addSound(ModSounds.GLIDER_OPEN.get(), "Glider opens");
+        addSound(ModSounds.SPACE_GLIDE.get(), "Space Glide");
 
         // ===== Blocks =====
 
