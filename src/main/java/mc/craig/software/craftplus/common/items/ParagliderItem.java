@@ -97,8 +97,8 @@ public class ParagliderItem extends Item implements Wearable {
             Vec3 m = player.getDeltaMovement();
             boolean hasSpeedMods = hasCopperMod(stack) && hasBeenStruck(stack);
 
-            float f = (float) player.getDeltaMovement().horizontalDistance();
-            if (isSpaceGlider(stack) && f >= 0.01F) {
+            float horizonalSpeed = (float) player.getDeltaMovement().horizontalDistance();
+            if (isSpaceGlider(stack) && horizonalSpeed >= 0.01F) {
                 for (int i = 0; i < 2; ++i) {
                     player.level.addParticle(ParticleTypes.DRAGON_BREATH, player.getRandomX(0.5D), player.getY() + 2, player.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
                 }
@@ -109,7 +109,7 @@ public class ParagliderItem extends Item implements Wearable {
                     player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(SPEED_MODIFIER);
                 }
                 for (int i = 0; i < 2; ++i) {
-                    if (f >= 0.01F) {
+                    if (horizonalSpeed >= 0.01F) {
                         player.level.addParticle(ParticleTypes.GLOW, player.getRandomX(0.5D), player.getY() + 2.5, player.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
                     }
                 }

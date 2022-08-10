@@ -5,9 +5,11 @@ import mc.craig.software.craftplus.client.models.Models;
 import mc.craig.software.craftplus.client.models.OwlModel;
 import mc.craig.software.craftplus.common.entities.OwlEntity;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 public class RenderOwl extends MobRenderer<OwlEntity, OwlModel<OwlEntity>> {
 
@@ -22,6 +24,12 @@ public class RenderOwl extends MobRenderer<OwlEntity, OwlModel<OwlEntity>> {
 
     public RenderOwl(EntityRendererProvider.Context p_174304_) {
         super(p_174304_, new OwlModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(Models.OWL)), 0.2F);
+    }
+
+    @Nullable
+    @Override
+    protected RenderType getRenderType(OwlEntity p_115322_, boolean p_115323_, boolean p_115324_, boolean p_115325_) {
+        return RenderType.entityTranslucentCull(getTextureLocation(p_115322_));
     }
 
     @Override

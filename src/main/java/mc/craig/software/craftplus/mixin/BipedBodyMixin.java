@@ -1,6 +1,6 @@
 package mc.craig.software.craftplus.mixin;
 
-import mc.craig.software.craftplus.client.Animations;
+import mc.craig.software.craftplus.client.PlayerAnimations;
 import mc.craig.software.craftplus.common.capability.ModCapability;
 import mc.craig.software.craftplus.util.AnimationUtil;
 import mc.craig.software.craftplus.util.GliderUtil;
@@ -35,7 +35,7 @@ public class BipedBodyMixin {
             if (livingEntity instanceof Player player) {
                 ModCapability.get(player).ifPresent(iCap1 -> {
                     if (iCap1.isFalling()) {
-                        AnimationUtil.animate(bipedModel, iCap.getAnimation(ModCapability.AnimationStates.FALLING), Animations.FALLING, ageInTicks, 1);
+                        AnimationUtil.animate(bipedModel, iCap.getAnimation(ModCapability.AnimationStates.FALLING), PlayerAnimations.FALLING, ageInTicks, 1);
                         fixLayers(bipedModel);
                         callbackInfo.cancel();
                     }
@@ -66,7 +66,7 @@ public class BipedBodyMixin {
                 bipedModel.leftArm.getAllParts().forEach(ModelPart::resetPose);
                 bipedModel.rightArm.getAllParts().forEach(ModelPart::resetPose);
                 bipedModel.body.getAllParts().forEach(ModelPart::resetPose);
-                AnimationUtil.animate(bipedModel, iCap.getAnimation(ModCapability.AnimationStates.BREATHING), Animations.BREATHING, ageInTicks, 1);
+                AnimationUtil.animate(bipedModel, iCap.getAnimation(ModCapability.AnimationStates.BREATHING), PlayerAnimations.BREATHING, ageInTicks, 1);
                 fixLayers(bipedModel);
             }
 
@@ -76,7 +76,7 @@ public class BipedBodyMixin {
                 bipedModel.rightArm.getAllParts().forEach(ModelPart::resetPose);
                 bipedModel.leftLeg.getAllParts().forEach(ModelPart::resetPose);
                 bipedModel.rightLeg.getAllParts().forEach(ModelPart::resetPose);
-                AnimationUtil.animate(bipedModel, iCap.getAnimation(ModCapability.AnimationStates.GLIDING), Animations.GLIDING, ageInTicks, 1);
+                AnimationUtil.animate(bipedModel, iCap.getAnimation(ModCapability.AnimationStates.GLIDING), PlayerAnimations.GLIDING, ageInTicks, 1);
                 fixLayers(bipedModel);
             }
         });

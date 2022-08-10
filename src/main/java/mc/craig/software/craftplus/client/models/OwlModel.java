@@ -19,45 +19,67 @@ import net.minecraft.client.model.geom.builders.*;
 public class OwlModel<T extends OwlEntity> extends HierarchicalModel<T> {
 
 
-    public static final AnimationDefinition FLYING = AnimationDefinition.Builder.withLength(0.25f).looping().addAnimation("LWing", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -107.5f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.125f, KeyframeAnimations.degreeVec(0f, 0f, -40f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.25f, KeyframeAnimations.degreeVec(0f, 0f, -107.5f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("RWing", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 107.5f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.125f, KeyframeAnimations.degreeVec(0f, 0f, 40f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.25f, KeyframeAnimations.degreeVec(0f, 0f,  107.5f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("Head", new AnimationChannel(AnimationChannel.Targets.POSITION, new Keyframe(0f, KeyframeAnimations.posVec(0f, 0.33f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.08333333333333333f, KeyframeAnimations.posVec(0f, 1f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.20833333333333334f, KeyframeAnimations.posVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.25f, KeyframeAnimations.posVec(0f, 0.33f, 0f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("Body", new AnimationChannel(AnimationChannel.Targets.POSITION, new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.125f, KeyframeAnimations.posVec(0f, 1f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.25f, KeyframeAnimations.posVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM))).build();
-    private final ModelPart head;
-    private final ModelPart body;
+    public static final AnimationDefinition FLYING = AnimationDefinition.Builder.withLength(2.4583333333333335f).addAnimation("LRoot", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0.041666666666666664f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.2916666666666667f, KeyframeAnimations.degreeVec(-90f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.9166666666666666f, KeyframeAnimations.degreeVec(-90f, 12.5f, 0f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("LRFeathers", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.2916666666666667f, KeyframeAnimations.degreeVec(0f, -10f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.5416666666666666f, KeyframeAnimations.degreeVec(0f, -10f, 0f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("LExtention", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0.125f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.16666666666666666f, KeyframeAnimations.degreeVec(-180f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("Body", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.125f, KeyframeAnimations.degreeVec(67.5f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(1.6666666666666667f, KeyframeAnimations.degreeVec(67.5f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("Head", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.13305333333333338f, KeyframeAnimations.degreeVec(-60f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.5416666666666666f, KeyframeAnimations.degreeVec(-60f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("LEFeathers", new AnimationChannel(AnimationChannel.Targets.POSITION, new Keyframe(0.041666666666666664f, KeyframeAnimations.posVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.08333333333333333f, KeyframeAnimations.posVec(0f, 0f, -1f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("LEFeathers", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.2916666666666667f, KeyframeAnimations.degreeVec(0f, -170f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.5416666666666666f, KeyframeAnimations.degreeVec(0f, -170f, 0f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("LShoulder", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.2916666666666667f, KeyframeAnimations.degreeVec(0f, -107.5f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.5416666666666666f, KeyframeAnimations.degreeVec(0f, -107.5f, 0f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("RShoulder", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.2916666666666667f, KeyframeAnimations.degreeVec(0f, 107.5f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.5416666666666666f, KeyframeAnimations.degreeVec(0f, 107.5f, 0f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("RRoot", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0.041666666666666664f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.2916666666666667f, KeyframeAnimations.degreeVec(-90f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.9166666666666666f, KeyframeAnimations.degreeVec(-90f, -12.5f, 0f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("RRFeathers", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.2916666666666667f, KeyframeAnimations.degreeVec(0f, 10f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.5416666666666666f, KeyframeAnimations.degreeVec(0f, 10f, 0f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("RExtention", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0.125f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.16666666666666666f, KeyframeAnimations.degreeVec(-180f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("REFeathers", new AnimationChannel(AnimationChannel.Targets.POSITION, new Keyframe(0.125f, KeyframeAnimations.posVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.16666666666666666f, KeyframeAnimations.posVec(0f, 0f, -1f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("REFeathers", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.2916666666666667f, KeyframeAnimations.degreeVec(0f, 170f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.5416666666666666f, KeyframeAnimations.degreeVec(0f, 170f, 0f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("LSFeathers", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.2916666666666667f, KeyframeAnimations.degreeVec(0f, 0f, 10f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.5416666666666666f, KeyframeAnimations.degreeVec(0f, 0f, 10f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("RSFeathers", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.2916666666666667f, KeyframeAnimations.degreeVec(0f, 0f, -10f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.5416666666666666f, KeyframeAnimations.degreeVec(0f, 0f, -10f), AnimationChannel.Interpolations.CATMULLROM))).build();
+    private final ModelPart Body;
     private final ModelPart root;
+    private final ModelPart Head;
 
     public OwlModel(ModelPart root) {
         this.root = root;
-        this.head = root.getChild("Head");
-        this.body = root.getChild("Body");
+        this.Body = root.getChild("Body");
+        this.Head = Body.getChild("Head");
     }
+
+
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition Head = partdefinition.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(18, 7).addBox(-3.0F, -3.0F, -3.5833F, 6.0F, 5.0F, 6.0F, new CubeDeformation(0.2F))
-                .texOffs(0, 13).addBox(-3.0F, -3.0F, -3.5833F, 6.0F, 5.0F, 6.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 16).addBox(-0.5F, 0.0F, -4.5833F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 13.0F, 0.5833F));
+        PartDefinition Body = partdefinition.addOrReplaceChild("Body", CubeListBuilder.create().texOffs(0, 0).addBox(-1.5F, -3.0F, -1.5F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.1F))
+                .texOffs(9, 6).addBox(-1.5F, -3.0F, -1.5F, 3.0F, 2.0F, 3.0F, new CubeDeformation(0.21F))
+                .texOffs(18, 0).addBox(-1.5F, 3.0F, 1.5F, 3.0F, 4.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 21.0F, -0.5F, 0.3491F, 0.0F, 0.0F));
 
-        PartDefinition Body = partdefinition.addOrReplaceChild("Body", CubeListBuilder.create().texOffs(18, 18).addBox(-3.0F, -9.0F, -3.0F, 6.0F, 4.0F, 6.0F, new CubeDeformation(0.5F)), PartPose.offset(0.0F, 24.0F, 0.0F));
+        PartDefinition Head = Body.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(0, 9).addBox(-1.5F, -1.5F, -1.5F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-0.1F))
+                .texOffs(9, 0).addBox(-0.5F, -0.6F, -1.95F, 1.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(0.0F, -4.05F, 0.0F, -0.2182F, 0.0F, 0.0F));
 
-        PartDefinition Tail_r1 = Body.addOrReplaceChild("Tail_r1", CubeListBuilder.create().texOffs(18, 0).addBox(-3.0F, 8.6F, 2.15F, 6.0F, 2.0F, 0.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 0).addBox(-3.0F, 1.6F, -3.85F, 6.0F, 7.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -10.0F, 0.0F, 0.2182F, 0.0F, 0.0F));
+        PartDefinition LWing = Body.addOrReplaceChild("LWing", CubeListBuilder.create(), PartPose.offset(1.65F, -2.5F, 1.25F));
 
-        PartDefinition LWing = Body.addOrReplaceChild("LWing", CubeListBuilder.create(), PartPose.offset(3.5F, -7.25F, 0.0F));
+        PartDefinition LShoulder = LWing.addOrReplaceChild("LShoulder", CubeListBuilder.create().texOffs(12, 1).addBox(0.0F, -0.5F, -2.5F, 0.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.025F, 0.0F, -0.125F));
 
-        PartDefinition LWing_r1 = LWing.addOrReplaceChild("LWing_r1", CubeListBuilder.create().texOffs(0, 24).addBox(-0.5F, -0.124F, -2.4745F, 1.0F, 6.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -1.0F, 0.0F, 0.2182F, 0.0F, 0.0F));
+        PartDefinition LSFeathers = LShoulder.addOrReplaceChild("LSFeathers", CubeListBuilder.create().texOffs(6, 12).addBox(0.005F, 0.0F, -1.5F, 0.0F, 4.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.5F, -1.0F));
 
-        PartDefinition RWing = Body.addOrReplaceChild("RWing", CubeListBuilder.create(), PartPose.offset(-3.5F, -7.25F, 0.0F));
+        PartDefinition LRoot = LShoulder.addOrReplaceChild("LRoot", CubeListBuilder.create().texOffs(2, 18).addBox(0.0F, 0.0F, 0.0F, 0.0F, 6.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -0.5F, -2.5F));
 
-        PartDefinition RWing_r1 = RWing.addOrReplaceChild("RWing_r1", CubeListBuilder.create().texOffs(12, 28).addBox(-0.5F, -0.124F, -2.4745F, 1.0F, 6.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -1.0F, 0.0F, 0.2182F, 0.0F, 0.0F));
+        PartDefinition LRFeathers = LRoot.addOrReplaceChild("LRFeathers", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 2.5F, 1.0F, 0.0F, 1.5708F, 0.0F));
 
-        PartDefinition LFoot = Body.addOrReplaceChild("LFoot", CubeListBuilder.create().texOffs(0, 2).addBox(1.0F, -0.5F, -0.5F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 1).addBox(0.5F, 1.5F, -1.5F, 2.0F, 0.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -1.5F, -0.5F));
+        PartDefinition Feathers_r1 = LRFeathers.addOrReplaceChild("Feathers_r1", CubeListBuilder.create().texOffs(12, 15).addBox(0.005F, -2.5F, -2.0F, 0.0F, 6.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 1.5708F, 0.0F));
 
-        PartDefinition RFoot = Body.addOrReplaceChild("RFoot", CubeListBuilder.create().texOffs(0, 13).addBox(-2.0F, -0.5F, -0.5F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 0).addBox(-2.5F, 1.5F, -1.5F, 2.0F, 0.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -1.5F, -0.5F));
+        PartDefinition LExtention = LRoot.addOrReplaceChild("LExtention", CubeListBuilder.create().texOffs(4, 18).addBox(0.0F, -5.0F, -0.5F, 0.0F, 5.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 6.0F, 0.5F));
 
-        return LayerDefinition.create(meshdefinition, 48, 48);
+        PartDefinition LEFeathers = LExtention.addOrReplaceChild("LEFeathers", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, -3.5F, 0.5F, 0.0F, 1.5708F, 0.0F));
+
+        PartDefinition Feathers_r2 = LEFeathers.addOrReplaceChild("Feathers_r2", CubeListBuilder.create().texOffs(16, 14).addBox(0.0F, -1.5F, -2.0F, 0.0F, 5.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 1.5708F, 0.0F));
+
+        PartDefinition RWing = Body.addOrReplaceChild("RWing", CubeListBuilder.create(), PartPose.offset(-1.65F, -2.5F, 1.25F));
+
+        PartDefinition RShoulder = RWing.addOrReplaceChild("RShoulder", CubeListBuilder.create().texOffs(12, 0).addBox(-0.005F, -0.5F, -2.5F, 0.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.025F, 0.0F, -0.125F));
+
+        PartDefinition RSFeathers = RShoulder.addOrReplaceChild("RSFeathers", CubeListBuilder.create().texOffs(0, 12).addBox(-0.005F, 0.0F, -1.5F, 0.0F, 4.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.5F, -1.0F));
+
+        PartDefinition RRoot = RShoulder.addOrReplaceChild("RRoot", CubeListBuilder.create().texOffs(0, 18).addBox(0.0F, 0.0F, 0.0F, 0.0F, 6.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -0.5F, -2.5F));
+
+        PartDefinition RRFeathers = RRoot.addOrReplaceChild("RRFeathers", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 2.5F, 1.0F, 0.0F, -1.5708F, 0.0F));
+
+        PartDefinition Feathers_r3 = RRFeathers.addOrReplaceChild("Feathers_r3", CubeListBuilder.create().texOffs(12, 9).addBox(0.0F, -2.5F, -2.0F, 0.0F, 6.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -1.5708F, 0.0F));
+
+        PartDefinition RExtention = RRoot.addOrReplaceChild("RExtention", CubeListBuilder.create().texOffs(18, 3).addBox(0.0F, -5.0F, -0.5F, 0.0F, 5.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 6.0F, 0.5F));
+
+        PartDefinition REFeathers = RExtention.addOrReplaceChild("REFeathers", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, -3.5F, 0.5F, 0.0F, -1.5708F, 0.0F));
+
+        PartDefinition Feathers_r4 = REFeathers.addOrReplaceChild("Feathers_r4", CubeListBuilder.create().texOffs(16, 9).addBox(0.0F, -1.5F, -2.0F, 0.0F, 5.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -1.5708F, 0.0F));
+
+        return LayerDefinition.create(meshdefinition, 32, 32);
     }
 
     @Override
@@ -68,10 +90,7 @@ public class OwlModel<T extends OwlEntity> extends HierarchicalModel<T> {
         if (entity.isFlying()) {
             this.animate(entity.flyingAnimationState, FLYING, ageInTicks);
         }
-
-        this.head.yRot = netheadYaw * ((float)Math.PI / 180F);
-
-
+        this.Head.yRot = netheadYaw * ((float) Math.PI / 180F);
     }
 
     @Override
@@ -80,7 +99,7 @@ public class OwlModel<T extends OwlEntity> extends HierarchicalModel<T> {
     }
 
     public void renderOnShoulder(PoseStack p_103224_, VertexConsumer p_103225_, int p_103226_, int p_103227_, HumanoidModel humanoidModel) {
-        this.head.yRot = humanoidModel.getHead().yRot;
+        this.Head.yRot = humanoidModel.getHead().yRot;
         this.root.render(p_103224_, p_103225_, p_103226_, p_103227_);
     }
 }

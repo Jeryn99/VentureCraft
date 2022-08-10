@@ -1,11 +1,12 @@
-package mc.craig.software.craftplus.client.models;// Made with Blockbench 4.3.1
-// Exported for Minecraft version 1.17 - 1.18 with Mojang mappings
-// Paste this class into your mod and generate all required imports
+package mc.craig.software.craftplus.client.models;
 
-
-import mc.craig.software.craftplus.client.Animations;
+import mc.craig.software.craftplus.client.PlayerAnimations;
 import mc.craig.software.craftplus.common.capability.ModCapability;
 import mc.craig.software.craftplus.util.GliderUtil;
+import net.minecraft.client.animation.AnimationChannel;
+import net.minecraft.client.animation.AnimationDefinition;
+import net.minecraft.client.animation.Keyframe;
+import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -14,6 +15,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
 public class XWingModel<T extends Entity> extends HierarchicalModel<T> {
+
+    public static final AnimationDefinition OPEN_XWING = AnimationDefinition.Builder.withLength(26f).addAnimation("LW1", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 2.5f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.4166666666666667f, KeyframeAnimations.degreeVec(0f, 0f, -17.66f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.7083333333333334f, KeyframeAnimations.degreeVec(0f, 0f, -17.5f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("LW2", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -5f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.4166666666666667f, KeyframeAnimations.degreeVec(0f, 0f, 17.66f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.6666666666666666f, KeyframeAnimations.degreeVec(0f, 0f, 15f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("RW1", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -2.5f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.4166666666666667f, KeyframeAnimations.degreeVec(0f, 0f, 18.27f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.6666666666666666f, KeyframeAnimations.degreeVec(0f, 0f, 15f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("RW2", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 5f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.4166666666666667f, KeyframeAnimations.degreeVec(0f, 0f, -17.66f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.7083333333333334f, KeyframeAnimations.degreeVec(0f, 0f, -15f), AnimationChannel.Interpolations.CATMULLROM))).build();
 
     private final ModelPart bone;
     private final ModelPart bone4;
@@ -160,7 +163,7 @@ public class XWingModel<T extends Entity> extends HierarchicalModel<T> {
             ModCapability.get(livingEntity).ifPresent(iCap -> {
                 this.root().getAllParts().forEach(ModelPart::resetPose);
                 if (GliderUtil.isGlidingWithActiveGlider(livingEntity)) {
-                    this.animate(iCap.getAnimation(ModCapability.AnimationStates.GLIDER_OPENING), Animations.OPEN_XWING, ageInTicks);
+                    this.animate(iCap.getAnimation(ModCapability.AnimationStates.GLIDER_OPENING), OPEN_XWING, ageInTicks);
                 }
             });
         }
