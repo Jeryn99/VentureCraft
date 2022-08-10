@@ -1,6 +1,7 @@
 package mc.craig.software.craftplus.client.renderers;
 
 import mc.craig.software.craftplus.MinecraftPlus;
+import mc.craig.software.craftplus.client.layers.OwlGlowEyesLayer;
 import mc.craig.software.craftplus.client.models.Models;
 import mc.craig.software.craftplus.client.models.OwlModel;
 import mc.craig.software.craftplus.common.entities.OwlEntity;
@@ -24,6 +25,7 @@ public class RenderOwl extends MobRenderer<OwlEntity, OwlModel<OwlEntity>> {
 
     public RenderOwl(EntityRendererProvider.Context p_174304_) {
         super(p_174304_, new OwlModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(Models.OWL)), 0.2F);
+        addLayer(new OwlGlowEyesLayer(this));
     }
 
     @Nullable
