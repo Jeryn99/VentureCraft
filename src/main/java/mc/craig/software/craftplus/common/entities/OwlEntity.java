@@ -1,5 +1,7 @@
 package mc.craig.software.craftplus.common.entities;
 
+import mc.craig.software.craftplus.common.Entities;
+import mc.craig.software.craftplus.common.ModDamageSource;
 import mc.craig.software.craftplus.util.Tags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,6 +13,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -22,13 +25,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.FlyingAnimal;
-import net.minecraft.world.entity.animal.Parrot;
-import net.minecraft.world.entity.animal.ShoulderRidingEntity;
+import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -51,12 +53,17 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
 
     public AnimationState flyingAnimationState = new AnimationState();
 
+    private NearestAttackableTargetGoal<AbstractFish> fishTargetGoal;
+    private NearestAttackableTargetGoal<Animal> landTargetGoal;
+
     public OwlEntity(EntityType<? extends ShoulderRidingEntity> shoulder, Level level) {
         super(shoulder, level);
         this.moveControl = new FlyingMoveControl(this, 10, false);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
-        this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.WATER_BORDER, 16.0F);
         this.setPathfindingMalus(BlockPathTypes.COCOA, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.FENCE, -1.0F);
     }
 
     @Nullable
@@ -102,6 +109,28 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
         this.goalSelector.addGoal(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, Ingredient.of(Tags.OWL_FOOD), false));
 
+        this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Cat.class, 6.0F, 1.0D, 1.2D));
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+
+
+        // Attack
+        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, true));
+
+        this.fishTargetGoal = new NearestAttackableTargetGoal<>(this, AbstractFish.class, 20, false, false, (mob) -> mob instanceof AbstractFish);
+        this.landTargetGoal = new NearestAttackableTargetGoal<>(this, Animal.class, 10, false, false, (mob) -> mob instanceof Chicken || mob instanceof Rabbit);
+
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+
+
+        this.targetSelector.addGoal(4, fishTargetGoal);
+        this.targetSelector.addGoal(6, landTargetGoal);
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true));
+
+        // Breeding
+        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
+        this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.25D));
+
 
     }
 
@@ -139,6 +168,11 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
     @Override
     protected boolean isFlapping() {
         return this.flyDist > this.nextFlap;
+    }
+
+    @Override
+    public boolean doHurtTarget(Entity entity) {
+        return entity.hurt(ModDamageSource.OWL_CLAWS, (float) ((int) this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
     }
 
     @Override
@@ -255,44 +289,12 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 6.0D).add(Attributes.FLYING_SPEED, 0.4F).add(Attributes.MOVEMENT_SPEED, 0.2F);
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 6.0D).add(Attributes.FLYING_SPEED, 0.4F).add(Attributes.ATTACK_DAMAGE, 0.4F).add(Attributes.ATTACK_KNOCKBACK, 0.4F).add(Attributes.MOVEMENT_SPEED, 0.2F);
     }
 
     @Override
     public boolean onClimbable() {
         return false;
-    }
-
-    @Override
-    public void travel(Vec3 p_20818_) {
-        if (this.isEffectiveAi() || this.isControlledByLocalInstance()) {
-            if (this.isInWater()) {
-                this.moveRelative(0.02F, p_20818_);
-                this.move(MoverType.SELF, this.getDeltaMovement());
-                this.setDeltaMovement(this.getDeltaMovement().scale(0.8F));
-            } else if (this.isInLava()) {
-                this.moveRelative(0.02F, p_20818_);
-                this.move(MoverType.SELF, this.getDeltaMovement());
-                this.setDeltaMovement(this.getDeltaMovement().scale(0.5D));
-            } else {
-                BlockPos ground = new BlockPos(this.getX(), this.getY() - 1.0D, this.getZ());
-                float f = 0.91F;
-                if (this.onGround) {
-                    f = this.level.getBlockState(ground).getFriction(this.level, ground, this) * 0.91F;
-                }
-                float f1 = 0.16277137F / (f * f * f);
-                f = 0.91F;
-                if (this.onGround) {
-                    f = this.level.getBlockState(ground).getFriction(this.level, ground, this) * 0.91F;
-                }
-
-                this.moveRelative(this.onGround ? 0.1F * f1 : 0.02F, p_20818_);
-                this.move(MoverType.SELF, this.getDeltaMovement());
-                this.setDeltaMovement(this.getDeltaMovement().scale(f));
-            }
-        }
-
-        this.calculateEntityAnimation(this, false);
     }
 
     @Override
@@ -318,7 +320,7 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
-        return null;
+        return new OwlEntity(Entities.OWL.get(), serverLevel);
     }
 
     @Override

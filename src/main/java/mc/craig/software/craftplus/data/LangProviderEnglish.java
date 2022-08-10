@@ -2,6 +2,7 @@ package mc.craig.software.craftplus.data;
 
 import mc.craig.software.craftplus.MinecraftPlus;
 import mc.craig.software.craftplus.common.Entities;
+import mc.craig.software.craftplus.common.ModDamageSource;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.ModSounds;
 import mc.craig.software.craftplus.util.ModConstants;
@@ -50,6 +51,8 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModConstants.INSTALLED_MODS, ChatFormatting.BOLD + "Installed Modifications");
         add(ModConstants.COPPER_MOD, "Copper Filament");
 
+        // ===== Damage Sources =====
+        add(ModDamageSource.OWL_CLAWS.getKey(), "%s was clawed to death by a Owl");
 
         // ===== Tabs =====
         add("itemGroup." + MinecraftPlus.MODID, "Minecraft+");

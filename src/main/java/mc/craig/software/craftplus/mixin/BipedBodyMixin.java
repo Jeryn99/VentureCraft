@@ -29,17 +29,13 @@ public class BipedBodyMixin {
        bipedModel.rightLeg.getAllParts().forEach(ModelPart::resetPose);
 
         ModCapability.get(livingEntity).ifPresent(iCap -> {
-
-
             // Falling Animation
-            if (livingEntity instanceof Player player) {
-                ModCapability.get(player).ifPresent(iCap1 -> {
-                    if (iCap1.isFalling()) {
-                        AnimationUtil.animate(bipedModel, iCap.getAnimation(ModCapability.AnimationStates.FALLING), PlayerAnimations.FALLING, ageInTicks, 1);
-                        fixLayers(bipedModel);
-                        callbackInfo.cancel();
-                    }
-                });
+            if (livingEntity instanceof Player) {
+                if (iCap.isFalling()) {
+                    AnimationUtil.animate(bipedModel, iCap.getAnimation(ModCapability.AnimationStates.FALLING), PlayerAnimations.FALLING, ageInTicks, 1);
+                    fixLayers(bipedModel);
+                    callbackInfo.cancel();
+                }
             }
         });
     }
@@ -61,8 +57,8 @@ public class BipedBodyMixin {
 
         ModCapability.get(livingEntity).ifPresent(iCap -> {
 
-            float f = (float) livingEntity.getDeltaMovement().horizontalDistance();
-            if (f < 0.01F) {
+            float horizontalDistance = (float) livingEntity.getDeltaMovement().horizontalDistance();
+            if (horizontalDistance < 0.01F && !livingEntity.isCrouching()) {
                 bipedModel.leftArm.getAllParts().forEach(ModelPart::resetPose);
                 bipedModel.rightArm.getAllParts().forEach(ModelPart::resetPose);
                 bipedModel.body.getAllParts().forEach(ModelPart::resetPose);

@@ -66,7 +66,10 @@ public class ModCapability implements ICap {
         isClimbing = canClimb(player) && player.horizontalCollision;
 
         if (isClimbing) {
-            player.setDeltaMovement(new Vec3(player.getDeltaMovement().x, player.isCrouching() ? -0.05F : 0.05F, player.getDeltaMovement().z));
+            Vec3 deltaMovement = livingEntity.getDeltaMovement();
+            deltaMovement = new Vec3(deltaMovement.x, livingEntity.isCrouching() ? -0.2D : 0.2D, deltaMovement.z);
+            float speed = livingEntity.isSprinting() ? 0.9F : 0.8F;
+            livingEntity.setDeltaMovement(deltaMovement.multiply(speed, 0.8F, speed));
             setStamina(getStamina() - 1);
         }
 

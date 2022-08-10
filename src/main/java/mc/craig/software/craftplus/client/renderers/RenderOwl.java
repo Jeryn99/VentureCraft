@@ -1,5 +1,7 @@
 package mc.craig.software.craftplus.client.renderers;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import mc.craig.software.craftplus.MinecraftPlus;
 import mc.craig.software.craftplus.client.layers.OwlGlowEyesLayer;
 import mc.craig.software.craftplus.client.models.Models;
@@ -32,6 +34,12 @@ public class RenderOwl extends MobRenderer<OwlEntity, OwlModel<OwlEntity>> {
     @Override
     protected RenderType getRenderType(OwlEntity p_115322_, boolean p_115323_, boolean p_115324_, boolean p_115325_) {
         return RenderType.entityTranslucentCull(getTextureLocation(p_115322_));
+    }
+
+    @Override
+    protected void setupRotations(OwlEntity owl, PoseStack poseStack, float p_115687_, float p_115688_, float p_115689_) {
+        super.setupRotations(owl, poseStack, p_115687_, p_115688_, p_115689_);
+        poseStack.mulPose(Vector3f.XP.rotationDegrees(owl.getXRot()));
     }
 
     @Override
