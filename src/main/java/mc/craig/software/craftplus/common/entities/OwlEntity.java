@@ -1,12 +1,17 @@
 package mc.craig.software.craftplus.common.entities;
 
-import com.google.common.collect.Sets;
+import mc.craig.software.craftplus.util.Tags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -22,21 +27,26 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.entity.animal.ShoulderRidingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Set;
-
 public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
+
+    private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(OwlEntity.class, EntityDataSerializers.INT);
 
 
     public AnimationState flyingAnimationState = new AnimationState();
@@ -49,6 +59,37 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
         this.setPathfindingMalus(BlockPathTypes.COCOA, -1.0F);
     }
 
+    @Nullable
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance p_29390_, MobSpawnType p_29391_, @javax.annotation.Nullable SpawnGroupData p_29392_, @javax.annotation.Nullable CompoundTag p_29393_) {
+        this.setVariant(serverLevelAccessor.getRandom().nextInt(6));
+        return super.finalizeSpawn(serverLevelAccessor, p_29390_, p_29391_, p_29392_, p_29393_);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compoundTag) {
+        super.addAdditionalSaveData(compoundTag);
+        compoundTag.putInt("Variant", this.getVariant());
+    }
+    @Override
+    public void readAdditionalSaveData(CompoundTag compoundTag) {
+        super.readAdditionalSaveData(compoundTag);
+        this.setVariant(compoundTag.getInt("Variant"));
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_VARIANT_ID, 0);
+    }
+
+    public int getVariant() {
+        return Mth.clamp(this.entityData.get(DATA_VARIANT_ID), 0, 7);
+    }
+
+    public void setVariant(int variant) {
+        this.entityData.set(DATA_VARIANT_ID, variant);
+    }
+
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
@@ -59,17 +100,59 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
         this.goalSelector.addGoal(3, new LandOnOwnersShoulderGoal(this));
         this.goalSelector.addGoal(2, new OwlEntity.OwlWanderGoal(this, 1.0D));
         this.goalSelector.addGoal(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, Ingredient.of(Tags.OWL_FOOD), false));
+
 
     }
 
-    private static final Item POISONOUS_FOOD = Items.COOKIE;
-    private static final Set<Item> TAME_FOOD = Sets.newHashSet(Items.WHEAT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS);
+    private float nextFlap = 1.0F;
+    public float flap;
+    public float flapSpeed;
+    public float oFlapSpeed;
+    public float oFlap;
+    private float flapping = 1.0F;
+
+    private void calculateFlapping() {
+        this.oFlap = this.flap;
+        this.oFlapSpeed = this.flapSpeed;
+        this.flapSpeed += (float) (!this.onGround && !this.isPassenger() ? 4 : -1) * 0.3F;
+        this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
+        if (!this.onGround && this.flapping < 1.0F) {
+            this.flapping = 1.0F;
+        }
+
+        this.flapping *= 0.9F;
+        Vec3 vec3 = this.getDeltaMovement();
+        if (!this.onGround && vec3.y < 0.0D) {
+            this.setDeltaMovement(vec3.multiply(1.0D, 0.6D, 1.0D));
+        }
+
+        this.flap += this.flapping * 2.0F;
+    }
 
     @Override
-    public InteractionResult mobInteract(Player p_29414_, InteractionHand p_29415_) {
-        ItemStack itemstack = p_29414_.getItemInHand(p_29415_);
-        if (!this.isTame() && TAME_FOOD.contains(itemstack.getItem())) {
-            if (!p_29414_.getAbilities().instabuild) {
+    protected void onFlap() {
+        this.playSound(SoundEvents.PARROT_FLY, 0.15F, 1.0F);
+        this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
+    }
+
+    @Override
+    protected boolean isFlapping() {
+        return this.flyDist > this.nextFlap;
+    }
+
+    @Override
+    public boolean checkSpawnRules(LevelAccessor levelAccessor, MobSpawnType mobSpawnType) {
+        return !level.isDay() && super.checkSpawnRules(levelAccessor, mobSpawnType);
+    }
+
+    private static final Item POISONOUS_FOOD = Items.COOKIE;
+
+    @Override
+    public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
+        ItemStack itemstack = player.getItemInHand(interactionHand);
+        if (!this.isTame() && itemstack.is(Tags.OWL_FOOD)) {
+            if (!player.getAbilities().instabuild) {
                 itemstack.shrink(1);
             }
 
@@ -78,8 +161,8 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
             }
 
             if (!this.level.isClientSide) {
-                if (this.random.nextInt(10) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, p_29414_)) {
-                    this.tame(p_29414_);
+                if (this.random.nextInt(10) == 0 && !ForgeEventFactory.onAnimalTame(this, player)) {
+                    this.tame(player);
                     this.level.broadcastEntityEvent(this, (byte) 7);
                 } else {
                     this.level.broadcastEntityEvent(this, (byte) 6);
@@ -88,28 +171,28 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
 
             return InteractionResult.sidedSuccess(this.level.isClientSide);
         } else if (itemstack.is(POISONOUS_FOOD)) {
-            if (!p_29414_.getAbilities().instabuild) {
+            if (!player.getAbilities().instabuild) {
                 itemstack.shrink(1);
             }
 
             this.addEffect(new MobEffectInstance(MobEffects.POISON, 900));
-            if (p_29414_.isCreative() || !this.isInvulnerable()) {
-                this.hurt(DamageSource.playerAttack(p_29414_), Float.MAX_VALUE);
+            if (player.isCreative() || !this.isInvulnerable()) {
+                this.hurt(DamageSource.playerAttack(player), Float.MAX_VALUE);
             }
 
             return InteractionResult.sidedSuccess(this.level.isClientSide);
-        } else if (!this.isFlying() && this.isTame() && this.isOwnedBy(p_29414_)) {
+        } else if (!this.isFlying() && this.isTame() && this.isOwnedBy(player)) {
             if (!this.level.isClientSide) {
                 this.setOrderedToSit(!this.isOrderedToSit());
             }
 
             return InteractionResult.sidedSuccess(this.level.isClientSide);
         } else {
-            return super.mobInteract(p_29414_, p_29415_);
+            return super.mobInteract(player, interactionHand);
         }
     }
 
-    static class OwlWanderGoal extends WaterAvoidingRandomFlyingGoal {
+    public static class OwlWanderGoal extends WaterAvoidingRandomFlyingGoal {
         public OwlWanderGoal(PathfinderMob p_186224_, double p_186225_) {
             super(p_186224_, p_186225_);
         }
@@ -158,7 +241,7 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
     }
 
     @Override
-    public boolean canMate(Animal p_29381_) {
+    public boolean canMate(Animal animal) {
         return false;
     }
 
@@ -173,6 +256,43 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 6.0D).add(Attributes.FLYING_SPEED, 0.4F).add(Attributes.MOVEMENT_SPEED, 0.2F);
+    }
+
+    @Override
+    public boolean onClimbable() {
+        return false;
+    }
+
+    @Override
+    public void travel(Vec3 p_20818_) {
+        if (this.isEffectiveAi() || this.isControlledByLocalInstance()) {
+            if (this.isInWater()) {
+                this.moveRelative(0.02F, p_20818_);
+                this.move(MoverType.SELF, this.getDeltaMovement());
+                this.setDeltaMovement(this.getDeltaMovement().scale(0.8F));
+            } else if (this.isInLava()) {
+                this.moveRelative(0.02F, p_20818_);
+                this.move(MoverType.SELF, this.getDeltaMovement());
+                this.setDeltaMovement(this.getDeltaMovement().scale(0.5D));
+            } else {
+                BlockPos ground = new BlockPos(this.getX(), this.getY() - 1.0D, this.getZ());
+                float f = 0.91F;
+                if (this.onGround) {
+                    f = this.level.getBlockState(ground).getFriction(this.level, ground, this) * 0.91F;
+                }
+                float f1 = 0.16277137F / (f * f * f);
+                f = 0.91F;
+                if (this.onGround) {
+                    f = this.level.getBlockState(ground).getFriction(this.level, ground, this) * 0.91F;
+                }
+
+                this.moveRelative(this.onGround ? 0.1F * f1 : 0.02F, p_20818_);
+                this.move(MoverType.SELF, this.getDeltaMovement());
+                this.setDeltaMovement(this.getDeltaMovement().scale(f));
+            }
+        }
+
+        this.calculateEntityAnimation(this, false);
     }
 
     @Override
@@ -191,16 +311,13 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
 
     @Override
     public void aiStep() {
-        Vec3 vec3 = this.getDeltaMovement();
-        if (!this.onGround && vec3.y < 0.0D) {
-            this.setDeltaMovement(vec3.multiply(1.0D, 0.6D, 1.0D));
-        }
+        this.calculateFlapping();
         super.aiStep();
     }
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
+    public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
         return null;
     }
 

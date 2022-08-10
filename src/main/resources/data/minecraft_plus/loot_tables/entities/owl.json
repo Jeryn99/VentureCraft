@@ -25,7 +25,7 @@
               "function": "minecraft:looting_enchant"
             }
           ],
-          "name": "minecraft:feather"
+          "name": "minecraft_plus:owl_feather"
         }
       ],
       "rolls": 1.0

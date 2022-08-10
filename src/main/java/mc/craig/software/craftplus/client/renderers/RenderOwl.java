@@ -11,14 +11,22 @@ import net.minecraft.resources.ResourceLocation;
 
 public class RenderOwl extends MobRenderer<OwlEntity, OwlModel<OwlEntity>> {
 
-    public static final ResourceLocation TEX = new ResourceLocation(MinecraftPlus.MODID, "textures/entity/owl/owl.png");
+    public static final ResourceLocation[] OWL_LOCATIONS = new ResourceLocation[]{
+            new ResourceLocation(MinecraftPlus.MODID, "textures/entity/owl/owl_0.png"),
+            new ResourceLocation(MinecraftPlus.MODID, "textures/entity/owl/owl_1.png"),
+            new ResourceLocation(MinecraftPlus.MODID, "textures/entity/owl/owl_2.png"),
+            new ResourceLocation(MinecraftPlus.MODID, "textures/entity/owl/owl_3.png"),
+            new ResourceLocation(MinecraftPlus.MODID, "textures/entity/owl/owl_4.png"),
+            new ResourceLocation(MinecraftPlus.MODID, "textures/entity/owl/owl_5.png"),
+            new ResourceLocation(MinecraftPlus.MODID, "textures/entity/owl/owl_6.png")};
 
     public RenderOwl(EntityRendererProvider.Context p_174304_) {
         super(p_174304_, new OwlModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(Models.OWL)), 0.2F);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(OwlEntity p_114482_) {
-        return TEX;
+    public ResourceLocation getTextureLocation(OwlEntity p_115658_) {
+        return OWL_LOCATIONS[p_115658_.getVariant()];
     }
+
 }

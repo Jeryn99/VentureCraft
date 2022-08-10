@@ -33,7 +33,7 @@ public class MessageToggleGlide {
                     ParagliderItem.setGlide(chestItem, !ParagliderItem.glidingEnabled(chestItem));
                     if (ParagliderItem.glidingEnabled(chestItem)) {
 
-                        sender.level.playSound(null, sender.getX(), sender.getY(), sender.getZ(), ModSounds.GLIDER_OPEN.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+                        sender.level.playSound(null, sender.getX(), sender.getY(), sender.getZ(), ParagliderItem.isSpaceGlider(chestItem) ? ModSounds.SPACE_DEPLOY.get() : ModSounds.GLIDER_OPEN.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 
                         Network.INSTANCE.send(PacketDistributor.DIMENSION.with(() -> sender.getCommandSenderWorld().dimension()), new MessagePlaySound(ParagliderItem.isSpaceGlider(chestItem) ? ModSounds.SPACE_GLIDE.get().getLocation() : SoundEvents.ELYTRA_FLYING.getLocation(), sender.getUUID()));
 

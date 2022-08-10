@@ -6,6 +6,12 @@
     ],
     "subtitle": "subtitle.minecraft_plus.glider_open"
   },
+  "space_deploy": {
+    "sounds": [
+      "minecraft_plus:space_deploy"
+    ],
+    "subtitle": "subtitle.minecraft_plus.space_deploy"
+  },
   "space_glide": {
     "sounds": [
       "minecraft_plus:space_glide"

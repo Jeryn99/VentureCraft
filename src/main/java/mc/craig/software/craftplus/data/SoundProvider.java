@@ -22,16 +22,17 @@ public class SoundProvider extends SoundDefinitionsProvider {
 
     @Override
     public void registerSounds() {
-        createDefinitionAndAdd(SoundDefinition.SoundType.SOUND, "glider_open", new SoundEvent(new ResourceLocation(MinecraftPlus.MODID, "glider_open_0")), new SoundEvent(new ResourceLocation(MinecraftPlus.MODID, "glider_open_1")));
+        createDefinitionAndAdd(ModSounds.GLIDER_OPEN.get(), SoundDefinition.SoundType.SOUND, "glider_open", new SoundEvent(new ResourceLocation(MinecraftPlus.MODID, "glider_open_0")), new SoundEvent(new ResourceLocation(MinecraftPlus.MODID, "glider_open_1")));
         createDefinitionAndAdd(ModSounds.SPACE_GLIDE.get(), SoundDefinition.SoundType.SOUND);
+        createDefinitionAndAdd(ModSounds.SPACE_DEPLOY.get(), SoundDefinition.SoundType.SOUND);
     }
 
-    public void createDefinitionAndAdd(SoundDefinition.SoundType soundType, String subtitle, SoundEvent... soundEvent) {
+    public void createDefinitionAndAdd(SoundEvent mainSound, SoundDefinition.SoundType soundType, String subtitle, SoundEvent... soundEvent) {
         SoundDefinition def = SoundDefinition.definition().subtitle("subtitle." + MinecraftPlus.MODID + "." + subtitle);
         for (SoundEvent event : soundEvent) {
             def.with(SoundDefinition.Sound.sound(event.getLocation(), soundType));
         }
-        add(ModSounds.GLIDER_OPEN, def);
+        add(mainSound, def);
     }
 
     public void createDefinitionAndAdd(SoundEvent soundEvent, SoundDefinition.SoundType soundType) {

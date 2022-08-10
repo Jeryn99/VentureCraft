@@ -11,6 +11,7 @@ import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
@@ -18,6 +19,7 @@ import net.minecraft.client.model.geom.builders.*;
 public class OwlModel<T extends OwlEntity> extends HierarchicalModel<T> {
 
 
+    public static final AnimationDefinition FLYING = AnimationDefinition.Builder.withLength(0.25f).looping().addAnimation("LWing", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, -107.5f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.125f, KeyframeAnimations.degreeVec(0f, 0f, -40f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.25f, KeyframeAnimations.degreeVec(0f, 0f, -107.5f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("RWing", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 107.5f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.125f, KeyframeAnimations.degreeVec(0f, 0f, 40f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.25f, KeyframeAnimations.degreeVec(0f, 0f,  107.5f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("Head", new AnimationChannel(AnimationChannel.Targets.POSITION, new Keyframe(0f, KeyframeAnimations.posVec(0f, 0.33f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.08333333333333333f, KeyframeAnimations.posVec(0f, 1f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.20833333333333334f, KeyframeAnimations.posVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.25f, KeyframeAnimations.posVec(0f, 0.33f, 0f), AnimationChannel.Interpolations.CATMULLROM))).addAnimation("Body", new AnimationChannel(AnimationChannel.Targets.POSITION, new Keyframe(0f, KeyframeAnimations.posVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.125f, KeyframeAnimations.posVec(0f, 1f, 0f), AnimationChannel.Interpolations.CATMULLROM), new Keyframe(0.25f, KeyframeAnimations.posVec(0f, 0f, 0f), AnimationChannel.Interpolations.CATMULLROM))).build();
     private final ModelPart head;
     private final ModelPart body;
     private final ModelPart root;
@@ -63,9 +65,13 @@ public class OwlModel<T extends OwlEntity> extends HierarchicalModel<T> {
 
         this.root().getAllParts().forEach(ModelPart::resetPose);
 
-      /*  if (entity.isFlying()) {
+        if (entity.isFlying()) {
             this.animate(entity.flyingAnimationState, FLYING, ageInTicks);
-        }*/
+        }
+
+        this.head.yRot = netheadYaw * ((float)Math.PI / 180F);
+
+
     }
 
     @Override
@@ -73,7 +79,8 @@ public class OwlModel<T extends OwlEntity> extends HierarchicalModel<T> {
         return root;
     }
 
-    public void renderOnShoulder(PoseStack p_103224_, VertexConsumer p_103225_, int p_103226_, int p_103227_, float p_103228_, float p_103229_, float p_103230_, float p_103231_, int p_103232_) {
+    public void renderOnShoulder(PoseStack p_103224_, VertexConsumer p_103225_, int p_103226_, int p_103227_, HumanoidModel humanoidModel) {
+        this.head.yRot = humanoidModel.getHead().yRot;
         this.root.render(p_103224_, p_103225_, p_103226_, p_103227_);
     }
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft_plus:item/leather_chestplate",
+    "layer1": "minecraft_plus:item/leather_chestplate_overlay"
+  }
+}

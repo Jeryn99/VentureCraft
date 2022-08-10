@@ -29,12 +29,7 @@ public class BipedBodyMixin {
        bipedModel.rightLeg.getAllParts().forEach(ModelPart::resetPose);
 
         ModCapability.get(livingEntity).ifPresent(iCap -> {
-            // Gliding Animation
-            if (GliderUtil.isGlidingWithActiveGlider(livingEntity)) {
-                AnimationUtil.animate(bipedModel, iCap.getAnimation(ModCapability.AnimationStates.GLIDING), Animations.GLIDING, ageInTicks, 1);
-                fixLayers(bipedModel);
-                callbackInfo.cancel();
-            }
+
 
             // Falling Animation
             if (livingEntity instanceof Player player) {
@@ -60,13 +55,32 @@ public class BipedBodyMixin {
         }
     }
 
-/*    @Inject(at = @At("TAIL"), method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V")
+    @Inject(at = @At("TAIL"), method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V")
     private void setupAnimTail(LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo callbackInfo) {
         HumanoidModel<LivingEntity> bipedModel = (HumanoidModel) (Object) this;
-        AnimationHandler.setupAnim(livingEntity, bipedModel, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        //AnimationUtil.animate(bipedModel, CommonEvents.glideAnimation, Animations.GLIDING, ageInTicks, 1);
-        bipedModel.hat.copyFrom(bipedModel.head);
-    }*/
+
+        ModCapability.get(livingEntity).ifPresent(iCap -> {
+
+            float f = (float) livingEntity.getDeltaMovement().horizontalDistance();
+            if (f < 0.01F) {
+                bipedModel.leftArm.getAllParts().forEach(ModelPart::resetPose);
+                bipedModel.rightArm.getAllParts().forEach(ModelPart::resetPose);
+                bipedModel.body.getAllParts().forEach(ModelPart::resetPose);
+                AnimationUtil.animate(bipedModel, iCap.getAnimation(ModCapability.AnimationStates.BREATHING), Animations.BREATHING, ageInTicks, 1);
+                fixLayers(bipedModel);
+            }
+
+            if (GliderUtil.isGlidingWithActiveGlider(livingEntity)) {
+                bipedModel.body.getAllParts().forEach(ModelPart::resetPose);
+                bipedModel.leftArm.getAllParts().forEach(ModelPart::resetPose);
+                bipedModel.rightArm.getAllParts().forEach(ModelPart::resetPose);
+                bipedModel.leftLeg.getAllParts().forEach(ModelPart::resetPose);
+                bipedModel.rightLeg.getAllParts().forEach(ModelPart::resetPose);
+                AnimationUtil.animate(bipedModel, iCap.getAnimation(ModCapability.AnimationStates.GLIDING), Animations.GLIDING, ageInTicks, 1);
+                fixLayers(bipedModel);
+            }
+        });
+    }
 
 
 }

@@ -24,7 +24,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class GlideLayer<T extends LivingEntity, M extends HumanoidModel<T>, A extends HumanoidModel<T>> extends RenderLayer<T, M> {
 
     public static GliderModel gliderModel;
-    private final XWingModel<Entity> xWingModel;
+    public static XWingModel<Entity> xWingModel;
 
     private static final ResourceLocation POWER_LOCATION = new ResourceLocation("textures/entity/creeper/creeper_armor.png");
     private static final ResourceLocation COPPER_EMBED = new ResourceLocation(MinecraftPlus.MODID, "textures/entity/glider/copper_overlay.png");

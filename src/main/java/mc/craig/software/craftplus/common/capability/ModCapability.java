@@ -1,5 +1,6 @@
 package mc.craig.software.craftplus.common.capability;
 
+import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.networking.Network;
 import mc.craig.software.craftplus.networking.packets.MessageSyncCap;
@@ -23,7 +24,7 @@ public class ModCapability implements ICap {
     public static final Capability<ICap> CAPABILITY = CapabilityManager.get(new CapabilityToken<ICap>() {
     });
     private Player player;
-    private boolean isClimbing = false, climbingEnabled = false;
+    private boolean isClimbing = false;
 
     private boolean falling = false;
 
@@ -31,12 +32,13 @@ public class ModCapability implements ICap {
     private int maxStamina = 200;
 
     public enum AnimationStates {
-        FALLING, GLIDING, GLIDER_OPENING
+        FALLING, GLIDING, GLIDER_OPENING, BREATHING
     }
 
     public AnimationState glideAnimation = new AnimationState();
     public AnimationState fallingAnimation = new AnimationState();
     public AnimationState gliderOpeningAnimation = new AnimationState();
+    public AnimationState breathing = new AnimationState();
 
     public ModCapability() {
 
@@ -61,16 +63,25 @@ public class ModCapability implements ICap {
             }
         }
 
-       /* if (!player.level.isClientSide) {
-            setClimbing(player.onClimbable());
-            if (isClimbing()) {
-                setStamina(getStamina() - 1);
+        isClimbing = canClimb(player) && player.horizontalCollision;
+
+        if (isClimbing) {
+            player.setDeltaMovement(new Vec3(player.getDeltaMovement().x, player.isCrouching() ? -0.05F : 0.05F, player.getDeltaMovement().z));
+            setStamina(getStamina() - 1);
+        }
+
+        float f = (float) this.player.getDeltaMovement().horizontalDistance();
+        if (f < 0.01F) {
+            if (!breathing.isStarted()) {
+                breathing.start(player.tickCount);
             }
-            sync();
-        }*/
+        } else {
+            breathing.stop();
+        }
     }
 
     private boolean glideAndFallLogic(LivingEntity livingEntity) {
+
         if(!livingEntity.level.isClientSide){
             boolean prev = isFalling();
             setFalling(player.fallDistance > 1.1309066 && !GliderUtil.isGlidingWithActiveGlider(livingEntity));
@@ -127,13 +138,8 @@ public class ModCapability implements ICap {
     }
 
     @Override
-    public void setClimbingEnabled(boolean climbing) {
-        this.climbingEnabled = climbing && getStamina() > 0;
-    }
-
-    @Override
     public boolean canClimb(LivingEntity livingEntity) {
-        return climbingEnabled;
+        return getStamina() > 0 && player.getItemBySlot(EquipmentSlot.FEET).getItem() == ModItems.CLIMBING_GEAR.get();
     }
 
     @Override
@@ -158,7 +164,7 @@ public class ModCapability implements ICap {
 
     @Override
     public boolean isRecharging() {
-        return !GliderUtil.isGlidingWithActiveGlider(player) && getStamina() < getMaxStamina() && GliderUtil.isPlayerOnGroundOrWater(player) && !isClimbing();
+        return !GliderUtil.isGlidingWithActiveGlider(player) && getStamina() < getMaxStamina() && !isFalling() && GliderUtil.isPlayerOnGroundOrWater(player) && !isClimbing();
     }
 
     @Override
@@ -167,6 +173,7 @@ public class ModCapability implements ICap {
             case FALLING -> fallingAnimation;
             case GLIDING -> glideAnimation;
             case GLIDER_OPENING -> gliderOpeningAnimation;
+            case BREATHING -> breathing;
         };
     }
 

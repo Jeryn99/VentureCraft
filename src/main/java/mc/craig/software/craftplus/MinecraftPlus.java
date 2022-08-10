@@ -9,6 +9,8 @@ import mc.craig.software.craftplus.common.entities.OwlEntity;
 import mc.craig.software.craftplus.common.entities.StalkerEntity;
 import mc.craig.software.craftplus.data.*;
 import mc.craig.software.craftplus.networking.Network;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
@@ -64,6 +66,9 @@ public class MinecraftPlus {
         generator.addProvider(true, new RecipeProvider(generator));
         generator.addProvider(true, new SoundProvider(generator, existingFileHelper));
         generator.addProvider(true, new ModLootTableProvider(generator));
+        generator.addProvider(true, new ItemTagsProvider(generator, Registry.ITEM, existingFileHelper));
+        generator.addProvider(true, new BiomeTagsProvider(generator, BuiltinRegistries.BIOME, existingFileHelper));
+        generator.addProvider(true, new BiomeModifierProvider(generator));
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
