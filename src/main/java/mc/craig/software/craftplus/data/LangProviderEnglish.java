@@ -53,6 +53,7 @@ public class LangProviderEnglish extends LanguageProvider {
 
         // ===== Damage Sources =====
         add(ModDamageSource.OWL_CLAWS.getKey(), "%s was clawed to death by a Owl");
+        add(ModDamageSource.LIGHTNING_GLIDER.getKey(), "%s's Glider experiment went wrong");
 
         // ===== Tabs =====
         add("itemGroup." + MinecraftPlus.MODID, "Minecraft+");

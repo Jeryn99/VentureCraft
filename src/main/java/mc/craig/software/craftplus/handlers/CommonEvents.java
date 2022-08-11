@@ -1,5 +1,6 @@
 package mc.craig.software.craftplus.handlers;
 
+import mc.craig.software.craftplus.common.ModDamageSource;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.capability.ICap;
 import mc.craig.software.craftplus.common.capability.ModCapability;
@@ -8,6 +9,7 @@ import mc.craig.software.craftplus.util.GliderUtil;
 import mc.craig.software.craftplus.util.ModConstants;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,6 +24,7 @@ import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -49,7 +52,28 @@ public class CommonEvents {
         Entity struckEntity = event.getEntity();
         if (struckEntity instanceof Player player) {
             ItemStack chestItem = player.getItemBySlot(EquipmentSlot.CHEST);
-            ParagliderItem.setStruck(chestItem, ParagliderItem.hasCopperMod(chestItem));
+            boolean hasCopperMod = ParagliderItem.hasCopperMod(chestItem);
+            boolean isGliding = GliderUtil.isGlidingWithActiveGlider(player);
+            if (hasCopperMod && isGliding) {
+                ParagliderItem.setStruck(chestItem, true);
+                if (ParagliderItem.hasBeenStruck(chestItem)) {
+                    player.hurt(ModDamageSource.LIGHTNING_GLIDER, 2F);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onHurt(LivingHurtEvent event) {
+        LivingEntity entity = event.getEntity();
+        if (entity instanceof Player player) {
+            ItemStack chestItem = player.getItemBySlot(EquipmentSlot.CHEST);
+            boolean hasCopperMod = ParagliderItem.hasCopperMod(chestItem);
+            boolean isGliding = GliderUtil.isGlidingWithActiveGlider(player);
+            boolean isLightning = event.getSource() == DamageSource.LIGHTNING_BOLT;
+            if (hasCopperMod && isGliding && isLightning) {
+                event.setAmount(0.0F);
+            }
         }
     }
 

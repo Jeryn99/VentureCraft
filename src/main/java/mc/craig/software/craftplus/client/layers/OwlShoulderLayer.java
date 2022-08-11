@@ -6,13 +6,9 @@ import mc.craig.software.craftplus.client.models.Models;
 import mc.craig.software.craftplus.client.models.OwlModel;
 import mc.craig.software.craftplus.client.renderers.RenderOwl;
 import mc.craig.software.craftplus.common.Entities;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ParrotModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.ParrotRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -39,9 +35,9 @@ public class OwlShoulderLayer<T extends Player> extends RenderLayer<T, PlayerMod
 
     private void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int p_117320_, T living, float p_117322_, float p_117323_, float p_117324_, float p_117325_, boolean p_117326_) {
         CompoundTag compoundtag = p_117326_ ? living.getShoulderEntityLeft() : living.getShoulderEntityRight();
-        EntityType.byString(compoundtag.getString("id")).filter((p_117294_) -> p_117294_ == Entities.OWL.get()).ifPresent((p_117338_) -> {
+        EntityType.byString(compoundtag.getString("id")).filter((p_117294_) -> p_117294_ == Entities.OWL.get()).ifPresent((owl) -> {
             poseStack.pushPose();
-            poseStack.translate(p_117326_ ? (double)0.4F : (double)-0.4F, living.isCrouching() ? (double)-1.3F : -1.5D, 0.0D);
+            poseStack.translate(p_117326_ ? (double) 0.4F : (double) -0.4F, living.isCrouching() ? (double) -1.3F : -1.5D, 0.0D);
             VertexConsumer vertexconsumer = multiBufferSource.getBuffer(this.model.renderType(RenderOwl.OWL_LOCATIONS[compoundtag.getInt("Variant")]));
             this.model.renderOnShoulder(poseStack, vertexconsumer, p_117320_, OverlayTexture.NO_OVERLAY, getParentModel());
             poseStack.popPose();

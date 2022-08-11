@@ -2,6 +2,7 @@ package mc.craig.software.craftplus.common.entities;
 
 import mc.craig.software.craftplus.common.Entities;
 import mc.craig.software.craftplus.common.ModDamageSource;
+import mc.craig.software.craftplus.common.entities.ai.OwlSitOnBlocks;
 import mc.craig.software.craftplus.util.Tags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -13,7 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.Difficulty;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -31,6 +32,7 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -52,6 +54,8 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
 
 
     public AnimationState flyingAnimationState = new AnimationState();
+    public AnimationState standingAnimationState = new AnimationState();
+    public AnimationState sittinAnimationState = new AnimationState();
 
     private NearestAttackableTargetGoal<AbstractFish> fishTargetGoal;
     private NearestAttackableTargetGoal<Animal> landTargetGoal;
@@ -77,10 +81,15 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
         super.addAdditionalSaveData(compoundTag);
         compoundTag.putInt("Variant", this.getVariant());
     }
+
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
         this.setVariant(compoundTag.getInt("Variant"));
+    }
+
+    public static boolean checkOwlSpawnRules(EntityType<OwlEntity> owlEntityEntityType, ServerLevelAccessor levelAccessor, MobSpawnType mobSpawnType, BlockPos blockPos, RandomSource randomSource) {
+        return levelAccessor.getBlockState(blockPos.below()).is(Tags.OWL_SPAWNABLE_ON) && Monster.isDarkEnoughToSpawn(levelAccessor, blockPos, randomSource);
     }
 
     @Override
@@ -111,6 +120,7 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
 
         this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Cat.class, 6.0F, 1.0D, 1.2D));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(1, new OwlSitOnBlocks(this, 1.1D, 8));
 
 
         // Attack
@@ -181,6 +191,7 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
     }
 
     private static final Item POISONOUS_FOOD = Items.COOKIE;
+
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
@@ -275,11 +286,6 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
     }
 
     @Override
-    public boolean canMate(Animal animal) {
-        return false;
-    }
-
-    @Override
     protected PathNavigation createNavigation(Level level) {
         FlyingPathNavigation flyingpathnavigation = new FlyingPathNavigation(this, level);
         flyingpathnavigation.setCanOpenDoors(false);
@@ -300,12 +306,23 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
     @Override
     public void tick() {
         if (level.isClientSide) {
+
             if (isFlying()) {
                 if (!flyingAnimationState.isStarted()) {
                     flyingAnimationState.start(tickCount);
                 }
             } else {
                 flyingAnimationState.stop();
+                if (isOrderedToSit()) {
+                    if (!sittinAnimationState.isStarted()) {
+                        sittinAnimationState.start(tickCount);
+                    }
+                } else {
+                    sittinAnimationState.stop();
+                    if (!standingAnimationState.isStarted()) {
+                        standingAnimationState.start(tickCount);
+                    }
+                }
             }
         }
         super.tick();

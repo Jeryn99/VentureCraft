@@ -14,9 +14,11 @@ public class Tags {
 
     public static TagKey<Item> OWL_FOOD = makeItem(MinecraftPlus.MODID, "owl_food");
     public static TagKey<Biome> OWL_SPAWNS = makeBiome("owl_spawns");
+    public static TagKey<Block> OWL_SPAWNABLE_ON = makeBlock("owl_spawnable_on");
+    public static TagKey<Block> OWL_SIT = makeBlock("owl_sit");
 
-    public static TagKey<Block> makeBlock(String domain, String path) {
-        return BlockTags.create(new ResourceLocation(domain, path));
+    public static TagKey<Block> makeBlock(String path) {
+        return BlockTags.create(new ResourceLocation(MinecraftPlus.MODID, path));
     }
 
     private static TagKey<Biome> makeBiome(String name) {

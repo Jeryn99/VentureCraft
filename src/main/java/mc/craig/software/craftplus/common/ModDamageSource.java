@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class ModDamageSource extends DamageSource {
 
     public static ModDamageSource OWL_CLAWS = new ModDamageSource("owl_claws");
+    public static ModDamageSource LIGHTNING_GLIDER = new ModDamageSource("lightning_glider");
 
     private String message = "";
 
