@@ -1,20 +1,21 @@
 package mc.craig.software.craftplus.common.entities;
 
-import mc.craig.software.craftplus.common.Entities;
 import mc.craig.software.craftplus.common.ModDamageSource;
-import mc.craig.software.craftplus.common.entities.ai.OwlSitOnBlocks;
+import mc.craig.software.craftplus.common.ModEntities;
+import mc.craig.software.craftplus.common.entities.ai.owl.OwlChargeAttackGoal;
+import mc.craig.software.craftplus.common.entities.ai.owl.OwlSitOnBlocks;
+import mc.craig.software.craftplus.common.entities.ai.owl.OwlWanderGoal;
 import mc.craig.software.craftplus.util.Tags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -28,128 +29,96 @@ import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.util.LandRandomPos;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.*;
-import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.AbstractSkeleton;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.Nullable;
 
-public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
+import java.util.UUID;
 
-    private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(OwlEntity.class, EntityDataSerializers.INT);
+
+public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMob {
+
+    private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(Owl.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(Owl.class, EntityDataSerializers.INT);
+    private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
 
 
     public AnimationState flyingAnimationState = new AnimationState();
     public AnimationState standingAnimationState = new AnimationState();
     public AnimationState sittinAnimationState = new AnimationState();
+    public float flap, flapSpeed, oFlapSpeed, oFlap;
+    private float nextFlap = 1.0F, flapping = 1.0F;
 
-    private NearestAttackableTargetGoal<AbstractFish> fishTargetGoal;
-    private NearestAttackableTargetGoal<Animal> landTargetGoal;
+    private int ticksSinceEaten;
 
-    public OwlEntity(EntityType<? extends ShoulderRidingEntity> shoulder, Level level) {
+    public Owl(EntityType<? extends ShoulderRidingEntity> shoulder, Level level) {
         super(shoulder, level);
-        this.moveControl = new FlyingMoveControl(this, 10, false);
+        this.moveControl = new FlyingMoveControl(this, 20, false);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.WATER_BORDER, 16.0F);
         this.setPathfindingMalus(BlockPathTypes.COCOA, -1.0F);
-        this.setPathfindingMalus(BlockPathTypes.FENCE, -1.0F);
+        this.setCanPickUpLoot(true);
     }
 
     @Nullable
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance p_29390_, MobSpawnType p_29391_, @javax.annotation.Nullable SpawnGroupData p_29392_, @javax.annotation.Nullable CompoundTag p_29393_) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData p_29392_, @Nullable CompoundTag p_29393_) {
         this.setVariant(serverLevelAccessor.getRandom().nextInt(6));
-        return super.finalizeSpawn(serverLevelAccessor, p_29390_, p_29391_, p_29392_, p_29393_);
+        return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, mobSpawnType, p_29392_, p_29393_);
+    }
+
+    @Override
+    public double getMeleeAttackRangeSqr(LivingEntity livingEntity) {
+        return this.getBbWidth() * 4.0F * this.getBbWidth() * 4.0F + livingEntity.getBbWidth();
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compoundTag) {
         super.addAdditionalSaveData(compoundTag);
         compoundTag.putInt("Variant", this.getVariant());
+        this.addPersistentAngerSaveData(compoundTag);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
         this.setVariant(compoundTag.getInt("Variant"));
-    }
-
-    public static boolean checkOwlSpawnRules(EntityType<OwlEntity> owlEntityEntityType, ServerLevelAccessor levelAccessor, MobSpawnType mobSpawnType, BlockPos blockPos, RandomSource randomSource) {
-        return levelAccessor.getBlockState(blockPos.below()).is(Tags.OWL_SPAWNABLE_ON) && Monster.isDarkEnoughToSpawn(levelAccessor, blockPos, randomSource);
+        this.readPersistentAngerSaveData(level, compoundTag);
     }
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DATA_VARIANT_ID, 0);
+        this.getEntityData().define(DATA_VARIANT_ID, 0);
+        this.getEntityData().define(DATA_REMAINING_ANGER_TIME, 0);
     }
 
     public int getVariant() {
-        return Mth.clamp(this.entityData.get(DATA_VARIANT_ID), 0, 7);
+        return Mth.clamp(this.getEntityData().get(DATA_VARIANT_ID), 0, 7);
     }
 
     public void setVariant(int variant) {
-        this.entityData.set(DATA_VARIANT_ID, variant);
+        this.getEntityData().set(DATA_VARIANT_ID, variant);
     }
-
-    @Override
-    protected void registerGoals() {
-        this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
-        this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
-        this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
-        this.goalSelector.addGoal(3, new LandOnOwnersShoulderGoal(this));
-        this.goalSelector.addGoal(2, new OwlEntity.OwlWanderGoal(this, 1.0D));
-        this.goalSelector.addGoal(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, Ingredient.of(Tags.OWL_FOOD), false));
-
-        this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Cat.class, 6.0F, 1.0D, 1.2D));
-        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(1, new OwlSitOnBlocks(this, 1.1D, 8));
-
-
-        // Attack
-        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, true));
-
-        this.fishTargetGoal = new NearestAttackableTargetGoal<>(this, AbstractFish.class, 20, false, false, (mob) -> mob instanceof AbstractFish);
-        this.landTargetGoal = new NearestAttackableTargetGoal<>(this, Animal.class, 10, false, false, (mob) -> mob instanceof Chicken || mob instanceof Rabbit);
-
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
-
-
-        this.targetSelector.addGoal(4, fishTargetGoal);
-        this.targetSelector.addGoal(6, landTargetGoal);
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true));
-
-        // Breeding
-        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.25D));
-
-
-    }
-
-    private float nextFlap = 1.0F;
-    public float flap;
-    public float flapSpeed;
-    public float oFlapSpeed;
-    public float oFlap;
-    private float flapping = 1.0F;
 
     private void calculateFlapping() {
         this.oFlap = this.flap;
@@ -189,10 +158,6 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
     public boolean checkSpawnRules(LevelAccessor levelAccessor, MobSpawnType mobSpawnType) {
         return !level.isDay() && super.checkSpawnRules(levelAccessor, mobSpawnType);
     }
-
-    private static final Item POISONOUS_FOOD = Items.COOKIE;
-
-
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
         ItemStack itemstack = player.getItemInHand(interactionHand);
@@ -215,7 +180,7 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
             }
 
             return InteractionResult.sidedSuccess(this.level.isClientSide);
-        } else if (itemstack.is(POISONOUS_FOOD)) {
+        } else if (itemstack.is(Tags.BIRD_POISON)) {
             if (!player.getAbilities().instabuild) {
                 itemstack.shrink(1);
             }
@@ -237,43 +202,63 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
         }
     }
 
-    public static class OwlWanderGoal extends WaterAvoidingRandomFlyingGoal {
-        public OwlWanderGoal(PathfinderMob p_186224_, double p_186225_) {
-            super(p_186224_, p_186225_);
-        }
+    public static AttributeSupplier.Builder createAttributes() {
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 6.0D).add(Attributes.FLYING_SPEED, 0.4F).add(Attributes.ATTACK_DAMAGE, 2F).add(Attributes.ATTACK_KNOCKBACK, 0.4F).add(Attributes.MOVEMENT_SPEED, 0.2F);
+    }
 
-        @Nullable
-        protected Vec3 getPosition() {
-            Vec3 vec3 = null;
-            if (this.mob.isInWater()) {
-                vec3 = LandRandomPos.getPos(this.mob, 15, 15);
+    @Override
+    protected void pickUpItem(ItemEntity itemEntity) {
+        ItemStack itemstack = itemEntity.getItem();
+        if (this.canHoldItem(itemstack)) {
+            int i = itemstack.getCount();
+            if (i > 1) {
+                ItemEntity itementity = new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), itemstack.split(i - 1));
+                this.level.addFreshEntity(itementity);
             }
-
-            if (this.mob.getRandom().nextFloat() >= this.probability) {
-                vec3 = this.getTreePos();
-            }
-
-            return vec3 == null ? super.getPosition() : vec3;
+            this.onItemPickup(itemEntity);
+            this.setItemSlot(EquipmentSlot.MAINHAND, itemstack.split(1));
+            this.setGuaranteedDrop(EquipmentSlot.MAINHAND);
+            this.take(itemEntity, itemstack.getCount());
+            itemEntity.discard();
+            this.ticksSinceEaten = 0;
         }
+    }
 
-        @Nullable
-        private Vec3 getTreePos() {
-            BlockPos blockpos = this.mob.blockPosition();
-            BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
-            BlockPos.MutableBlockPos blockpos$mutableblockpos1 = new BlockPos.MutableBlockPos();
+    @Override
+    public boolean canHoldItem(ItemStack itemStack) {
+        return itemStack.is(Tags.OWL_FOOD);
+    }
 
-            for (BlockPos blockpos1 : BlockPos.betweenClosed(Mth.floor(this.mob.getX() - 3.0D), Mth.floor(this.mob.getY() - 6.0D), Mth.floor(this.mob.getZ() - 3.0D), Mth.floor(this.mob.getX() + 3.0D), Mth.floor(this.mob.getY() + 6.0D), Mth.floor(this.mob.getZ() + 3.0D))) {
-                if (!blockpos.equals(blockpos1)) {
-                    BlockState blockstate = this.mob.level.getBlockState(blockpos$mutableblockpos1.setWithOffset(blockpos1, Direction.DOWN));
-                    boolean flag = blockstate.getBlock() instanceof LeavesBlock || blockstate.is(BlockTags.LOGS);
-                    if (flag && this.mob.level.isEmptyBlock(blockpos1) && this.mob.level.isEmptyBlock(blockpos$mutableblockpos.setWithOffset(blockpos1, Direction.UP))) {
-                        return Vec3.atBottomCenterOf(blockpos1);
-                    }
-                }
-            }
+    @Override
+    protected void registerGoals() {
+        this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
+        this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
+        this.goalSelector.addGoal(3, new LandOnOwnersShoulderGoal(this));
+        this.goalSelector.addGoal(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, Ingredient.of(Tags.OWL_FOOD), false));
+        this.goalSelector.addGoal(3, new OwlWanderGoal(this, 1.0D));
+        this.goalSelector.addGoal(3, new FleeSunGoal(this, 1.0D));
 
-            return null;
-        }
+        this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Cat.class, 6.0F, 1.0D, 1.2D));
+        this.targetSelector.addGoal(1, new OwlSitOnBlocks(this, 1.1D, 8));
+
+        // Attack
+        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, true));
+        this.goalSelector.addGoal(4, new OwlChargeAttackGoal(this));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, AbstractFish.class, 20, false, false, (mob) -> mob instanceof AbstractFish));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, PathfinderMob.class, 20, false, false, (mob) -> mob.getType().is(Tags.OWL_ATTACK)));
+        this.targetSelector.addGoal(1, new NonTameRandomTargetGoal<>(this, Turtle.class, false, Turtle.BABY_ON_LAND_SELECTOR));
+        this.targetSelector.addGoal(8, new ResetUniversalAngerTargetGoal<>(this, true));
+
+        // Breeding
+        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
+        this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.25D));
+
+
     }
 
     @Override
@@ -292,10 +277,6 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
         flyingpathnavigation.setCanFloat(true);
         flyingpathnavigation.setCanPassDoors(true);
         return flyingpathnavigation;
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 6.0D).add(Attributes.FLYING_SPEED, 0.4F).add(Attributes.ATTACK_DAMAGE, 0.4F).add(Attributes.ATTACK_KNOCKBACK, 0.4F).add(Attributes.MOVEMENT_SPEED, 0.2F);
     }
 
     @Override
@@ -332,16 +313,69 @@ public class OwlEntity extends ShoulderRidingEntity implements FlyingAnimal {
     public void aiStep() {
         this.calculateFlapping();
         super.aiStep();
+
+        if (!this.level.isClientSide && this.isAlive() && this.isEffectiveAi()) {
+            ++this.ticksSinceEaten;
+            ItemStack itemstack = this.getItemBySlot(EquipmentSlot.MAINHAND);
+            if (this.canEat(itemstack)) {
+                setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.AIR));
+                setItemInHand(InteractionHand.OFF_HAND, itemstack); //Move to Offhand (Mouth)
+                if (this.ticksSinceEaten > 600) {
+                    ItemStack itemstack1 = itemstack.finishUsingItem(this.level, this);
+                    if (!itemstack1.isEmpty()) {
+                        this.setItemSlot(EquipmentSlot.OFFHAND, itemstack1);
+                    }
+
+                    this.ticksSinceEaten = 0;
+                } else if (this.ticksSinceEaten > 560 && this.random.nextFloat() < 0.1F) {
+                    this.playSound(this.getEatingSound(itemstack), 1.0F, 1.0F);
+                    this.level.broadcastEntityEvent(this, (byte) 45);
+                }
+            }
+        }
+
+        if (!this.level.isClientSide) {
+            this.updatePersistentAnger((ServerLevel) this.level, true);
+        }
+    }
+
+    private boolean canEat(ItemStack p_28598_) {
+        return p_28598_.getItem().isEdible() && this.getTarget() == null && this.onGround && !this.isSleeping();
     }
 
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
-        return new OwlEntity(Entities.OWL.get(), serverLevel);
+        Owl owl = new Owl(ModEntities.OWL.get(), serverLevel);
+        return owl;
     }
 
     @Override
     public boolean isFlying() {
         return !this.onGround;
+    }
+
+    public int getRemainingPersistentAngerTime() {
+        return this.getEntityData().get(DATA_REMAINING_ANGER_TIME);
+    }
+
+    public void setRemainingPersistentAngerTime(int p_30404_) {
+        this.getEntityData().set(DATA_REMAINING_ANGER_TIME, p_30404_);
+    }
+
+    public void startPersistentAngerTimer() {
+        this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
+    }
+
+    @Nullable
+    private UUID persistentAngerTarget;
+
+    @Nullable
+    public UUID getPersistentAngerTarget() {
+        return this.persistentAngerTarget;
+    }
+
+    public void setPersistentAngerTarget(@Nullable UUID p_30400_) {
+        this.persistentAngerTarget = p_30400_;
     }
 }

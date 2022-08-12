@@ -3,7 +3,7 @@ package mc.craig.software.craftplus.client.models;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import mc.craig.software.craftplus.common.entities.StalkerEntity;
+import mc.craig.software.craftplus.common.entities.Stalker;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.ListModel;
@@ -15,7 +15,7 @@ import net.minecraft.world.entity.HumanoidArm;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class StalkerModel extends ListModel<StalkerEntity> implements HeadedModel, ArmedModel {
+public class StalkerModel extends ListModel<Stalker> implements HeadedModel, ArmedModel {
     public final ModelPart head;
     public final ModelPart body;
     public final ModelPart leftArm;
@@ -52,15 +52,15 @@ public class StalkerModel extends ListModel<StalkerEntity> implements HeadedMode
 
 
     @Override
-    public void setupAnim(@Nullable StalkerEntity weepingAngel, float v, float v1, float v2, float v3, float v4) {
+    public void setupAnim(@Nullable Stalker weepingAngel, float v, float v1, float v2, float v3, float v4) {
 
-        StalkerEntity.Pose pose = weepingAngel.getStalkerPose();
+        Stalker.Pose pose = weepingAngel.getStalkerPose();
 
         head.xRot = (float) Math.toRadians(0);
         head.yRot = (float) Math.toRadians(0);
         head.zRot = (float) Math.toRadians(0);
 
-        if (pose == StalkerEntity.Pose.FURIOUS) {
+        if (pose == Stalker.Pose.FURIOUS) {
             rightArm.xRot = (float) Math.toRadians(-115);
             rightArm.yRot = (float) Math.toRadians(0);
             rightArm.zRot = (float) Math.toRadians(0);
@@ -76,7 +76,7 @@ public class StalkerModel extends ListModel<StalkerEntity> implements HeadedMode
         }
 
 
-        if (pose == StalkerEntity.Pose.ANGRY) {
+        if (pose == Stalker.Pose.ANGRY) {
             rightArm.xRot = (float) Math.toRadians(-90);
             rightArm.yRot = (float) Math.toRadians(-20);
             rightArm.zRot = (float) Math.toRadians(30);
@@ -92,7 +92,7 @@ public class StalkerModel extends ListModel<StalkerEntity> implements HeadedMode
         }
 
 
-        if (pose == StalkerEntity.Pose.HIDING) {
+        if (pose == Stalker.Pose.HIDING) {
             head.xRot = (float) Math.toRadians(20);
             head.yRot = (float) Math.toRadians(0);
             head.zRot = (float) Math.toRadians(0);
@@ -107,7 +107,7 @@ public class StalkerModel extends ListModel<StalkerEntity> implements HeadedMode
             return;
         }
 
-        if (pose == StalkerEntity.Pose.APPROACH) {
+        if (pose == Stalker.Pose.APPROACH) {
             rightArm.xRot = -1.04533F;
             rightArm.yRot = -0.55851F;
             rightArm.zRot = 0.0F;
@@ -117,7 +117,7 @@ public class StalkerModel extends ListModel<StalkerEntity> implements HeadedMode
             return;
         }
 
-        if (pose == StalkerEntity.Pose.IDLE) {
+        if (pose == Stalker.Pose.IDLE) {
             head.xRot = (float) Math.toRadians(0);
             head.yRot = (float) Math.toRadians(0);
             head.zRot = (float) Math.toRadians(0);
@@ -132,7 +132,7 @@ public class StalkerModel extends ListModel<StalkerEntity> implements HeadedMode
             return;
         }
 
-        if (pose == StalkerEntity.Pose.SHY) {
+        if (pose == Stalker.Pose.SHY) {
             rightArm.xRot = (float) Math.toRadians(-90);
             rightArm.yRot = (float) Math.toRadians(-1.5);
             rightArm.zRot = (float) Math.toRadians(-20);

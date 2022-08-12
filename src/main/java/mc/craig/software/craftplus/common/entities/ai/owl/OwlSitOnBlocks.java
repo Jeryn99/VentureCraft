@@ -1,6 +1,6 @@
-package mc.craig.software.craftplus.common.entities.ai;
+package mc.craig.software.craftplus.common.entities.ai.owl;
 
-import mc.craig.software.craftplus.common.entities.OwlEntity;
+import mc.craig.software.craftplus.common.entities.Owl;
 import mc.craig.software.craftplus.util.Tags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.PathfinderMob;
@@ -11,9 +11,9 @@ import net.minecraft.world.level.LevelReader;
 import java.util.EnumSet;
 
 public class OwlSitOnBlocks extends MoveToBlockGoal {
-    private final OwlEntity owl;
+    private final Owl owl;
 
-    public OwlSitOnBlocks(OwlEntity p_25135_, double p_25136_, int p_25137_) {
+    public OwlSitOnBlocks(Owl p_25135_, double p_25136_, int p_25137_) {
         super(p_25135_, p_25136_, p_25137_, 6);
         this.owl = p_25135_;
         this.verticalSearchStart = -2;

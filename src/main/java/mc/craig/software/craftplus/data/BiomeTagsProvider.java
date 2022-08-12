@@ -6,6 +6,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -25,14 +26,20 @@ public class BiomeTagsProvider extends TagsProvider<Biome> {
 
         for (Map.Entry<ResourceKey<Biome>, Biome> entry : ForgeRegistries.BIOMES.getEntries()) {
             Biome biome = entry.getValue();
-            if(ForgeRegistries.BIOMES.getKey(biome).getPath().contains("jungle")){
+            if (biome.getPrecipitation() == Biome.Precipitation.SNOW) {
                 add(Tags.OWL_SPAWNS, biome);
             }
         }
+        add(Tags.OWL_SPAWNS, BiomeTags.IS_FOREST, BiomeTags.IS_TAIGA, BiomeTags.IS_MOUNTAIN);
+
     }
 
     public void add(TagKey<Biome> branch, Biome biome) {
         this.tag(branch).add(biome);
+    }
+
+    public void add(TagKey<Biome> branch, TagKey<Biome>... biome) {
+        this.tag(branch).addTags(biome);
     }
 
     public void add(TagKey<Biome> branch, Biome... biome) {

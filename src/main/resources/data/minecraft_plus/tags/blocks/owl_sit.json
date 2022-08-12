@@ -1,6 +1,7 @@
 {
   "values": [
     "#minecraft:beds",
-    "#minecraft:leaves"
+    "#minecraft:leaves",
+    "#minecraft:fences"
   ]
 }

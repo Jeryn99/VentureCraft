@@ -5,7 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import mc.craig.software.craftplus.MinecraftPlus;
-import mc.craig.software.craftplus.client.layers.GlideLayer;
+import mc.craig.software.craftplus.client.layers.PlayerGliderLayer;
 import mc.craig.software.craftplus.common.capability.ModCapability;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.util.GliderUtil;
@@ -59,14 +59,14 @@ public class ClientEvents {
     @SubscribeEvent
     public static void onRenderLevelLast(RenderLevelStageEvent event) {
 
+
         RenderBuffers bufferSource = Minecraft.getInstance().renderBuffers();
 
         LocalPlayer living = Minecraft.getInstance().player;
         ItemStack stack = living.getItemBySlot(EquipmentSlot.CHEST);
 
         PoseStack posestack = event.getPoseStack();
-        if (Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON && stack.getItem() instanceof ParagliderItem && GliderUtil.isGlidingWithActiveGlider(living)) {
-            event.setCanceled(true);
+        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_WEATHER && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON && stack.getItem() instanceof ParagliderItem && GliderUtil.isGlidingWithActiveGlider(living)) {
             posestack.pushPose();
             posestack.translate(0, 2.2, -0.5);
             posestack.scale(1.5F, 1.5F, 1.5F);
@@ -75,11 +75,11 @@ public class ClientEvents {
             if(ParagliderItem.isSpaceGlider(stack)) {
                 posestack.mulPose(Vector3f.YP.rotationDegrees(180));
                 posestack.translate(0, -0.2, 0);
-                GlideLayer.xWingModel.setupAnim(living, 0, 0, living.tickCount, 0, 0);
-                GlideLayer.xWingModel.renderToBuffer(posestack,bufferSource.bufferSource().getBuffer(RenderType.entityCutoutNoCull(GlideLayer.getGliderTexture(stack))), lightLevel, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+                PlayerGliderLayer.xWingModel.setupAnim(living, 0, 0, living.tickCount, 0, 0);
+                PlayerGliderLayer.xWingModel.renderToBuffer(posestack, bufferSource.bufferSource().getBuffer(RenderType.entityCutoutNoCull(PlayerGliderLayer.getGliderTexture(stack))), lightLevel, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
             } else {
-                GlideLayer.gliderModel.setupAnim(living, 0, 0, living.tickCount, 0, 0);
-                GlideLayer.gliderModel.renderToBuffer(posestack, bufferSource.bufferSource().getBuffer(RenderType.entityCutoutNoCull(GlideLayer.getGliderTexture(stack))), lightLevel, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+                PlayerGliderLayer.gliderModel.setupAnim(living, 0, 0, living.tickCount, 0, 0);
+                PlayerGliderLayer.gliderModel.renderToBuffer(posestack, bufferSource.bufferSource().getBuffer(RenderType.entityCutoutNoCull(PlayerGliderLayer.getGliderTexture(stack))), lightLevel, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
             }
             posestack.popPose();
         }

@@ -6,6 +6,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -31,12 +32,19 @@ public class ItemTagsProvider extends TagsProvider<Item> {
             }
         }
 
-        add(Tags.OWL_FOOD, Items.RABBIT, Items.COOKED_RABBIT, Items.RABBIT_FOOT, Items.RABBIT_HIDE);
+        add(Tags.OWL_FOOD, Items.RABBIT, Items.COOKED_RABBIT, Items.RABBIT_FOOT, Items.RABBIT_HIDE, Items.TURTLE_EGG, Items.SPIDER_EYE, Items.CHICKEN, Items.COOKED_CHICKEN);
+        add(Tags.OWL_FOOD, ItemTags.FISHES);
+
+        add(Tags.BIRD_POISON, Items.COOKIE, Items.CAKE);
 
     }
 
     public void add(TagKey<Item> branch, Item item) {
         this.tag(branch).add(item);
+    }
+
+    public void add(TagKey<Item> branch, TagKey<Item>... item) {
+        this.tag(branch).addTags(item);
     }
 
     public void add(TagKey<Item> branch, Item... item) {

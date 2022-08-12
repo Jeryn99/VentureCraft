@@ -15,11 +15,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 
-public class StalkerEntity extends QuantumLockedLifeform {
+public class Stalker extends QuantumLockedLifeform {
 
-    private static final EntityDataAccessor<String> POSE = SynchedEntityData.defineId(StalkerEntity.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<String> POSE = SynchedEntityData.defineId(Stalker.class, EntityDataSerializers.STRING);
 
-    public StalkerEntity(EntityType<? extends QuantumLockedLifeform> type, Level worldIn) {
+    public Stalker(EntityType<? extends QuantumLockedLifeform> type, Level worldIn) {
         super(worldIn, type);
     }
 

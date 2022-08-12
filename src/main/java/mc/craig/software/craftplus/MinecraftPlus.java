@@ -1,14 +1,15 @@
 package mc.craig.software.craftplus;
 
 import mc.craig.software.craftplus.common.Blocks;
-import mc.craig.software.craftplus.common.Entities;
+import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.ModSounds;
 import mc.craig.software.craftplus.common.capability.ICap;
-import mc.craig.software.craftplus.common.entities.OwlEntity;
-import mc.craig.software.craftplus.common.entities.StalkerEntity;
+import mc.craig.software.craftplus.common.entities.Owl;
+import mc.craig.software.craftplus.common.entities.Stalker;
 import mc.craig.software.craftplus.data.*;
 import mc.craig.software.craftplus.networking.Network;
+import mc.craig.software.craftplus.util.ModSpawningRules;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
@@ -42,7 +43,7 @@ public class MinecraftPlus {
 
         ModItems.ITEMS.register(modBus);
         Blocks.BLOCKS.register(modBus);
-        Entities.ENTITY_TYPES.register(modBus);
+        ModEntities.ENTITY_TYPES.register(modBus);
         ModSounds.SOUNDS.register(modBus);
 
         modBus.addListener(this::onAttributeAssign);
@@ -56,9 +57,9 @@ public class MinecraftPlus {
     }
 
     public void onAttributeAssign(EntityAttributeCreationEvent event) {
-        event.put(Entities.STALKER.get(), StalkerEntity.createAttributes().build());
-        event.put(Entities.OWL.get(), OwlEntity.createAttributes().build());
-        SpawnPlacements.register(Entities.OWL.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, OwlEntity::checkOwlSpawnRules);
+        event.put(ModEntities.STALKER.get(), Stalker.createAttributes().build());
+        event.put(ModEntities.OWL.get(), Owl.createAttributes().build());
+        SpawnPlacements.register(ModEntities.OWL.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, ModSpawningRules::checkOwlSpawnRules);
 
     }
 
@@ -73,6 +74,7 @@ public class MinecraftPlus {
         generator.addProvider(true, new ItemTagsProvider(generator, Registry.ITEM, existingFileHelper));
         generator.addProvider(true, new BlockTagsProvider(generator, Registry.BLOCK, existingFileHelper));
         generator.addProvider(true, new BiomeTagsProvider(generator, BuiltinRegistries.BIOME, existingFileHelper));
+        generator.addProvider(true, new EntityTypeTagsProvider(generator, Registry.ENTITY_TYPE, existingFileHelper));
         generator.addProvider(true, new BiomeModifierProvider(generator));
     }
 

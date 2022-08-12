@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import mc.craig.software.craftplus.client.models.Models;
 import mc.craig.software.craftplus.client.models.OwlModel;
 import mc.craig.software.craftplus.client.renderers.RenderOwl;
-import mc.craig.software.craftplus.common.Entities;
+import mc.craig.software.craftplus.common.ModEntities;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -35,7 +35,7 @@ public class OwlShoulderLayer<T extends Player> extends RenderLayer<T, PlayerMod
 
     private void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int p_117320_, T living, float p_117322_, float p_117323_, float p_117324_, float p_117325_, boolean p_117326_) {
         CompoundTag compoundtag = p_117326_ ? living.getShoulderEntityLeft() : living.getShoulderEntityRight();
-        EntityType.byString(compoundtag.getString("id")).filter((p_117294_) -> p_117294_ == Entities.OWL.get()).ifPresent((owl) -> {
+        EntityType.byString(compoundtag.getString("id")).filter((p_117294_) -> p_117294_ == ModEntities.OWL.get()).ifPresent((owl) -> {
             poseStack.pushPose();
             poseStack.translate(p_117326_ ? (double) 0.4F : (double) -0.4F, living.isCrouching() ? (double) -1.3F : -1.5D, 0.0D);
             VertexConsumer vertexconsumer = multiBufferSource.getBuffer(this.model.renderType(RenderOwl.OWL_LOCATIONS[compoundtag.getInt("Variant")]));

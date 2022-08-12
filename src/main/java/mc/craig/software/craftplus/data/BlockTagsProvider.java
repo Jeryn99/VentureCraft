@@ -19,8 +19,7 @@ public class BlockTagsProvider extends TagsProvider<Block> {
 
     @Override
     protected void addTags() {
-        add(Tags.OWL_SIT, BlockTags.BEDS, BlockTags.LEAVES);
-        add(Tags.OWL_SPAWNABLE_ON, BlockTags.LEAVES, BlockTags.ACACIA_LOGS, BlockTags.CROPS);
+        add(Tags.OWL_SIT, BlockTags.BEDS, BlockTags.LEAVES, BlockTags.FENCES);
     }
 
     public void add(TagKey<Block> branch, Block item) {

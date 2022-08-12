@@ -1,8 +1,8 @@
 package mc.craig.software.craftplus.data;
 
 import mc.craig.software.craftplus.MinecraftPlus;
-import mc.craig.software.craftplus.common.Entities;
 import mc.craig.software.craftplus.common.ModDamageSource;
+import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.ModSounds;
 import mc.craig.software.craftplus.util.ModConstants;
@@ -19,9 +19,9 @@ public class LangProviderEnglish extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        // ===== Entities =====
-        add(Entities.STALKER.get(), "Stalker");
-        add(Entities.OWL.get(), "Owl");
+        // ===== ModEntities =====
+        add(ModEntities.STALKER.get(), "Stalker");
+        add(ModEntities.OWL.get(), "Owl");
 
         // ===== Items =====
 

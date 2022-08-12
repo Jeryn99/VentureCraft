@@ -2,7 +2,6 @@ package mc.craig.software.craftplus.common;
 
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.common.items.TierArmor;
-import mc.craig.software.craftplus.util.Utils;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -48,8 +47,8 @@ public class ModItems {
     public static final RegistryObject<TierArmor> LEATHER_ARMOR_LEGGINGS = ITEMS.register("leather_leggings", () -> new TierArmor(TierArmor.Tier.LEATHER, EquipmentSlot.LEGS, new Item.Properties().tab(MAIN)));
     public static final RegistryObject<TierArmor> LEATHER_ARMOR_FEET = ITEMS.register("leather_boots", () -> new TierArmor(TierArmor.Tier.LEATHER, EquipmentSlot.FEET, new Item.Properties().tab(MAIN)));
 
-    public static final RegistryObject<SpawnEggItem> STALKERS_EGG = ITEMS.register("stalker_spawn_egg", () -> new ForgeSpawnEggItem(Entities.STALKER, DyeColor.BLACK.getTextColor(), DyeColor.ORANGE.getTextColor(), new Item.Properties().tab(MAIN)));
-    public static final RegistryObject<SpawnEggItem> OWL_SPAWN_EGG = ITEMS.register("owl_spawn_egg", () -> new ForgeSpawnEggItem(Entities.OWL, DyeColor.BROWN.getTextColor(), DyeColor.YELLOW.getTextColor(), new Item.Properties().tab(MAIN)));
+    public static final RegistryObject<SpawnEggItem> STALKERS_EGG = ITEMS.register("stalker_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.STALKER, DyeColor.BLACK.getTextColor(), DyeColor.ORANGE.getTextColor(), new Item.Properties().tab(MAIN)));
+    public static final RegistryObject<SpawnEggItem> OWL_SPAWN_EGG = ITEMS.register("owl_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.OWL, DyeColor.BROWN.getTextColor(), DyeColor.YELLOW.getTextColor(), new Item.Properties().tab(MAIN)));
 
     public static final RegistryObject<Item> OWL_FEATHER = ITEMS.register("owl_feather", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
     public static final RegistryObject<Item> CLIMBING_GEAR = ITEMS.register("climbing_gear", () -> new ArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.FEET, new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));

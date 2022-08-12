@@ -3,7 +3,7 @@ package mc.craig.software.craftplus.data;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import mc.craig.software.craftplus.MinecraftPlus;
-import mc.craig.software.craftplus.common.Entities;
+import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.util.Tags;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
@@ -51,7 +51,7 @@ public record BiomeModifierProvider(DataGenerator dataGenerator) implements Data
         final Path outputFolder = this.dataGenerator.getOutputFolder();
 
         // Biome Modifiers
-        BiomeModifier spawnsModifier = new ForgeBiomeModifiers.AddSpawnsBiomeModifier(new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), Tags.OWL_SPAWNS), List.of(new MobSpawnSettings.SpawnerData(Entities.OWL.get(), 40, 1, 2)));
+        BiomeModifier spawnsModifier = new ForgeBiomeModifiers.AddSpawnsBiomeModifier(new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), Tags.OWL_SPAWNS), List.of(new MobSpawnSettings.SpawnerData(ModEntities.OWL.get(), 40, 1, 2)));
 
         // Generate BiomeModiers
         generate(ops, spawnsModifier, outputFolder, "owl_spawns", cachedOutput);

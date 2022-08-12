@@ -1,14 +1,13 @@
 package mc.craig.software.craftplus.data;
 
 import com.mojang.datafixers.util.Pair;
-import mc.craig.software.craftplus.common.Entities;
+import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.ModItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.EntityLoot;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTables;
@@ -49,14 +48,14 @@ public class ModLootTableProvider extends LootTableProvider {
     public static class ModEntityLoot extends EntityLoot {
         @Override
         protected void addTables() {
-            add(Entities.OWL.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(ModItems.OWL_FEATHER.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))).apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))));
-            add(Entities.STALKER.get(), LootTable.lootTable());
+            add(ModEntities.OWL.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(ModItems.OWL_FEATHER.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))).apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))));
+            add(ModEntities.STALKER.get(), LootTable.lootTable());
         }
 
         @Override
         protected Iterable<EntityType<?>> getKnownEntities() {
             ArrayList<EntityType<?>> entityTypes = new ArrayList<>();
-            for (RegistryObject<EntityType<?>> entry : Entities.ENTITY_TYPES.getEntries()) {
+            for (RegistryObject<EntityType<?>> entry : ModEntities.ENTITY_TYPES.getEntries()) {
                 entityTypes.add(entry.get());
             }
             return entityTypes;

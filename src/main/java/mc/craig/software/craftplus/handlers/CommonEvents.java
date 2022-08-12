@@ -4,6 +4,7 @@ import mc.craig.software.craftplus.common.ModDamageSource;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.capability.ICap;
 import mc.craig.software.craftplus.common.capability.ModCapability;
+import mc.craig.software.craftplus.common.entities.Owl;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.util.GliderUtil;
 import mc.craig.software.craftplus.util.ModConstants;
@@ -13,6 +14,9 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;
+import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
@@ -20,6 +24,7 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -30,10 +35,18 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nonnull;
+import java.util.function.Predicate;
 
 @Mod.EventBusSubscriber
 public class CommonEvents {
 
+    @SubscribeEvent
+    public static void onJoin(EntityJoinLevelEvent levelEvent){
+        Entity entity = levelEvent.getEntity();
+        if(entity instanceof Cat cat){
+            cat.targetSelector.addGoal(1, new NonTameRandomTargetGoal<>(cat, Owl.class, false, null));
+        }
+    }
 
     @SubscribeEvent
     public static void onAnvil(AnvilUpdateEvent event) {

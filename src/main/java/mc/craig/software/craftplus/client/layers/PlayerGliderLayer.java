@@ -21,18 +21,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class GlideLayer<T extends LivingEntity, M extends HumanoidModel<T>, A extends HumanoidModel<T>> extends RenderLayer<T, M> {
+public class PlayerGliderLayer<T extends LivingEntity, M extends HumanoidModel<T>, A extends HumanoidModel<T>> extends RenderLayer<T, M> {
 
     public static GliderModel gliderModel;
     public static XWingModel<Entity> xWingModel;
-
-    private static final ResourceLocation POWER_LOCATION = new ResourceLocation("textures/entity/creeper/creeper_armor.png");
     private static final ResourceLocation COPPER_EMBED = new ResourceLocation(MinecraftPlus.MODID, "textures/entity/glider/copper_overlay.png");
     private static final ResourceLocation COPPER_EMBED_CHARGED = new ResourceLocation(MinecraftPlus.MODID, "textures/entity/glider/copper_overlay_charged.png");
     private static final ResourceLocation XWING_TEXTURE = new ResourceLocation(MinecraftPlus.MODID, "textures/entity/glider/xwing.png");
 
 
-    public GlideLayer(RenderLayerParent<T, M> renderLayerParent) {
+    public PlayerGliderLayer(RenderLayerParent<T, M> renderLayerParent) {
         super(renderLayerParent);
         gliderModel = new GliderModel(Minecraft.getInstance().getEntityModels().bakeLayer(Models.GLIDER));
         xWingModel = new XWingModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(Models.X_WING));

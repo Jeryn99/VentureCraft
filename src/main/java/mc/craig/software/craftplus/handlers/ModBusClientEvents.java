@@ -1,11 +1,11 @@
 package mc.craig.software.craftplus.handlers;
 
-import mc.craig.software.craftplus.client.layers.GlideLayer;
 import mc.craig.software.craftplus.client.layers.OwlShoulderLayer;
+import mc.craig.software.craftplus.client.layers.PlayerGliderLayer;
 import mc.craig.software.craftplus.client.models.Models;
 import mc.craig.software.craftplus.client.renderers.RenderOwl;
 import mc.craig.software.craftplus.client.renderers.RenderStalker;
-import mc.craig.software.craftplus.common.Entities;
+import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -29,8 +29,8 @@ public class ModBusClientEvents {
 
     @SubscribeEvent
     public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(Entities.STALKER.get(), RenderStalker::new);
-        event.registerEntityRenderer(Entities.OWL.get(), RenderOwl::new);
+        event.registerEntityRenderer(ModEntities.STALKER.get(), RenderStalker::new);
+        event.registerEntityRenderer(ModEntities.OWL.get(), RenderOwl::new);
     }
 
     @SubscribeEvent
@@ -42,7 +42,7 @@ public class ModBusClientEvents {
     public static void renderLayers(EntityRenderersEvent.AddLayers addLayers) {
         addLayers.getSkins().forEach(skin -> {
             LivingEntityRenderer<? extends Player, ? extends EntityModel<? extends Player>> renderer = addLayers.getSkin(skin);
-            renderer.addLayer(new GlideLayer(renderer));
+            renderer.addLayer(new PlayerGliderLayer(renderer));
             renderer.addLayer(new OwlShoulderLayer(renderer, addLayers.getEntityModels()));
         });
     }
