@@ -1,0 +1,6 @@
+{
+  "type": "forge:remove_features",
+  "features": "minecraft:ore_diamond_large",
+  "biomes": "#minecraft:is_overworld",
+  "steps": "underground_ores"
+}

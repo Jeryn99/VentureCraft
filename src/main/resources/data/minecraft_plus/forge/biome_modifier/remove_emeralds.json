@@ -1,0 +1,6 @@
+{
+  "type": "forge:remove_features",
+  "features": "minecraft:ore_emerald",
+  "biomes": "#minecraft:is_overworld",
+  "steps": "underground_ores"
+}

@@ -1,12 +1,13 @@
 package mc.craig.software.craftplus;
 
-import mc.craig.software.craftplus.common.Blocks;
+import mc.craig.software.craftplus.common.ModBlocks;
 import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.ModSounds;
 import mc.craig.software.craftplus.common.capability.ICap;
 import mc.craig.software.craftplus.common.entities.Owl;
 import mc.craig.software.craftplus.common.entities.Stalker;
+import mc.craig.software.craftplus.common.level.ModOres;
 import mc.craig.software.craftplus.data.*;
 import mc.craig.software.craftplus.networking.Network;
 import mc.craig.software.craftplus.util.ModSpawningRules;
@@ -42,9 +43,11 @@ public class MinecraftPlus {
         MinecraftForge.EVENT_BUS.register(this);
 
         ModItems.ITEMS.register(modBus);
-        Blocks.BLOCKS.register(modBus);
+        ModBlocks.BLOCKS.register(modBus);
         ModEntities.ENTITY_TYPES.register(modBus);
         ModSounds.SOUNDS.register(modBus);
+        ModOres.PLACED_FEATURES.register(modBus);
+        ModOres.CONFIGURED_FEATURES.register(modBus);
 
         modBus.addListener(this::onAttributeAssign);
         modBus.addListener(this::onGatherData);
@@ -76,6 +79,7 @@ public class MinecraftPlus {
         generator.addProvider(true, new BiomeTagsProvider(generator, BuiltinRegistries.BIOME, existingFileHelper));
         generator.addProvider(true, new EntityTypeTagsProvider(generator, Registry.ENTITY_TYPE, existingFileHelper));
         generator.addProvider(true, new BiomeModifierProvider(generator));
+        generator.addProvider(true, new ModelProviderBlock(generator, existingFileHelper));
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

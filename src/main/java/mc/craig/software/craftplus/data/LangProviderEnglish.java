@@ -1,10 +1,7 @@
 package mc.craig.software.craftplus.data;
 
 import mc.craig.software.craftplus.MinecraftPlus;
-import mc.craig.software.craftplus.common.ModDamageSource;
-import mc.craig.software.craftplus.common.ModEntities;
-import mc.craig.software.craftplus.common.ModItems;
-import mc.craig.software.craftplus.common.ModSounds;
+import mc.craig.software.craftplus.common.*;
 import mc.craig.software.craftplus.util.ModConstants;
 import net.minecraft.ChatFormatting;
 import net.minecraft.data.DataGenerator;
@@ -67,9 +64,12 @@ public class LangProviderEnglish extends LanguageProvider {
         addSound(ModSounds.GLIDER_OPEN.get(), "Glider opens");
         addSound(ModSounds.SPACE_GLIDE.get(), "Space Glide");
         addSound(ModSounds.SPACE_DEPLOY.get(), "Space Deploy");
+        addSound(ModSounds.OWL_HURT.get(), "Owl hurts");
+        addSound(ModSounds.OWL_HOOTS.get(), "Space hoots");
 
         // ===== Blocks =====
-
+        add(ModBlocks.SAPPHIRE_ORE.get(), "Sapphire Ore");
+        add(ModBlocks.DEEPSLATE_SAPPHIRE_ORE.get(), "Deepslate Sapphire Ore");
     }
 
     private void addSound(SoundEvent soundEvent, String subtitle) {

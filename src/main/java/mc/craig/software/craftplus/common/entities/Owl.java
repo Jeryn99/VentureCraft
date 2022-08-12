@@ -2,7 +2,9 @@ package mc.craig.software.craftplus.common.entities;
 
 import mc.craig.software.craftplus.common.ModDamageSource;
 import mc.craig.software.craftplus.common.ModEntities;
+import mc.craig.software.craftplus.common.ModSounds;
 import mc.craig.software.craftplus.common.entities.ai.owl.OwlChargeAttackGoal;
+import mc.craig.software.craftplus.common.entities.ai.owl.OwlMoveHelper;
 import mc.craig.software.craftplus.common.entities.ai.owl.OwlSitOnBlocks;
 import mc.craig.software.craftplus.common.entities.ai.owl.OwlWanderGoal;
 import mc.craig.software.craftplus.util.Tags;
@@ -12,6 +14,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.TimeUtil;
@@ -25,7 +28,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -33,12 +35,8 @@ import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.AbstractSkeleton;
-import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -72,13 +70,39 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
 
     public Owl(EntityType<? extends ShoulderRidingEntity> shoulder, Level level) {
         super(shoulder, level);
-        this.moveControl = new FlyingMoveControl(this, 20, false);
+        this.moveControl = new OwlMoveHelper(this);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.WATER_BORDER, 16.0F);
         this.setPathfindingMalus(BlockPathTypes.COCOA, -1.0F);
         this.setCanPickUpLoot(true);
     }
+
+
+    @Override
+    public void playAmbientSound() {
+        if (level.isDay()) return;
+        super.playAmbientSound();
+    }
+
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return ModSounds.OWL_HURT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.OWL_HOOTS.get();
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        return 0.1F;
+    }
+
 
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData p_29392_, @Nullable CompoundTag p_29393_) {
@@ -90,6 +114,7 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
     public double getMeleeAttackRangeSqr(LivingEntity livingEntity) {
         return this.getBbWidth() * 4.0F * this.getBbWidth() * 4.0F + livingEntity.getBbWidth();
     }
+
 
     @Override
     public void addAdditionalSaveData(CompoundTag compoundTag) {

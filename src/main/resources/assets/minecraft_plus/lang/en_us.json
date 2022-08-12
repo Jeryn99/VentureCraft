@@ -1,4 +1,6 @@
 {
+  "block.minecraft_plus.deepslate_sapphire_ore": "Deepslate Sapphire Ore",
+  "block.minecraft_plus.sapphire_ore": "Sapphire Ore",
   "entity.minecraft_plus.owl": "Owl",
   "entity.minecraft_plus.stalker": "Stalker",
   "item.minecraft_plus.climbing_gear": "Climbing Gear",
@@ -24,6 +26,8 @@
   "minecraft_plus.source.lightning_glider": "%s's Glider experiment went wrong",
   "minecraft_plus.source.owl_claws": "%s was clawed to death by a Owl",
   "subtitle.minecraft_plus.glider_open": "Glider opens",
+  "subtitle.minecraft_plus.owl_hoots": "Space hoots",
+  "subtitle.minecraft_plus.owl_hurt": "Owl hurts",
   "subtitle.minecraft_plus.space_deploy": "Space Deploy",
   "subtitle.minecraft_plus.space_glide": "Space Glide",
   "tooltip.minecraft_plus.copper_mod": "Copper Filament",

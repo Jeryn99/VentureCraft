@@ -25,6 +25,9 @@ public class SoundProvider extends SoundDefinitionsProvider {
         createDefinitionAndAdd(ModSounds.GLIDER_OPEN.get(), SoundDefinition.SoundType.SOUND, "glider_open", new SoundEvent(new ResourceLocation(MinecraftPlus.MODID, "glider_open_0")), new SoundEvent(new ResourceLocation(MinecraftPlus.MODID, "glider_open_1")));
         createDefinitionAndAdd(ModSounds.SPACE_GLIDE.get(), SoundDefinition.SoundType.SOUND);
         createDefinitionAndAdd(ModSounds.SPACE_DEPLOY.get(), SoundDefinition.SoundType.SOUND);
+        createDefinitionAndAdd(ModSounds.OWL_HOOTS.get(), SoundDefinition.SoundType.SOUND, "owl_hoots", new SoundEvent(new ResourceLocation(MinecraftPlus.MODID, "owl_single_hoot")), new SoundEvent(new ResourceLocation(MinecraftPlus.MODID, "owl_double_hoot")));
+        createDefinitionAndAdd(ModSounds.OWL_HURT.get(), SoundDefinition.SoundType.SOUND);
+
     }
 
     public void createDefinitionAndAdd(SoundEvent mainSound, SoundDefinition.SoundType soundType, String subtitle, SoundEvent... soundEvent) {

@@ -1,6 +1,7 @@
 package mc.craig.software.craftplus.data;
 
 import mc.craig.software.craftplus.MinecraftPlus;
+import mc.craig.software.craftplus.common.ModBlocks;
 import mc.craig.software.craftplus.util.Tags;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
@@ -20,6 +21,8 @@ public class BlockTagsProvider extends TagsProvider<Block> {
     @Override
     protected void addTags() {
         add(Tags.OWL_SIT, BlockTags.BEDS, BlockTags.LEAVES, BlockTags.FENCES);
+        add(BlockTags.MINEABLE_WITH_PICKAXE, ModBlocks.DEEPSLATE_SAPPHIRE_ORE.get(), ModBlocks.SAPPHIRE_ORE.get());
+        add(net.minecraftforge.common.Tags.Blocks.NEEDS_GOLD_TOOL, ModBlocks.DEEPSLATE_SAPPHIRE_ORE.get(), ModBlocks.SAPPHIRE_ORE.get());
     }
 
     public void add(TagKey<Block> branch, Block item) {

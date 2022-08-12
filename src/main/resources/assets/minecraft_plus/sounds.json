@@ -6,6 +6,19 @@
     ],
     "subtitle": "subtitle.minecraft_plus.glider_open"
   },
+  "owl_hoots": {
+    "sounds": [
+      "minecraft_plus:owl_single_hoot",
+      "minecraft_plus:owl_double_hoot"
+    ],
+    "subtitle": "subtitle.minecraft_plus.owl_hoots"
+  },
+  "owl_hurt": {
+    "sounds": [
+      "minecraft_plus:owl_hurt"
+    ],
+    "subtitle": "subtitle.minecraft_plus.owl_hurt"
+  },
   "space_deploy": {
     "sounds": [
       "minecraft_plus:space_deploy"
