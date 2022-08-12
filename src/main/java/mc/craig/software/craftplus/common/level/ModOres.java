@@ -3,9 +3,11 @@ package mc.craig.software.craftplus.common.level;
 import com.google.common.collect.ImmutableList;
 import mc.craig.software.craftplus.MinecraftPlus;
 import mc.craig.software.craftplus.common.ModBlocks;
+import mc.craig.software.craftplus.common.ModItems;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.features.OreFeatures;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -29,6 +31,11 @@ public class ModOres {
 
     public static RegistryObject<ConfiguredFeature<?, ?>> ORE_SAPPHIRE_LARGE_CONFIGURED = CONFIGURED_FEATURES.register("ore_sapphire_large", () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(ImmutableList.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, ModBlocks.SAPPHIRE_ORE.get().defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, ModBlocks.DEEPSLATE_SAPPHIRE_ORE.get().defaultBlockState())), 4)));
     public static RegistryObject<PlacedFeature> ORE_SAPPHIRE_LARGE = PLACED_FEATURES.register("ore_sapphire_large", () -> new PlacedFeature(Holder.direct(ORE_SAPPHIRE_LARGE_CONFIGURED.get()), List.copyOf(rareOrePlacement(9, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(80))))));
+
+
+    public static RegistryObject<ConfiguredFeature<?, ?>> ORE_RUBY_CONFIGURED = CONFIGURED_FEATURES.register("ore_ruby", () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, Blocks.EMERALD_ORE.defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, ModBlocks.RUBY_ORE.get().defaultBlockState())), 3)));
+    public static RegistryObject<PlacedFeature> ORE_RUBY = PLACED_FEATURES.register("ore_ruby", () -> new PlacedFeature(Holder.direct(ORE_RUBY_CONFIGURED.get()), List.copyOf(commonOrePlacement(100, HeightRangePlacement.triangle(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(480))))));
+
 
 
     private static List<PlacementModifier> orePlacement(PlacementModifier p_195347_, PlacementModifier p_195348_) {

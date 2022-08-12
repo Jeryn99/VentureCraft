@@ -54,6 +54,7 @@ public class ModLootTableProvider extends LootTableProvider {
         protected void addTables() {
             this.add(ModBlocks.SAPPHIRE_ORE.get(), (block) -> createOreDrop(block, ModItems.SAPPHIRE_INGOT.get()));
             this.add(ModBlocks.DEEPSLATE_SAPPHIRE_ORE.get(), (block) -> createOreDrop(block, ModItems.SAPPHIRE_INGOT.get()));
+            this.add(ModBlocks.RUBY_ORE.get(), (block) -> createOreDrop(block, ModItems.RUBY_INGOT.get()));
         }
 
         @Override

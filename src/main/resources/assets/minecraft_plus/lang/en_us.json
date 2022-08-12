@@ -1,5 +1,6 @@
 {
   "block.minecraft_plus.deepslate_sapphire_ore": "Deepslate Sapphire Ore",
+  "block.minecraft_plus.ruby_ore": "Ruby Ore",
   "block.minecraft_plus.sapphire_ore": "Sapphire Ore",
   "entity.minecraft_plus.owl": "Owl",
   "entity.minecraft_plus.stalker": "Stalker",
@@ -21,6 +22,8 @@
   "item.minecraft_plus.reinforced_paper_gold": "Re-Inforced Paper (Gold)",
   "item.minecraft_plus.reinforced_paper_iron": "Re-Inforced Paper (Iron)",
   "item.minecraft_plus.reinforced_paper_netherite": "Re-Inforced Paper (Netherite)",
+  "item.minecraft_plus.ruby_ingot": "Ruby Ingot",
+  "item.minecraft_plus.sapphire_ingot": "Sapphire Ingot",
   "item.minecraft_plus.stalker_spawn_egg": "Spawn Stalker",
   "itemGroup.minecraft_plus": "Minecraft+",
   "minecraft_plus.source.lightning_glider": "%s's Glider experiment went wrong",

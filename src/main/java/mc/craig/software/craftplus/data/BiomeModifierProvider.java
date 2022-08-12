@@ -61,6 +61,7 @@ public record BiomeModifierProvider(DataGenerator dataGenerator) implements Data
         BiomeModifier sapphireSmall = new ForgeBiomeModifiers.AddFeaturesBiomeModifier(new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_OVERWORLD), HolderSet.direct(Holder.direct(ModOres.ORE_SAPPHIRE.get())), GenerationStep.Decoration.UNDERGROUND_ORES);
         BiomeModifier sapphireBuried = new ForgeBiomeModifiers.AddFeaturesBiomeModifier(new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_OVERWORLD), HolderSet.direct(Holder.direct(ModOres.ORE_SAPPHIRE_BURIED.get())), GenerationStep.Decoration.UNDERGROUND_ORES);
         BiomeModifier sapphireLarge = new ForgeBiomeModifiers.AddFeaturesBiomeModifier(new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_OVERWORLD), HolderSet.direct(Holder.direct(ModOres.ORE_SAPPHIRE_LARGE.get())), GenerationStep.Decoration.UNDERGROUND_ORES);
+        BiomeModifier rubyOres = new ForgeBiomeModifiers.AddFeaturesBiomeModifier(new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_OVERWORLD), HolderSet.direct(Holder.direct(ModOres.ORE_RUBY.get())), GenerationStep.Decoration.UNDERGROUND_ORES);
 
 
         // Generate BiomeModiers
@@ -69,6 +70,7 @@ public record BiomeModifierProvider(DataGenerator dataGenerator) implements Data
         generate(ops, sapphireSmall, outputFolder, "sapphire_small", cachedOutput);
         generate(ops, sapphireBuried, outputFolder, "sapphire_buried", cachedOutput);
         generate(ops, sapphireLarge, outputFolder, "sapphire_large", cachedOutput);
+        generate(ops, rubyOres, outputFolder, "ruby_ores", cachedOutput);
 
     }
 

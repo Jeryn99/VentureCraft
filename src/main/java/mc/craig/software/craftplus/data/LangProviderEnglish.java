@@ -39,6 +39,8 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModItems.COPPER_FILAMENT.get(), "Copper Filament");
         add(ModItems.OWL_FEATHER.get(), "Owl Feather");
         add(ModItems.CLIMBING_GEAR.get(), "Climbing Gear");
+        add(ModItems.RUBY_INGOT.get(), "Ruby Ingot");
+        add(ModItems.SAPPHIRE_INGOT.get(), "Sapphire Ingot");
 
         // Eggs
         add(ModItems.STALKERS_EGG.get(), "Spawn Stalker");
@@ -70,6 +72,7 @@ public class LangProviderEnglish extends LanguageProvider {
         // ===== Blocks =====
         add(ModBlocks.SAPPHIRE_ORE.get(), "Sapphire Ore");
         add(ModBlocks.DEEPSLATE_SAPPHIRE_ORE.get(), "Deepslate Sapphire Ore");
+        add(ModBlocks.RUBY_ORE.get(), "Ruby Ore");
     }
 
     private void addSound(SoundEvent soundEvent, String subtitle) {

@@ -52,6 +52,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> OWL_FEATHER = ITEMS.register("owl_feather", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
     public static final RegistryObject<Item> SAPPHIRE_INGOT = ITEMS.register("sapphire_ingot", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> RUBY_INGOT = ITEMS.register("ruby_ingot", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.RARE)));
     public static final RegistryObject<Item> CLIMBING_GEAR = ITEMS.register("climbing_gear", () -> new ArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.FEET, new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
 
 }

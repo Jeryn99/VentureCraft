@@ -16,5 +16,6 @@ public class ModelProviderBlock extends BlockStateProvider {
     protected void registerStatesAndModels() {
         simpleBlock(ModBlocks.SAPPHIRE_ORE.get());
         simpleBlock(ModBlocks.DEEPSLATE_SAPPHIRE_ORE.get());
+        simpleBlock(ModBlocks.RUBY_ORE.get());
     }
 }
