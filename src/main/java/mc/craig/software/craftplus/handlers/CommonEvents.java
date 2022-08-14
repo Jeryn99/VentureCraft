@@ -43,9 +43,12 @@ public class CommonEvents {
     @SubscribeEvent
     public static void onJoin(EntityJoinLevelEvent levelEvent){
         Entity entity = levelEvent.getEntity();
+
+        // Make Cats attack Owls
         if(entity instanceof Cat cat){
             cat.targetSelector.addGoal(1, new NonTameRandomTargetGoal<>(cat, Owl.class, false, null));
         }
+
     }
 
     @SubscribeEvent

@@ -6,7 +6,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.GrindstoneMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -29,14 +28,15 @@ public class AbstractContainerMenuMixin {
     @Final
     private NonNullList<ItemStack> remoteSlots;
 
+    // This is horrible, but Forge has forced my hand
     @Inject(at = @At("HEAD"), method = "addSlot(Lnet/minecraft/world/inventory/Slot;)Lnet/minecraft/world/inventory/Slot;")
     private void addSlot(Slot slot, CallbackInfoReturnable<Slot> cir) {
-        if (((Object) this) instanceof GrindstoneMenu && slot.index == 0) {
+        if (((Object) this) instanceof GrindstoneMenu && slot.index == 0 && slot.x == 49) {
 
             Slot newSlot = new Slot(slot.container, 0, 49, 19) {
                 @Override
                 public boolean mayPlace(ItemStack itemStack) {
-                    return itemStack.isDamageableItem() || itemStack.is(Items.ENCHANTED_BOOK) || itemStack.isEnchanted() || itemStack.getItem() == ModItems.UNREFINED_RUBY.get();
+                    return slot.mayPlace(itemStack) || itemStack.getItem() == ModItems.UNREFINED_RUBY.get();
                 }
             };
 

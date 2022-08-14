@@ -27,7 +27,7 @@ public class GrindstoneMenuMixin {
         ItemStack repairSlot = repairSlots.getItem(0);
 
         if (repairSlot.is(ModItems.UNREFINED_RUBY.get())) {
-            resultSlots.setItem(0, new ItemStack(ModItems.RUBY.get()));
+            resultSlots.setItem(0, new ItemStack(ModItems.RUBY.get(), repairSlot.getCount()));
             callbackInfo.cancel();
         }
     }
