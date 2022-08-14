@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class ParagliderItem extends Item implements Wearable {
+public class ParagliderItem extends Item implements Wearable, Repairable {
 
     private final double SPEED_INCREASE = 2;
     private final AttributeModifier SPEED_MODIFIER = new AttributeModifier("b44790fb-65c0-4ec7-8b63-a1749c614b1e", SPEED_INCREASE, AttributeModifier.Operation.MULTIPLY_BASE);
@@ -45,6 +45,7 @@ public class ParagliderItem extends Item implements Wearable {
         CompoundTag compound = itemStack.getOrCreateTag();
         compound.putBoolean("copper_mod", copper);
     }
+
 
     public static boolean hasCopperMod(ItemStack itemStack) {
         CompoundTag compound = itemStack.getOrCreateTag();
@@ -175,5 +176,10 @@ public class ParagliderItem extends Item implements Wearable {
         } else {
             return InteractionResultHolder.fail(itemstack);
         }
+    }
+
+    @Override
+    public Item getRepairItem() {
+        return repairItem.get();
     }
 }

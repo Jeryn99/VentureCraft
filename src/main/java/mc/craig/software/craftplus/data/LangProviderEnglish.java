@@ -39,8 +39,9 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModItems.COPPER_FILAMENT.get(), "Copper Filament");
         add(ModItems.OWL_FEATHER.get(), "Owl Feather");
         add(ModItems.CLIMBING_GEAR.get(), "Climbing Gear");
-        add(ModItems.RUBY_INGOT.get(), "Ruby Ingot");
-        add(ModItems.SAPPHIRE_INGOT.get(), "Sapphire Ingot");
+        add(ModItems.UNREFINED_RUBY.get(), "Unrefined Ruby");
+        add(ModItems.RUBY.get(), "Ruby");
+        add(ModItems.SAPPHIRE_GEM.get(), "Sapphire Gem");
 
         // Eggs
         add(ModItems.STALKERS_EGG.get(), "Spawn Stalker");

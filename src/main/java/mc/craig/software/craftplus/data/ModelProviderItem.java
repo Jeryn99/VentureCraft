@@ -15,6 +15,7 @@ import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
@@ -29,8 +30,11 @@ public class ModelProviderItem extends ItemModelProvider {
         for (RegistryObject<Item> entry : ModItems.ITEMS.getEntries()) {
             if (entry.get() instanceof ForgeSpawnEggItem) continue;
 
+
+
             if (entry.get() instanceof ParagliderItem) {
-                basicItem(new ResourceLocation(MinecraftPlus.MODID, ForgeRegistries.ITEMS.getKey(entry.get()).getPath() + "_copper_mod"));
+                ResourceLocation gliderId = ForgeRegistries.ITEMS.getKey(entry.get());
+                layeredItem(new ResourceLocation(gliderId.getNamespace(), gliderId.getPath() + "_copper_mod"), Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(entry.get())), new ResourceLocation(MinecraftPlus.MODID, "glider_copper_mod"));
                 continue;
             }
 
@@ -51,6 +55,13 @@ public class ModelProviderItem extends ItemModelProvider {
     public ItemModelBuilder blockItem(ResourceLocation item) {
         return getBuilder(item.toString())
                 .parent(new ModelFile.UncheckedModelFile(new ResourceLocation(item.getNamespace(), "block/" + item.getPath())));
+    }
+
+    public ItemModelBuilder layeredItem(ResourceLocation destination, ResourceLocation item, ResourceLocation resourceLocation) {
+        return getBuilder(destination.toString())
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", new ResourceLocation(item.getNamespace(), "item/" + item.getPath()))
+                .texture("layer1", new ResourceLocation(resourceLocation.getNamespace(), "item/" + resourceLocation.getPath()));
     }
 
     public ItemModelBuilder layeredItem(ResourceLocation item, ResourceLocation resourceLocation) {
