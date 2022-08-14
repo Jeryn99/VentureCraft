@@ -11,7 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 
-public class Tags {
+public class ModTags {
 
     public static TagKey<Item> OWL_FOOD = makeItem(MinecraftPlus.MODID, "owl_food");
     public static TagKey<Item> BIRD_POISON = makeItem(MinecraftPlus.MODID, "bird_poison");

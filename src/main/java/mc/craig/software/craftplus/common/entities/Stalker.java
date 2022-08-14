@@ -1,5 +1,6 @@
 package mc.craig.software.craftplus.common.entities;
 
+import mc.craig.software.craftplus.common.ModDamageSource;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -7,9 +8,13 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -18,15 +23,35 @@ import net.minecraftforge.network.NetworkHooks;
 public class Stalker extends QuantumLockedLifeform {
 
     private static final EntityDataAccessor<String> POSE = SynchedEntityData.defineId(Stalker.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<Boolean> IS_ALIVE = SynchedEntityData.defineId(Stalker.class, EntityDataSerializers.BOOLEAN);
 
     public Stalker(EntityType<? extends QuantumLockedLifeform> type, Level worldIn) {
         super(worldIn, type);
     }
 
+    protected void registerGoals() {
+        this.goalSelector.addGoal(1, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new ClimbOnTopOfPowderSnowGoal(this, this.level));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+    }
+
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        getEntityData().define(POSE, Pose.ANGRY.id());
+        getEntityData().define(POSE, Pose.HIDING.id());
+        getEntityData().define(IS_ALIVE, random.nextBoolean());
+    }
+
+    public boolean isLivingStatue(){
+        return getEntityData().get(IS_ALIVE);
+    }
+
+    public void setLivingStatue(boolean alive){
+        getEntityData().set(IS_ALIVE, alive);
     }
 
     @Override
@@ -39,12 +64,20 @@ public class Stalker extends QuantumLockedLifeform {
     }
 
     @Override
+    public boolean doHurtTarget(Entity entity) {
+        return entity.hurt(ModDamageSource.OWL_CLAWS, random.nextIntBetweenInclusive(1, 3));
+    }
+
+    @Override
     public void knockback(double p_147241_, double p_147242_, double p_147243_) {
         // No no
     }
 
     @Override
     public void tick() {
+        setGlowingTag(true);
+        setNoAi(!isLivingStatue());
+        if(!isLivingStatue()) return;
         super.tick();
     }
 
@@ -56,7 +89,7 @@ public class Stalker extends QuantumLockedLifeform {
     @Override
     public void invokeSeen(Player player) {
         super.invokeSeen(player);
-        if (getSeenTime() == 1) {
+        if (getSeenTime() == 1 && isLivingStatue()) {
             setStalkerPose(Pose.randomPose(random));
         }
     }
@@ -89,12 +122,14 @@ public class Stalker extends QuantumLockedLifeform {
     public void deserializeNBT(CompoundTag compound) {
         super.deserializeNBT(compound);
         setStalkerPose(Pose.getPoseByName(compound.getString("stalker_pose")));
+        setLivingStatue(compound.getBoolean("is_living"));
     }
 
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag compound = super.serializeNBT();
         compound.putString("stalker_pose", getStalkerPose().id());
+        compound.putBoolean("is_living", isLivingStatue());
         return compound;
     }
 

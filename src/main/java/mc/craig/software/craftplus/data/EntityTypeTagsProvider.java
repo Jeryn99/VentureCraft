@@ -1,7 +1,7 @@
 package mc.craig.software.craftplus.data;
 
 import mc.craig.software.craftplus.MinecraftPlus;
-import mc.craig.software.craftplus.util.Tags;
+import mc.craig.software.craftplus.util.ModTags;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.TagsProvider;
@@ -18,7 +18,7 @@ public class EntityTypeTagsProvider extends TagsProvider<EntityType<?>> {
 
     @Override
     protected void addTags() {
-        add(Tags.OWL_ATTACK, EntityType.RABBIT, EntityType.SPIDER, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.TROPICAL_FISH, EntityType.PUFFERFISH, EntityType.COD, EntityType.SALMON);
+        add(ModTags.OWL_ATTACK, EntityType.RABBIT, EntityType.SPIDER, EntityType.CAVE_SPIDER, EntityType.CHICKEN, EntityType.TROPICAL_FISH, EntityType.PUFFERFISH, EntityType.COD, EntityType.SALMON);
     }
 
     public void add(TagKey<EntityType<?>> branch, EntityType<?> item) {

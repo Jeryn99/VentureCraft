@@ -11,11 +11,14 @@ import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.RenderBuffers;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,6 +28,8 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.time.chrono.MinguoEra;
 
 @Mod.EventBusSubscriber(modid = MinecraftPlus.MODID, value = Dist.CLIENT)
 public class ClientEvents {
@@ -48,9 +53,13 @@ public class ClientEvents {
     public static void onRenderHand(RenderHandEvent event) {
         lightLevel = event.getPackedLight(); // My precious little hack, my precious
         Entity camera = Minecraft.getInstance().getCameraEntity();
-        if(camera instanceof LivingEntity livingEntity) {
+        if(camera instanceof AbstractClientPlayer livingEntity) {
             if (GliderUtil.isGlidingWithActiveGlider(livingEntity)) {
                 event.setCanceled(true);
+                ItemInHandRenderer handRender = Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer();
+              //  handRender.renderArmWithItem(livingEntity, 0, 0, InteractionHand.MAIN_HAND, 0, ItemStack.EMPTY, 0, event.getPoseStack(), event.getMultiBufferSource(), lightLevel);
+              //  handRender.renderArmWithItem(livingEntity, 0, 0, InteractionHand.OFF_HAND, 0, ItemStack.EMPTY, 0, event.getPoseStack(), event.getMultiBufferSource(), lightLevel);
+
             }
         }
     }
@@ -68,9 +77,12 @@ public class ClientEvents {
         PoseStack posestack = event.getPoseStack();
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_WEATHER && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON && stack.getItem() instanceof ParagliderItem && GliderUtil.isGlidingWithActiveGlider(living)) {
             posestack.pushPose();
-            posestack.translate(0, 2.2, -0.5);
-            posestack.scale(1.5F, 1.5F, 1.5F);
             posestack.mulPose(Vector3f.XP.rotationDegrees(180));
+            posestack.mulPose(Vector3f.YP.rotationDegrees(living.getViewYRot(1F)));
+
+
+            posestack.translate(0, -2.4, -0.5);
+            posestack.scale(1.5F, 1.5F, 1.5F);
 
             if(ParagliderItem.isSpaceGlider(stack)) {
                 posestack.mulPose(Vector3f.YP.rotationDegrees(180));

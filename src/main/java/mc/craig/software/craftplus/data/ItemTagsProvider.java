@@ -1,7 +1,7 @@
 package mc.craig.software.craftplus.data;
 
 import mc.craig.software.craftplus.MinecraftPlus;
-import mc.craig.software.craftplus.util.Tags;
+import mc.craig.software.craftplus.util.ModTags;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.TagsProvider;
@@ -28,14 +28,14 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         for (Map.Entry<ResourceKey<Item>, Item> entry : ForgeRegistries.ITEMS.getEntries()) {
             Item item = entry.getValue();
             if(ForgeRegistries.ITEMS.getKey(item).getPath().contains("seed")){
-                add(Tags.OWL_FOOD, item);
+                add(ModTags.OWL_FOOD, item);
             }
         }
 
-        add(Tags.OWL_FOOD, Items.RABBIT, Items.COOKED_RABBIT, Items.RABBIT_FOOT, Items.RABBIT_HIDE, Items.TURTLE_EGG, Items.SPIDER_EYE, Items.CHICKEN, Items.COOKED_CHICKEN);
-        add(Tags.OWL_FOOD, ItemTags.FISHES);
+        add(ModTags.OWL_FOOD, Items.RABBIT, Items.COOKED_RABBIT, Items.RABBIT_FOOT, Items.RABBIT_HIDE, Items.TURTLE_EGG, Items.SPIDER_EYE, Items.CHICKEN, Items.COOKED_CHICKEN);
+        add(ModTags.OWL_FOOD, ItemTags.FISHES);
 
-        add(Tags.BIRD_POISON, Items.COOKIE, Items.CAKE);
+        add(ModTags.BIRD_POISON, Items.COOKIE, Items.CAKE);
 
     }
 

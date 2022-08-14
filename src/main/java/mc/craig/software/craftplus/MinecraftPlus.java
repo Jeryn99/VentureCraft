@@ -62,7 +62,8 @@ public class MinecraftPlus {
     public void onAttributeAssign(EntityAttributeCreationEvent event) {
         event.put(ModEntities.STALKER.get(), Stalker.createAttributes().build());
         event.put(ModEntities.OWL.get(), Owl.createAttributes().build());
-        SpawnPlacements.register(ModEntities.OWL.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, ModSpawningRules::checkOwlSpawnRules);
+        SpawnPlacements.register(ModEntities.OWL.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, ModSpawningRules::checkOwlSpawnRules);
+        SpawnPlacements.register(ModEntities.STALKER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, ModSpawningRules::checkStalkerSpawnRules);
 
     }
 

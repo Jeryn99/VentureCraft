@@ -1,7 +1,7 @@
 package mc.craig.software.craftplus.data;
 
 import mc.craig.software.craftplus.MinecraftPlus;
-import mc.craig.software.craftplus.util.Tags;
+import mc.craig.software.craftplus.util.ModTags;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.TagsProvider;
@@ -27,10 +27,10 @@ public class BiomeTagsProvider extends TagsProvider<Biome> {
         for (Map.Entry<ResourceKey<Biome>, Biome> entry : ForgeRegistries.BIOMES.getEntries()) {
             Biome biome = entry.getValue();
             if (biome.getPrecipitation() == Biome.Precipitation.SNOW) {
-                add(Tags.OWL_SPAWNS, biome);
+                add(ModTags.OWL_SPAWNS, biome);
             }
         }
-        add(Tags.OWL_SPAWNS, BiomeTags.IS_FOREST, BiomeTags.IS_TAIGA, BiomeTags.IS_MOUNTAIN);
+        add(ModTags.OWL_SPAWNS, BiomeTags.IS_FOREST, BiomeTags.IS_TAIGA, BiomeTags.IS_MOUNTAIN);
 
     }
 

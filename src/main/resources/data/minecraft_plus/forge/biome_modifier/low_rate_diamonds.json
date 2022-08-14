@@ -10,7 +10,7 @@
         "targets": [
           {
             "state": {
-              "Name": "minecraft_plus:ruby_ore"
+              "Name": "minecraft:diamond_ore"
             },
             "target": {
               "predicate_type": "minecraft:tag_match",
@@ -19,7 +19,7 @@
           },
           {
             "state": {
-              "Name": "minecraft_plus:ruby_ore"
+              "Name": "minecraft:deepslate_diamond_ore"
             },
             "target": {
               "predicate_type": "minecraft:tag_match",

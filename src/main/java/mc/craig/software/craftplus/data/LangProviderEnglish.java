@@ -28,6 +28,7 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModItems.PARAGLIDER_DIAMOND.get(), "Diamond Paraglider");
         add(ModItems.PARAGLIDER_GOLD.get(), "Gold Paraglider");
         add(ModItems.PARAGLIDER_NETHERITE.get(), "Netherite Paraglider");
+        add(ModItems.PARAGLIDER_SAPPHIRE.get(), "Sapphire Paraglider");
 
         // Paper
         add(ModItems.REINFORCED_PAPER.get(), "Re-Inforced Paper");
@@ -35,10 +36,13 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModItems.REINFORCED_PAPER_GOLD.get(), "Re-Inforced Paper (Gold)");
         add(ModItems.REINFORCED_PAPER_DIAMOND.get(), "Re-Inforced Paper (Diamond)");
         add(ModItems.REINFORCED_PAPER_NETHERITE.get(), "Re-Inforced Paper (Netherite)");
+        add(ModItems.REINFORCED_PAPER_SAPPHIRE.get(), "Re-Inforced Paper (Sapphire)");
 
         add(ModItems.COPPER_FILAMENT.get(), "Copper Filament");
         add(ModItems.OWL_FEATHER.get(), "Owl Feather");
         add(ModItems.CLIMBING_GEAR.get(), "Climbing Gear");
+
+        // Ingots/Mined Items
         add(ModItems.UNREFINED_RUBY.get(), "Unrefined Ruby");
         add(ModItems.RUBY.get(), "Ruby");
         add(ModItems.SAPPHIRE_GEM.get(), "Sapphire Gem");
@@ -47,6 +51,12 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModItems.STALKERS_EGG.get(), "Spawn Stalker");
         add(ModItems.OWL_SPAWN_EGG.get(), "Spawn Owl");
 
+        // Armor
+        add(ModItems.LEATHER_ARMOR_HEAD.get(), "Leather Helmet");
+        add(ModItems.LEATHER_ARMOR_CHEST.get(), "Leather Chestplate");
+        add(ModItems.LEATHER_ARMOR_LEGGINGS.get(), "Leather Leggings");
+        add(ModItems.LEATHER_ARMOR_FEET.get(), "Leather Feet");
+
         // ===== Messages =====
         add(ModConstants.INSTALLED_MODS, ChatFormatting.BOLD + "Installed Modifications");
         add(ModConstants.COPPER_MOD, "Copper Filament");
@@ -54,14 +64,11 @@ public class LangProviderEnglish extends LanguageProvider {
         // ===== Damage Sources =====
         add(ModDamageSource.OWL_CLAWS.getKey(), "%s was clawed to death by a Owl");
         add(ModDamageSource.LIGHTNING_GLIDER.getKey(), "%s's Glider experiment went wrong");
+        add(ModDamageSource.STATUE.getKey(), "Something happened to %s...");
 
         // ===== Tabs =====
         add("itemGroup." + MinecraftPlus.MODID, "Minecraft+");
 
-        add(ModItems.LEATHER_ARMOR_HEAD.get(), "Leather Helmet");
-        add(ModItems.LEATHER_ARMOR_CHEST.get(), "Leather Chestplate");
-        add(ModItems.LEATHER_ARMOR_LEGGINGS.get(), "Leather Leggings");
-        add(ModItems.LEATHER_ARMOR_FEET.get(), "Leather Feet");
 
         // ===== Subtitles/Sounds =====
         addSound(ModSounds.GLIDER_OPEN.get(), "Glider opens");
@@ -74,6 +81,7 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModBlocks.SAPPHIRE_ORE.get(), "Sapphire Ore");
         add(ModBlocks.DEEPSLATE_SAPPHIRE_ORE.get(), "Deepslate Sapphire Ore");
         add(ModBlocks.RUBY_ORE.get(), "Ruby Ore");
+        add(ModBlocks.DEEPSLATE_RUBY_ORE.get(), "Deepslate Ruby Ore");
     }
 
     private void addSound(SoundEvent soundEvent, String subtitle) {

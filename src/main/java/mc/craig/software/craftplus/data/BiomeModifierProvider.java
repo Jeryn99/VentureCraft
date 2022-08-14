@@ -5,7 +5,7 @@ import com.mojang.serialization.JsonOps;
 import mc.craig.software.craftplus.MinecraftPlus;
 import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.level.ModOres;
-import mc.craig.software.craftplus.util.Tags;
+import mc.craig.software.craftplus.util.ModTags;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
@@ -56,21 +56,25 @@ public record BiomeModifierProvider(DataGenerator dataGenerator) implements Data
         final Path outputFolder = this.dataGenerator.getOutputFolder();
 
         // Biome Modifiers
-        BiomeModifier spawnsModifier = new ForgeBiomeModifiers.AddSpawnsBiomeModifier(new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), Tags.OWL_SPAWNS), List.of(new MobSpawnSettings.SpawnerData(ModEntities.OWL.get(), 40, 1, 2)));
+        BiomeModifier owlSpawnsModifier = new ForgeBiomeModifiers.AddSpawnsBiomeModifier(new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), ModTags.OWL_SPAWNS), List.of(new MobSpawnSettings.SpawnerData(ModEntities.OWL.get(), 40, 1, 2)));
+        BiomeModifier stalkerSpawnsModifier = new ForgeBiomeModifiers.AddSpawnsBiomeModifier(new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_OVERWORLD), List.of(new MobSpawnSettings.SpawnerData(ModEntities.STALKER.get(), 40, 1, 2)));
 
         BiomeModifier sapphireSmall = new ForgeBiomeModifiers.AddFeaturesBiomeModifier(new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_OVERWORLD), HolderSet.direct(Holder.direct(ModOres.ORE_SAPPHIRE.get())), GenerationStep.Decoration.UNDERGROUND_ORES);
         BiomeModifier sapphireBuried = new ForgeBiomeModifiers.AddFeaturesBiomeModifier(new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_OVERWORLD), HolderSet.direct(Holder.direct(ModOres.ORE_SAPPHIRE_BURIED.get())), GenerationStep.Decoration.UNDERGROUND_ORES);
         BiomeModifier sapphireLarge = new ForgeBiomeModifiers.AddFeaturesBiomeModifier(new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_OVERWORLD), HolderSet.direct(Holder.direct(ModOres.ORE_SAPPHIRE_LARGE.get())), GenerationStep.Decoration.UNDERGROUND_ORES);
         BiomeModifier rubyOres = new ForgeBiomeModifiers.AddFeaturesBiomeModifier(new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_OVERWORLD), HolderSet.direct(Holder.direct(ModOres.ORE_RUBY.get())), GenerationStep.Decoration.UNDERGROUND_ORES);
+        BiomeModifier diamondsNew = new ForgeBiomeModifiers.AddFeaturesBiomeModifier(new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_OVERWORLD), HolderSet.direct(Holder.direct(ModOres.ORE_DIAMOND.get())), GenerationStep.Decoration.UNDERGROUND_ORES);
 
 
         // Generate BiomeModiers
-        generate(ops, spawnsModifier, outputFolder, "owl_spawns", cachedOutput);
+        generate(ops, owlSpawnsModifier, outputFolder, "owl_spawns", cachedOutput);
+        generate(ops, stalkerSpawnsModifier, outputFolder, "stalker_spawns", cachedOutput);
 
         generate(ops, sapphireSmall, outputFolder, "sapphire_small", cachedOutput);
         generate(ops, sapphireBuried, outputFolder, "sapphire_buried", cachedOutput);
         generate(ops, sapphireLarge, outputFolder, "sapphire_large", cachedOutput);
         generate(ops, rubyOres, outputFolder, "ruby_ores", cachedOutput);
+        generate(ops, diamondsNew, outputFolder, "low_rate_diamonds", cachedOutput);
 
     }
 

@@ -7,7 +7,7 @@ import mc.craig.software.craftplus.common.entities.ai.owl.OwlChargeAttackGoal;
 import mc.craig.software.craftplus.common.entities.ai.owl.OwlMoveHelper;
 import mc.craig.software.craftplus.common.entities.ai.owl.OwlSitOnBlocks;
 import mc.craig.software.craftplus.common.entities.ai.owl.OwlWanderGoal;
-import mc.craig.software.craftplus.util.Tags;
+import mc.craig.software.craftplus.util.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -186,7 +186,7 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
         ItemStack itemstack = player.getItemInHand(interactionHand);
-        if (!this.isTame() && itemstack.is(Tags.OWL_FOOD)) {
+        if (!this.isTame() && itemstack.is(ModTags.OWL_FOOD)) {
             if (!player.getAbilities().instabuild) {
                 itemstack.shrink(1);
             }
@@ -205,7 +205,7 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
             }
 
             return InteractionResult.sidedSuccess(this.level.isClientSide);
-        } else if (itemstack.is(Tags.BIRD_POISON)) {
+        } else if (itemstack.is(ModTags.BIRD_POISON)) {
             if (!player.getAbilities().instabuild) {
                 itemstack.shrink(1);
             }
@@ -251,7 +251,7 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
 
     @Override
     public boolean canHoldItem(ItemStack itemStack) {
-        return itemStack.is(Tags.OWL_FOOD);
+        return itemStack.is(ModTags.OWL_FOOD);
     }
 
     @Override
@@ -263,7 +263,7 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
         this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
         this.goalSelector.addGoal(3, new LandOnOwnersShoulderGoal(this));
         this.goalSelector.addGoal(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, Ingredient.of(Tags.OWL_FOOD), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.0D, Ingredient.of(ModTags.OWL_FOOD), false));
         this.goalSelector.addGoal(3, new OwlWanderGoal(this, 1.0D));
         this.goalSelector.addGoal(3, new FleeSunGoal(this, 1.0D));
 
@@ -275,7 +275,7 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, true));
         this.goalSelector.addGoal(4, new OwlChargeAttackGoal(this));
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, AbstractFish.class, 20, false, false, (mob) -> mob instanceof AbstractFish));
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, PathfinderMob.class, 20, false, false, (mob) -> mob.getType().is(Tags.OWL_ATTACK)));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, PathfinderMob.class, 20, false, false, (mob) -> mob.getType().is(ModTags.OWL_ATTACK)));
         this.targetSelector.addGoal(1, new NonTameRandomTargetGoal<>(this, Turtle.class, false, Turtle.BABY_ON_LAND_SELECTOR));
         this.targetSelector.addGoal(8, new ResetUniversalAngerTargetGoal<>(this, true));
 

@@ -10,6 +10,7 @@ public class ModDamageSource extends DamageSource {
 
     public static ModDamageSource OWL_CLAWS = new ModDamageSource("owl_claws");
     public static ModDamageSource LIGHTNING_GLIDER = new ModDamageSource("lightning_glider");
+    public static ModDamageSource STATUE = new ModDamageSource("statue");
 
     private String message = "";
 

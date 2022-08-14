@@ -1,7 +1,7 @@
 package mc.craig.software.craftplus.common.entities.ai.owl;
 
 import mc.craig.software.craftplus.common.entities.Owl;
-import mc.craig.software.craftplus.util.Tags;
+import mc.craig.software.craftplus.util.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -51,6 +51,6 @@ public class OwlSitOnBlocks extends MoveToBlockGoal {
 
     @Override
     protected boolean isValidTarget(LevelReader levelReader, BlockPos blockPos) {
-        return levelReader.isEmptyBlock(blockPos.above()) && levelReader.getBlockState(blockPos).is(Tags.OWL_SIT);
+        return levelReader.isEmptyBlock(blockPos.above()) && levelReader.getBlockState(blockPos).is(ModTags.OWL_SIT);
     }
 }

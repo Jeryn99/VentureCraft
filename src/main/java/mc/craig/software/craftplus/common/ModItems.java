@@ -31,6 +31,7 @@ public class ModItems {
     public static final RegistryObject<ParagliderItem> PARAGLIDER_GOLD = ITEMS.register("paraglider_gold", () -> new ParagliderItem((new Item.Properties()).durability(70).tab(MAIN).rarity(Rarity.UNCOMMON), ModItems.REINFORCED_PAPER_GOLD));
     public static final RegistryObject<ParagliderItem> PARAGLIDER_DIAMOND = ITEMS.register("paraglider_diamond", () -> new ParagliderItem((new Item.Properties()).durability(200).tab(MAIN).rarity(Rarity.RARE), ModItems.REINFORCED_PAPER_DIAMOND));
     public static final RegistryObject<ParagliderItem> PARAGLIDER_NETHERITE = ITEMS.register("paraglider_netherite", () -> new ParagliderItem((new Item.Properties()).durability(350).tab(MAIN).rarity(Rarity.EPIC), ModItems.REINFORCED_PAPER_NETHERITE));
+    public static final RegistryObject<ParagliderItem> PARAGLIDER_SAPPHIRE = ITEMS.register("paraglider_sapphire", () -> new ParagliderItem((new Item.Properties()).durability(200).tab(MAIN).rarity(Rarity.EPIC), ModItems.REINFORCED_PAPER_NETHERITE));
 
     // Re-inforced Paper
     public static final RegistryObject<Item> REINFORCED_PAPER = ITEMS.register("reinforced_paper", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
@@ -38,6 +39,7 @@ public class ModItems {
     public static final RegistryObject<Item> REINFORCED_PAPER_GOLD = ITEMS.register("reinforced_paper_gold", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> REINFORCED_PAPER_DIAMOND = ITEMS.register("reinforced_paper_diamond", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.RARE)));
     public static final RegistryObject<Item> REINFORCED_PAPER_NETHERITE = ITEMS.register("reinforced_paper_netherite", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> REINFORCED_PAPER_SAPPHIRE = ITEMS.register("reinforced_paper_sapphire", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.EPIC)));
 
     public static final RegistryObject<Item> COPPER_FILAMENT = ITEMS.register("copper_filament", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
 
