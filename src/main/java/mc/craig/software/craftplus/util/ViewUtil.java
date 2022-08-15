@@ -1,5 +1,6 @@
 package mc.craig.software.craftplus.util;
 
+import com.mojang.math.Vector3d;
 import mc.craig.software.craftplus.common.entities.QuantumLockedLifeform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,9 +17,9 @@ import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 
 import javax.annotation.Nullable;
@@ -27,6 +28,31 @@ import java.util.function.Predicate;
 public class ViewUtil {
 
     private static final float headSize = 0.15f;
+
+    /**
+     * Gets the Raytrace result of the entity's look vector
+     * @param entity
+     * @param distance
+     * @return
+     */
+    public static HitResult getPosLookingAt(Entity entity, double distance) {
+        Vec3 lookVec = entity.getLookAngle();
+        for (int i = 0; i < distance * 2; i++) {
+            float scale = i / 2F;
+            Vec3 pos = entity.position().add(0, entity.getEyeHeight(), 0).add(lookVec.scale(scale));
+            if (entity.level.getBlockState(new BlockPos(pos)).getCollisionShape(entity.level, new BlockPos(pos)) != Shapes.empty() && !entity.level.isEmptyBlock(new BlockPos(pos))) {
+                return new BlockHitResult(pos, Direction.getNearest(pos.x, pos.y, pos.z), new BlockPos(pos), false);
+            } else {
+                Vec3 min = pos.add(0.25F, 0.25F, 0.25F);
+                Vec3 max = pos.add(-0.25F, -0.25F, -0.25F);
+                for (Entity e : entity.level.getEntities(entity, new AABB((int) min.x, (int) min.y, (int) min.z, (int) max.x, (int) max.y, (int) max.z))) {
+                    return new EntityHitResult(e);
+                }
+            }
+        }
+        return null;
+    }
+
 
     public static boolean isInFrontOfEntity(LivingEntity entity, Entity target, boolean vr) {
         Vec3 vecTargetsPos = target.position();

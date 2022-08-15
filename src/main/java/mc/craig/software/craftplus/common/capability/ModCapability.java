@@ -6,6 +6,7 @@ import mc.craig.software.craftplus.networking.Network;
 import mc.craig.software.craftplus.networking.packets.MessageSyncCap;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -176,7 +177,7 @@ public class ModCapability implements ICap {
 
     @Override
     public void setStamina(int stamina) {
-        this.stamina = stamina;
+        this.stamina = Mth.clamp(stamina, 0, maxStamina);
     }
 
     @Override
