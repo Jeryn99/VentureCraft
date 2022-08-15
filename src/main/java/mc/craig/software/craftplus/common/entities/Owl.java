@@ -4,7 +4,6 @@ import mc.craig.software.craftplus.common.ModDamageSource;
 import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.ModSounds;
 import mc.craig.software.craftplus.common.entities.ai.owl.OwlChargeAttackGoal;
-import mc.craig.software.craftplus.common.entities.ai.owl.OwlMoveHelper;
 import mc.craig.software.craftplus.common.entities.ai.owl.OwlSitOnBlocks;
 import mc.craig.software.craftplus.common.entities.ai.owl.OwlWanderGoal;
 import mc.craig.software.craftplus.util.ModTags;
@@ -28,6 +27,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -70,7 +70,7 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
 
     public Owl(EntityType<? extends ShoulderRidingEntity> shoulder, Level level) {
         super(shoulder, level);
-        this.moveControl = new OwlMoveHelper(this);
+        this.moveControl = new FlyingMoveControl(this, 20, false);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.WATER_BORDER, 16.0F);
@@ -314,6 +314,7 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
         if (level.isClientSide) {
 
             if (isFlying()) {
+                Vec3 movement = getDeltaMovement();
                 if (!flyingAnimationState.isStarted()) {
                     flyingAnimationState.start(tickCount);
                 }

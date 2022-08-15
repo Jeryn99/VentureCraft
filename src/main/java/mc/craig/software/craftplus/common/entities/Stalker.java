@@ -1,11 +1,15 @@
 package mc.craig.software.craftplus.common.entities;
 
 import mc.craig.software.craftplus.common.ModDamageSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -18,6 +22,9 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
 public class Stalker extends QuantumLockedLifeform {
@@ -39,6 +46,56 @@ public class Stalker extends QuantumLockedLifeform {
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
+    protected boolean teleport() {
+        if (!this.level.isClientSide() && this.isAlive()) {
+            double d0 = this.getX() + (this.random.nextDouble() - 0.5D) * 64.0D;
+            double d1 = this.getY() + (double) (this.random.nextInt(64) - 32);
+            double d2 = this.getZ() + (this.random.nextDouble() - 0.5D) * 64.0D;
+            return this.teleport(d0, d1, d2);
+        } else {
+            return false;
+        }
+    }
+
+    boolean teleportTowards(Entity p_32501_) {
+        Vec3 vec3 = new Vec3(this.getX() - p_32501_.getX(), this.getY(0.5D) - p_32501_.getEyeY(), this.getZ() - p_32501_.getZ());
+        vec3 = vec3.normalize();
+        double d0 = 16.0D;
+        double d1 = this.getX() + (this.random.nextDouble() - 0.5D) * 8.0D - vec3.x * 16.0D;
+        double d2 = this.getY() + (double) (this.random.nextInt(16) - 8) - vec3.y * 16.0D;
+        double d3 = this.getZ() + (this.random.nextDouble() - 0.5D) * 8.0D - vec3.z * 16.0D;
+        return this.teleport(d1, d2, d3);
+    }
+
+    private boolean teleport(double p_32544_, double p_32545_, double p_32546_) {
+        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(p_32544_, p_32545_, p_32546_);
+
+        while (blockpos$mutableblockpos.getY() > this.level.getMinBuildHeight() && !this.level.getBlockState(blockpos$mutableblockpos).getMaterial().blocksMotion()) {
+            blockpos$mutableblockpos.move(Direction.DOWN);
+        }
+
+        BlockState blockstate = this.level.getBlockState(blockpos$mutableblockpos);
+        boolean flag = blockstate.getMaterial().blocksMotion();
+        boolean flag1 = blockstate.getFluidState().is(FluidTags.WATER);
+        if (flag && !flag1) {
+            net.minecraftforge.event.entity.EntityTeleportEvent.EnderEntity event = net.minecraftforge.event.ForgeEventFactory.onEnderTeleport(this, p_32544_, p_32545_, p_32546_);
+            if (event.isCanceled()) return false;
+            Vec3 vec3 = this.position();
+            boolean flag2 = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), true);
+            if (flag2) {
+                this.level.gameEvent(GameEvent.TELEPORT, vec3, GameEvent.Context.of(this));
+                if (!this.isSilent()) {
+                    this.level.playSound((Player) null, this.xo, this.yo, this.zo, SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0F, 1.0F);
+                    this.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
+                }
+            }
+
+            return flag2;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
@@ -46,13 +103,6 @@ public class Stalker extends QuantumLockedLifeform {
         getEntityData().define(IS_ALIVE, random.nextBoolean());
     }
 
-    public boolean isLivingStatue(){
-        return getEntityData().get(IS_ALIVE);
-    }
-
-    public void setLivingStatue(boolean alive){
-        getEntityData().set(IS_ALIVE, alive);
-    }
 
     @Override
     public boolean isCustomNameVisible() {
@@ -65,7 +115,7 @@ public class Stalker extends QuantumLockedLifeform {
 
     @Override
     public boolean doHurtTarget(Entity entity) {
-        return entity.hurt(ModDamageSource.OWL_CLAWS, random.nextIntBetweenInclusive(1, 3));
+        return entity.hurt(ModDamageSource.STATUE, random.nextIntBetweenInclusive(3, 5));
     }
 
     @Override
@@ -76,9 +126,13 @@ public class Stalker extends QuantumLockedLifeform {
     @Override
     public void tick() {
         setGlowingTag(true);
-        setNoAi(!isLivingStatue());
-        if(!isLivingStatue()) return;
+        setNoAi(isSeen());
         super.tick();
+
+        if (!isSeen() && getTarget() != null && tickCount % 200 == 0) {
+            teleportTowards(getTarget());
+        }
+
     }
 
     @Override
@@ -89,7 +143,7 @@ public class Stalker extends QuantumLockedLifeform {
     @Override
     public void invokeSeen(Player player) {
         super.invokeSeen(player);
-        if (getSeenTime() == 1 && isLivingStatue()) {
+        if (getSeenTime() == 1) {
             setStalkerPose(Pose.randomPose(random));
         }
     }
@@ -122,15 +176,26 @@ public class Stalker extends QuantumLockedLifeform {
     public void deserializeNBT(CompoundTag compound) {
         super.deserializeNBT(compound);
         setStalkerPose(Pose.getPoseByName(compound.getString("stalker_pose")));
-        setLivingStatue(compound.getBoolean("is_living"));
     }
 
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag compound = super.serializeNBT();
         compound.putString("stalker_pose", getStalkerPose().id());
-        compound.putBoolean("is_living", isLivingStatue());
         return compound;
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    protected void doPush(Entity p_27415_) {
+    }
+
+    @Override
+    protected void pushEntities() {
     }
 
 

@@ -57,8 +57,11 @@ public class StalkerModel extends ListModel<Stalker> implements HeadedModel, Arm
         Stalker.Pose pose = weepingAngel.getStalkerPose();
 
         head.xRot = (float) Math.toRadians(0);
-        head.yRot = (float) Math.toRadians(0);
+        head.yRot = (float) Math.toRadians(weepingAngel.yHeadRot);
         head.zRot = (float) Math.toRadians(0);
+
+        this.head.yRot = v3 * ((float)Math.PI / 180F);
+
 
         if (pose == Stalker.Pose.FURIOUS) {
             rightArm.xRot = (float) Math.toRadians(-115);
@@ -69,9 +72,9 @@ public class StalkerModel extends ListModel<Stalker> implements HeadedModel, Arm
             leftArm.yRot = (float) Math.toRadians(0);
             leftArm.zRot = (float) Math.toRadians(0);
 
-            head.xRot = (float) Math.toRadians(17.5);
+    /*        head.xRot = (float) Math.toRadians(17.5);
             head.yRot = (float) Math.toRadians(0);
-            head.zRot = (float) Math.toRadians(-10);
+            head.zRot = (float) Math.toRadians(-10);*/
             return;
         }
 
@@ -85,9 +88,9 @@ public class StalkerModel extends ListModel<Stalker> implements HeadedModel, Arm
             leftArm.yRot = (float) Math.toRadians(25);
             leftArm.zRot = (float) Math.toRadians(-17.5);
 
-            head.xRot = (float) Math.toRadians(0);
+    /*        head.xRot = (float) Math.toRadians(0);
             head.yRot = (float) Math.toRadians(-12.5);
-            head.zRot = (float) Math.toRadians(0);
+            head.zRot = (float) Math.toRadians(0);*/
             return;
         }
 
@@ -118,9 +121,9 @@ public class StalkerModel extends ListModel<Stalker> implements HeadedModel, Arm
         }
 
         if (pose == Stalker.Pose.IDLE) {
-            head.xRot = (float) Math.toRadians(0);
+      /*      head.xRot = (float) Math.toRadians(0);
             head.yRot = (float) Math.toRadians(0);
-            head.zRot = (float) Math.toRadians(0);
+            head.zRot = (float) Math.toRadians(0);*/
 
             rightArm.xRot = (float) Math.toRadians(0);
             rightArm.yRot = (float) Math.toRadians(0);
@@ -140,10 +143,10 @@ public class StalkerModel extends ListModel<Stalker> implements HeadedModel, Arm
             leftArm.xRot = (float) Math.toRadians(-120);
             leftArm.yRot = (float) Math.toRadians(-36);
             leftArm.zRot = (float) Math.toRadians(10);
-
+/*
             head.xRot = (float) Math.toRadians(20);
             head.yRot = (float) Math.toRadians(-40);
-            head.zRot = (float) Math.toRadians(-20);
+            head.zRot = (float) Math.toRadians(-20);*/
         }
     }
 

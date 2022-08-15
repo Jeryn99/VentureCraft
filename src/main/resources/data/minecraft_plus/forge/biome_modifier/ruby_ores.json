@@ -19,7 +19,7 @@
           },
           {
             "state": {
-              "Name": "minecraft_plus:ruby_ore"
+              "Name": "minecraft_plus:deepslate_ruby_ore"
             },
             "target": {
               "predicate_type": "minecraft:tag_match",

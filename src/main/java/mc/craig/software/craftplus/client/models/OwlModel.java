@@ -35,7 +35,6 @@ public class OwlModel<T extends Owl> extends HierarchicalModel<T> {
     private final ModelPart sitWings;
 
     public OwlModel(ModelPart root) {
-        super(RenderType::entityTranslucentCull);
         this.root = root;
         this.Body = root.getChild("Body");
         this.Head = Body.getChild("Head");
@@ -117,7 +116,7 @@ public class OwlModel<T extends Owl> extends HierarchicalModel<T> {
         flyWings.visible = entity.flyingAnimationState.isStarted();
 
         if (entity.isFlying()) {
-            this.animate(entity.flyingAnimationState, FLYING, ageInTicks);
+            this.animate(entity.flyingAnimationState, WINGS, ageInTicks);
         } else {
             if (entity.isInSittingPose()) {
                 this.animate(entity.sittinAnimationState, SITTING, ageInTicks);

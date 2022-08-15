@@ -1,4 +1,5 @@
 {
+  "block.minecraft_plus.deepslate_ruby_ore": "Deepslate Ruby Ore",
   "block.minecraft_plus.deepslate_sapphire_ore": "Deepslate Sapphire Ore",
   "block.minecraft_plus.ruby_ore": "Ruby Ore",
   "block.minecraft_plus.sapphire_ore": "Sapphire Ore",
@@ -31,6 +32,7 @@
   "itemGroup.minecraft_plus": "Minecraft+",
   "minecraft_plus.source.lightning_glider": "%s's Glider experiment went wrong",
   "minecraft_plus.source.owl_claws": "%s was clawed to death by a Owl",
+  "minecraft_plus.source.statue": "Something happened to %s...",
   "subtitle.minecraft_plus.glider_open": "Glider opens",
   "subtitle.minecraft_plus.owl_hoots": "Space hoots",
   "subtitle.minecraft_plus.owl_hurt": "Owl hurts",

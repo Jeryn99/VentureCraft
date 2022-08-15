@@ -75,7 +75,7 @@ public class ClientEvents {
         ItemStack stack = living.getItemBySlot(EquipmentSlot.CHEST);
 
         PoseStack posestack = event.getPoseStack();
-        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_WEATHER && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON && stack.getItem() instanceof ParagliderItem && GliderUtil.isGlidingWithActiveGlider(living)) {
+        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON && stack.getItem() instanceof ParagliderItem && GliderUtil.isGlidingWithActiveGlider(living)) {
             posestack.pushPose();
             posestack.mulPose(Vector3f.XP.rotationDegrees(180));
             posestack.mulPose(Vector3f.YP.rotationDegrees(living.getViewYRot(1F)));
@@ -85,7 +85,6 @@ public class ClientEvents {
             posestack.scale(1.5F, 1.5F, 1.5F);
 
             if(ParagliderItem.isSpaceGlider(stack)) {
-                posestack.mulPose(Vector3f.YP.rotationDegrees(180));
                 posestack.translate(0, -0.2, 0);
                 PlayerGliderLayer.xWingModel.setupAnim(living, 0, 0, living.tickCount, 0, 0);
                 PlayerGliderLayer.xWingModel.renderToBuffer(posestack, bufferSource.bufferSource().getBuffer(RenderType.entityCutoutNoCull(PlayerGliderLayer.getGliderTexture(stack))), lightLevel, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);

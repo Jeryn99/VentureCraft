@@ -57,10 +57,12 @@ public class QuantumLockedLifeform extends Monster implements Enemy {
                         setSeenTime(getSeenTime() + 1);
                         invokeSeen(player);
                         return;
+                    } else {
+                        setSeenTime(0);
+                        setSpeed(0.5F);
                     }
                     if (targetPlayer == null) {
                         targetPlayer = player;
-                        setSeenTime(0);
                         setSpeed(0.5F);
                     }
                 }

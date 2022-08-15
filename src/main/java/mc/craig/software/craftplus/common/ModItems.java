@@ -1,5 +1,6 @@
 package mc.craig.software.craftplus.common;
 
+import mc.craig.software.craftplus.common.items.ClimbingGearItem;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.common.items.TierArmor;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -56,6 +57,6 @@ public class ModItems {
     public static final RegistryObject<Item> SAPPHIRE_GEM = ITEMS.register("sapphire_gem", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.RARE)));
     public static final RegistryObject<Item> UNREFINED_RUBY = ITEMS.register("unrefined_ruby", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.RARE)));
     public static final RegistryObject<Item> RUBY = ITEMS.register("ruby", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.RARE)));
-    public static final RegistryObject<Item> CLIMBING_GEAR = ITEMS.register("climbing_gear", () -> new ArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.FEET, new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
+    public static final RegistryObject<Item> CLIMBING_GEAR = ITEMS.register("climbing_gear", () -> new ClimbingGearItem(ArmorMaterials.LEATHER, EquipmentSlot.FEET, new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
 
 }
