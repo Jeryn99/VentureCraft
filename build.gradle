@@ -142,9 +142,7 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     implementation fg.deobf("curse.maven:jei-238222:3905244")
-    implementation fg.deobf("curse.maven:configured-457570:3903908")
     implementation fg.deobf("curse.maven:shoulder-surfing-reloaded-243190:3914089")
-    implementation fg.deobf("curse.maven:oculus-581495:3864204")
 
 }
 

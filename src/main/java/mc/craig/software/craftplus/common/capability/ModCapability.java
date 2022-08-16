@@ -58,6 +58,12 @@ public class ModCapability implements ICap {
     public void tick(LivingEntity livingEntity) {
         if (glideAndFallLogic(livingEntity)) return;
 
+        if(!livingEntity.level.isClientSide()) {
+            if (livingEntity.isOnGround()) {
+                setClimbing(false);
+            }
+        }
+
         if (isRecharging()) {
             if (getStamina() < getMaxStamina()) {
                 setStamina(getStamina() + 1);

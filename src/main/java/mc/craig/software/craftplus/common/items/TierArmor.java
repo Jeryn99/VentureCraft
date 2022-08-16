@@ -1,5 +1,6 @@
 package mc.craig.software.craftplus.common.items;
 
+import mc.craig.software.craftplus.common.items.armor.SpeedArmor;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -43,12 +44,7 @@ public class TierArmor extends ArmorItem {
     }
 
     public enum Tier {
-        LEATHER(ArmorMaterials.LEATHER, new ArmorAction() {
-            @Override
-            public void tick(LivingEntity entity) {
-
-            }
-        });
+        LEATHER(ArmorMaterials.LEATHER, new SpeedArmor());
 
         private final ArmorMaterials material;
         private final ArmorAction armorAction;

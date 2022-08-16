@@ -94,6 +94,7 @@ public class ParagliderItem extends Item implements Wearable, Repairable {
             player.resetFallDistance();
 
             player.getAbilities().mayfly = true; // Stop Servers kicking survival players
+
             // Handle Movement
             Vec3 m = player.getDeltaMovement();
             boolean hasSpeedMods = hasCopperMod(stack) && hasBeenStruck(stack);
