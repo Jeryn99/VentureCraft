@@ -116,7 +116,7 @@ public class OwlModel<T extends Owl> extends HierarchicalModel<T> {
         flyWings.visible = entity.flyingAnimationState.isStarted();
 
         if (entity.isFlying()) {
-            this.animate(entity.flyingAnimationState, WINGS, ageInTicks);
+            this.animate(entity.flyingAnimationState, FLYING, ageInTicks);
         } else {
             if (entity.isInSittingPose()) {
                 this.animate(entity.sittinAnimationState, SITTING, ageInTicks);

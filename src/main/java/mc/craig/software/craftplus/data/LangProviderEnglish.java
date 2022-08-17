@@ -76,6 +76,9 @@ public class LangProviderEnglish extends LanguageProvider {
         addSound(ModSounds.SPACE_DEPLOY.get(), "Space Deploy");
         addSound(ModSounds.OWL_HURT.get(), "Owl hurts");
         addSound(ModSounds.OWL_HOOTS.get(), "Space hoots");
+        addSound(ModSounds.STALKER_STRIKE.get(), "Stalker Strikes");
+        addSound(ModSounds.STALKER_MOVE.get(), "Stalker Moves");
+        addSound(ModSounds.STALKER_LAUGH.get(), "Stalker laughs at how hopeless you are");
 
         // ===== Blocks =====
         add(ModBlocks.SAPPHIRE_ORE.get(), "Sapphire Ore");

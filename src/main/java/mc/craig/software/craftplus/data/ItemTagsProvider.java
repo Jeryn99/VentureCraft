@@ -1,6 +1,7 @@
 package mc.craig.software.craftplus.data;
 
 import mc.craig.software.craftplus.MinecraftPlus;
+import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.util.ModTags;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
@@ -36,6 +37,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         add(ModTags.OWL_FOOD, ItemTags.FISHES);
 
         add(ModTags.BIRD_POISON, Items.COOKIE, Items.CAKE);
+        add(ModTags.TOTEMS, ModItems.TOTEM.get());
 
     }
 

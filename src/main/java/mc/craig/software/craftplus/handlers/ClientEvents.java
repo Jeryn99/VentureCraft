@@ -11,6 +11,7 @@ import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
@@ -18,10 +19,12 @@ import net.minecraft.client.renderer.RenderBuffers;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
@@ -29,25 +32,20 @@ import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.time.chrono.MinguoEra;
-
 @Mod.EventBusSubscriber(modid = MinecraftPlus.MODID, value = Dist.CLIENT)
 public class ClientEvents {
 
 
     private static int lightLevel;
 
-    @SubscribeEvent
-    public static void onRenderPlayer(RenderPlayerEvent.Pre pre){
-
-    }
-
-    @SubscribeEvent
-    public static void on(InputEvent pre){
-     /*   if(Minecraft.getInstance().options.keyJump.isDown()){
-            Network.INSTANCE.sendToServer(new MessageToggleClimb());
-        }*/
-    }
+/*    @SubscribeEvent
+    public static void onOpenInventory(ScreenEvent.Init pre){
+        if(pre.getScreen() instanceof InventoryScreen inventoryScreen){
+            Inventory inv = Minecraft.getInstance().player.getInventory();
+            InventoryMenu inventoryMenu = Minecraft.getInstance().player.inventoryMenu;
+            inventoryMenu.slots.add(201, new Slot(inv, 0, 56, 17));
+        }
+    }*/
 
     @SubscribeEvent
     public static void onRenderHand(RenderHandEvent event) {

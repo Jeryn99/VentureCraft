@@ -75,6 +75,16 @@ public class BipedBodyMixin {
                 AnimationUtil.animate(bipedModel, iCap.getAnimation(ModCapability.AnimationStates.GLIDING), PlayerAnimations.GLIDING, ageInTicks, 1);
                 fixLayers(bipedModel);
             }
+
+     /*       if (livingEntity.isSprinting()) {
+                bipedModel.body.getAllParts().forEach(ModelPart::resetPose);
+                bipedModel.leftArm.getAllParts().forEach(ModelPart::resetPose);
+                bipedModel.rightArm.getAllParts().forEach(ModelPart::resetPose);
+                bipedModel.leftLeg.getAllParts().forEach(ModelPart::resetPose);
+                bipedModel.rightLeg.getAllParts().forEach(ModelPart::resetPose);
+                AnimationUtil.animate(bipedModel, iCap.getAnimation(ModCapability.AnimationStates.RUNNING), PlayerAnimations.RUNNING, ageInTicks, 1);
+                fixLayers(bipedModel);
+            }*/
         });
     }
 

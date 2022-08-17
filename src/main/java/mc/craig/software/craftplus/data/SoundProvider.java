@@ -22,25 +22,24 @@ public class SoundProvider extends SoundDefinitionsProvider {
 
     @Override
     public void registerSounds() {
-        createDefinitionAndAdd(ModSounds.GLIDER_OPEN.get(), SoundDefinition.SoundType.SOUND, "glider_open", new SoundEvent(new ResourceLocation(MinecraftPlus.MODID, "glider_open_0")), new SoundEvent(new ResourceLocation(MinecraftPlus.MODID, "glider_open_1")));
-        createDefinitionAndAdd(ModSounds.SPACE_GLIDE.get(), SoundDefinition.SoundType.SOUND);
-        createDefinitionAndAdd(ModSounds.SPACE_DEPLOY.get(), SoundDefinition.SoundType.SOUND);
-        createDefinitionAndAdd(ModSounds.OWL_HOOTS.get(), SoundDefinition.SoundType.SOUND, "owl_hoots", new SoundEvent(new ResourceLocation(MinecraftPlus.MODID, "owl_single_hoot")), new SoundEvent(new ResourceLocation(MinecraftPlus.MODID, "owl_double_hoot")));
-        createDefinitionAndAdd(ModSounds.OWL_HURT.get(), SoundDefinition.SoundType.SOUND);
+        createDefinitionAndAdd(ModSounds.GLIDER_OPEN.get(), SoundDefinition.SoundType.SOUND, "glider_open", "glider/glider_open_0", "glider/glider_open_1");
+        createDefinitionAndAdd(ModSounds.SPACE_GLIDE.get(), SoundDefinition.SoundType.SOUND, "space_glide", "glider/space_glide");
+        createDefinitionAndAdd(ModSounds.SPACE_DEPLOY.get(), SoundDefinition.SoundType.SOUND, "space_deploy", "glider/space_deploy");
+        createDefinitionAndAdd(ModSounds.OWL_HOOTS.get(), SoundDefinition.SoundType.SOUND, "owl_hoots", "owl/owl_single_hoot", "owl/owl_double_hoot");
+        createDefinitionAndAdd(ModSounds.OWL_HURT.get(), SoundDefinition.SoundType.SOUND, "owl_hurt", "owl/owl_hurt");
+        createDefinitionAndAdd(ModSounds.STALKER_BREATH.get(), SoundDefinition.SoundType.SOUND, "stalker_breath", "stalker/stalker_breath");
+        createDefinitionAndAdd(ModSounds.STALKER_LAUGH.get(), SoundDefinition.SoundType.SOUND, "stalker_laugh", "stalker/stalker_giggle_1", "stalker/stalker_giggle_2", "stalker/stalker_giggle_3");
+        createDefinitionAndAdd(ModSounds.STALKER_MOVE.get(), SoundDefinition.SoundType.SOUND, "stalker_move", "stalker/stalker_glide_1", "stalker/stalker_glide_2", "stalker/stalker_glide_3", "stalker/stalker_glide_4");
+        createDefinitionAndAdd(ModSounds.STALKER_STRIKE.get(), SoundDefinition.SoundType.SOUND, "stalker_strike", "stalker/stalker_striking");
 
     }
 
-    public void createDefinitionAndAdd(SoundEvent mainSound, SoundDefinition.SoundType soundType, String subtitle, SoundEvent... soundEvent) {
+    public void createDefinitionAndAdd(SoundEvent mainSound, SoundDefinition.SoundType soundType, String subtitle, String... soundEvent) {
         SoundDefinition def = SoundDefinition.definition().subtitle("subtitle." + MinecraftPlus.MODID + "." + subtitle);
-        for (SoundEvent event : soundEvent) {
-            def.with(SoundDefinition.Sound.sound(event.getLocation(), soundType));
+        for (String event : soundEvent) {
+            def.with(SoundDefinition.Sound.sound(new ResourceLocation(MinecraftPlus.MODID, event), soundType));
         }
         add(mainSound, def);
     }
 
-    public void createDefinitionAndAdd(SoundEvent soundEvent, SoundDefinition.SoundType soundType) {
-        SoundDefinition def = SoundDefinition.definition().subtitle("subtitle." + MinecraftPlus.MODID + "." + soundEvent.getLocation().getPath());
-        def.with(SoundDefinition.Sound.sound(soundEvent.getLocation(), soundType));
-        add(soundEvent, def);
-    }
 }

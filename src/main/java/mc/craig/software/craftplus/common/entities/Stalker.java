@@ -1,6 +1,9 @@
 package mc.craig.software.craftplus.common.entities;
 
 import mc.craig.software.craftplus.common.ModDamageSource;
+import mc.craig.software.craftplus.common.ModSounds;
+import mc.craig.software.craftplus.util.ModTags;
+import mc.craig.software.craftplus.util.ViewUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -8,24 +11,32 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.Nullable;
 
 public class Stalker extends QuantumLockedLifeform {
 
@@ -34,6 +45,12 @@ public class Stalker extends QuantumLockedLifeform {
 
     public Stalker(EntityType<? extends QuantumLockedLifeform> type, Level worldIn) {
         super(worldIn, type);
+
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level p_33802_) {
+        return new WallClimberNavigation(this, p_33802_);
     }
 
     protected void registerGoals() {
@@ -67,8 +84,8 @@ public class Stalker extends QuantumLockedLifeform {
         return this.teleport(d1, d2, d3);
     }
 
-    private boolean teleport(double p_32544_, double p_32545_, double p_32546_) {
-        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(p_32544_, p_32545_, p_32546_);
+    private boolean teleport(double x, double y, double z) {
+        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(x, y, z);
 
         while (blockpos$mutableblockpos.getY() > this.level.getMinBuildHeight() && !this.level.getBlockState(blockpos$mutableblockpos).getMaterial().blocksMotion()) {
             blockpos$mutableblockpos.move(Direction.DOWN);
@@ -78,15 +95,11 @@ public class Stalker extends QuantumLockedLifeform {
         boolean flag = blockstate.getMaterial().blocksMotion();
         boolean flag1 = blockstate.getFluidState().is(FluidTags.WATER);
         if (flag && !flag1) {
-            net.minecraftforge.event.entity.EntityTeleportEvent.EnderEntity event = net.minecraftforge.event.ForgeEventFactory.onEnderTeleport(this, p_32544_, p_32545_, p_32546_);
-            if (event.isCanceled()) return false;
-            Vec3 vec3 = this.position();
-            boolean flag2 = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), true);
+            boolean flag2 = this.randomTeleport(x, y, z, false);
             if (flag2) {
-                this.level.gameEvent(GameEvent.TELEPORT, vec3, GameEvent.Context.of(this));
                 if (!this.isSilent()) {
-                    this.level.playSound((Player) null, this.xo, this.yo, this.zo, SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0F, 1.0F);
-                    this.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
+                    this.level.playSound(null, this.xo, this.yo, this.zo, ModSounds.STALKER_LAUGH.get(), this.getSoundSource(), 1.0F, 1.0F);
+                    this.playSound(ModSounds.STALKER_LAUGH.get(), 1.0F, 1.0F);
                 }
             }
 
@@ -99,10 +112,29 @@ public class Stalker extends QuantumLockedLifeform {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        getEntityData().define(POSE, Pose.HIDING.id());
+        getEntityData().define(POSE, Pose.randomPose(random).id());
         getEntityData().define(IS_ALIVE, random.nextBoolean());
     }
 
+    @Override
+    protected SoundEvent getHurtSound(DamageSource p_33034_) {
+        return SoundEvents.STONE_HIT;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return random.nextBoolean() ? ModSounds.STALKER_LAUGH.get() : ModSounds.STALKER_BREATH.get();
+    }
+
+    @Override
+    protected void playStepSound(BlockPos blockPos, BlockState state) {
+        if (!state.getMaterial().isLiquid()) {
+            BlockState blockstate = this.level.getBlockState(blockPos.above());
+            SoundType soundtype = blockstate.is(Blocks.SNOW) ? blockstate.getSoundType(level, blockPos, this) : state.getSoundType(level, blockPos, this);
+            this.playSound(ModSounds.STALKER_MOVE.get(), soundtype.getVolume() * 0.15F, soundtype.getPitch());
+        }
+    }
 
     @Override
     public boolean isCustomNameVisible() {
@@ -115,7 +147,11 @@ public class Stalker extends QuantumLockedLifeform {
 
     @Override
     public boolean doHurtTarget(Entity entity) {
-        return entity.hurt(ModDamageSource.STATUE, random.nextIntBetweenInclusive(3, 5));
+        boolean hurt = entity.hurt(ModDamageSource.STATUE, random.nextIntBetweenInclusive(3, 5));
+        if (hurt) {
+            playSound(ModSounds.STALKER_STRIKE.get());
+        }
+        return hurt;
     }
 
     @Override
@@ -125,19 +161,22 @@ public class Stalker extends QuantumLockedLifeform {
 
     @Override
     public void tick() {
-        setGlowingTag(true);
         setNoAi(isSeen());
         super.tick();
 
-        if (!isSeen() && getTarget() != null && tickCount % 200 == 0) {
-            teleportTowards(getTarget());
+        if ((ViewUtil.isInPrison(this)) && tickCount % 200 == 0) {
+            teleport();
         }
-
     }
 
     @Override
     public boolean shouldShowName() {
         return false;
+    }
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 400;
     }
 
     @Override
@@ -158,7 +197,18 @@ public class Stalker extends QuantumLockedLifeform {
 
     @Override
     public boolean hurt(DamageSource damageSource, float amount) {
+
+        if(damageSource.getEntity() instanceof Player player){
+            boolean hasTotem = player.getInventory().contains(ModTags.TOTEMS);
+            return hasTotem && player.getMainHandItem().getItem() instanceof PickaxeItem && super.hurt(damageSource, amount);
+        }
+
         return false;
+    }
+
+    @Override
+    public boolean onClimbable() {
+        return horizontalCollision || super.onClimbable();
     }
 
     @Override
@@ -185,6 +235,7 @@ public class Stalker extends QuantumLockedLifeform {
         return compound;
     }
 
+
     @Override
     public boolean isPushable() {
         return false;
@@ -192,10 +243,12 @@ public class Stalker extends QuantumLockedLifeform {
 
     @Override
     protected void doPush(Entity p_27415_) {
+        super.doPush(p_27415_);
     }
 
     @Override
     protected void pushEntities() {
+        super.pushEntities();
     }
 
 

@@ -9,7 +9,6 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 
 public class ClimbingGearItem extends ArmorItem {
@@ -28,12 +27,7 @@ public class ClimbingGearItem extends ArmorItem {
 
         ModCapability.get(player).ifPresent(iCap -> {
             if (!level.isClientSide()) {
-
-                if (!iCap.isClimbing()) {
-                    iCap.setClimbing(isPlayerCollided);
-                    player.getItemBySlot(getSlot()).hurtAndBreak(1, player, e -> e.broadcastBreakEvent(getSlot()));
-                }
-
+                iCap.setClimbing(isPlayerCollided);
                 if (isPlayerCollided && !player.isCreative()) {
                     iCap.setStamina(iCap.getStamina() - 1);
                 }

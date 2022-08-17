@@ -15,6 +15,7 @@ public class ModTags {
 
     public static TagKey<Item> OWL_FOOD = makeItem(MinecraftPlus.MODID, "owl_food");
     public static TagKey<Item> BIRD_POISON = makeItem(MinecraftPlus.MODID, "bird_poison");
+    public static TagKey<Item> TOTEMS = makeItem(MinecraftPlus.MODID, "totems");
     public static TagKey<Biome> OWL_SPAWNS = makeBiome("owl_spawns");
 
     public static TagKey<Block> OWL_SIT = makeBlock("owl_sit");

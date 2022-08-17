@@ -13,9 +13,9 @@ import java.util.EnumSet;
 public class OwlSitOnBlocks extends MoveToBlockGoal {
     private final Owl owl;
 
-    public OwlSitOnBlocks(Owl p_25135_, double p_25136_, int p_25137_) {
-        super(p_25135_, p_25136_, p_25137_, 6);
-        this.owl = p_25135_;
+    public OwlSitOnBlocks(Owl owl, double p_25136_, int p_25137_) {
+        super(owl, p_25136_, p_25137_, 6);
+        this.owl = owl;
         this.verticalSearchStart = -2;
         this.setFlags(EnumSet.of(Flag.JUMP, Goal.Flag.MOVE));
     }

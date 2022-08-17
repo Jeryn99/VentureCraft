@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraftforge.common.Tags;
 
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
@@ -312,6 +314,19 @@ public class ViewUtil {
 
         return null;
     }
+
+    public static boolean isInPrison(LivingEntity entity){
+        for (Direction value : Direction.values()) {
+            if(value == Direction.UP || value == Direction.DOWN) continue;
+            BlockState blockState = entity.level.getBlockState(entity.blockPosition().relative(value, 1));
+            BlockState blockStateUp = entity.level.getBlockState(entity.blockPosition().above().relative(value, 1));
+            if(!blockStateUp.isAir() && !blockState.isAir()){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     // This is bloated, I know, but I want to make sure I cover EVERY basis :/
     public static boolean canSeeThrough(BlockState blockState, Level world, BlockPos pos) {

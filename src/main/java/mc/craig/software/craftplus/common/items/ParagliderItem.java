@@ -6,13 +6,14 @@ import mc.craig.software.craftplus.util.ModConstants;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -20,6 +21,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Wearable;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,8 +30,6 @@ import java.util.function.Supplier;
 
 public class ParagliderItem extends Item implements Wearable, Repairable {
 
-    private final double SPEED_INCREASE = 2;
-    private final AttributeModifier SPEED_MODIFIER = new AttributeModifier("b44790fb-65c0-4ec7-8b63-a1749c614b1e", SPEED_INCREASE, AttributeModifier.Operation.MULTIPLY_BASE);
     private final Supplier<Item> repairItem;
 
     public ParagliderItem(Properties itemProperties, Supplier<Item> itemSupplier) {
@@ -102,35 +102,36 @@ public class ParagliderItem extends Item implements Wearable, Repairable {
             // Particles
             float horizonalSpeed = (float) player.getDeltaMovement().horizontalDistance();
             if (isSpaceGlider(stack) && horizonalSpeed >= 0.01F) {
-                for (int i = 0; i < 2; ++i) {
 
-                    player.level.addParticle(ParticleTypes.DRAGON_BREATH, player.getRandomX(0.5D), player.getY() + 2, player.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
+                if (!level.isClientSide()) {
+                    for (int i = 0; i < 2; ++i) {
+                        for (ServerPlayer serverplayer : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
+                            ((ServerLevel) serverplayer.level).sendParticles(ParticleTypes.DRAGON_BREATH, player.getRandomX(0.5D), player.getY() + 2.5, player.getRandomZ(0.5D), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                        }
+                    }
                 }
             }
 
             // Speed Modifications
             if (hasSpeedMods) {
-                if (!player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(SPEED_MODIFIER)) {
-                    player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(SPEED_MODIFIER);
-                }
-                for (int i = 0; i < 2; ++i) {
-                    if (horizonalSpeed >= 0.01F) {
-                        player.level.addParticle(ParticleTypes.GLOW, player.getRandomX(0.5D), player.getY() + 2.5, player.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
+
+                if (!level.isClientSide() && horizonalSpeed >= 0.01F) {
+                    for (int i = 0; i < 2; ++i) {
+                        for (ServerPlayer serverplayer : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
+                            ((ServerLevel) serverplayer.level).sendParticles(ParticleTypes.GLOW, player.getRandomX(0.5D), player.getY() + 2.5, player.getRandomZ(0.5D), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                        }
                     }
                 }
             }
 
-            if (m.y < -0.05) player.setDeltaMovement(new Vec3(m.x, -0.05, m.z));
+            if (m.y < -0.05)
+                player.setDeltaMovement(new Vec3(m.x, -0.05, m.z));
             return;
         }
 
         player.getAbilities().mayfly = player.isCreative();
 
         if (GliderUtil.isPlayerOnGroundOrWater(player)) {
-
-            if (player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(SPEED_MODIFIER)) {
-                player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_MODIFIER);
-            }
 
             // Reset Gliding status when on Ground
             setGlide(stack, false);

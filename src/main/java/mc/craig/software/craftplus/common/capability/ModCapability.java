@@ -5,7 +5,9 @@ import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.networking.Network;
 import mc.craig.software.craftplus.networking.packets.MessageSyncCap;
 import mc.craig.software.craftplus.util.GliderUtil;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
@@ -24,6 +26,9 @@ public class ModCapability implements ICap {
 
     public static final Capability<ICap> CAPABILITY = CapabilityManager.get(new CapabilityToken<ICap>() {
     });
+
+    public final NonNullList<ItemStack> TOTEM_INV = NonNullList.withSize(3, ItemStack.EMPTY);
+
     private Player player;
     private boolean isClimbing = false;
 
@@ -33,13 +38,14 @@ public class ModCapability implements ICap {
     private int maxStamina = 200;
 
     public enum AnimationStates {
-        FALLING, GLIDING, GLIDER_OPENING, BREATHING
+        FALLING, GLIDING, GLIDER_OPENING, BREATHING, RUNNING
     }
 
     public AnimationState glideAnimation = new AnimationState();
     public AnimationState fallingAnimation = new AnimationState();
     public AnimationState gliderOpeningAnimation = new AnimationState();
     public AnimationState breathing = new AnimationState();
+    public AnimationState runningAnimation = new AnimationState();
 
     public ModCapability() {
 
@@ -58,10 +64,18 @@ public class ModCapability implements ICap {
     public void tick(LivingEntity livingEntity) {
         if (glideAndFallLogic(livingEntity)) return;
 
-        if(!livingEntity.level.isClientSide()) {
+        if (!livingEntity.level.isClientSide()) {
             if (livingEntity.isOnGround()) {
                 setClimbing(false);
             }
+        }
+
+        if (livingEntity.isSprinting()) {
+            if (!runningAnimation.isStarted()) {
+                runningAnimation.start(player.tickCount);
+            }
+        } else {
+            runningAnimation.stop();
         }
 
         if (isRecharging()) {
@@ -178,6 +192,7 @@ public class ModCapability implements ICap {
             case GLIDING -> glideAnimation;
             case GLIDER_OPENING -> gliderOpeningAnimation;
             case BREATHING -> breathing;
+            case RUNNING -> runningAnimation;
         };
     }
 
@@ -209,6 +224,20 @@ public class ModCapability implements ICap {
         compoundTag.putBoolean("isFalling", falling);
         compoundTag.putInt("stamina", stamina);
         compoundTag.putInt("maxStamina", maxStamina);
+
+        ListTag inventory = new ListTag();
+
+        for (int k = 0; k < this.TOTEM_INV.size(); ++k) {
+            if (!this.TOTEM_INV.get(k).isEmpty()) {
+                CompoundTag itemNbt = new CompoundTag();
+                itemNbt.putByte("Slot", (byte) (k + 200));
+                this.TOTEM_INV.get(k).save(itemNbt);
+                inventory.add(itemNbt);
+            }
+        }
+
+        compoundTag.put("totems", inventory);
+
         return compoundTag;
     }
 
@@ -218,5 +247,18 @@ public class ModCapability implements ICap {
         falling = nbt.getBoolean("isFalling");
         stamina = nbt.getInt("stamina");
         maxStamina = nbt.getInt("maxStamina");
+
+        ListTag listtag = nbt.getList("totems", 10);
+
+        for (int i = 0; i < listtag.size(); ++i) {
+            CompoundTag compoundtag = listtag.getCompound(i);
+            int slot = compoundtag.getByte("Slot") & 255;
+            ItemStack itemstack = ItemStack.of(compoundtag);
+            if (!itemstack.isEmpty()) {
+                if (slot >= 200 && slot < this.TOTEM_INV.size() + 200) {
+                    this.TOTEM_INV.set(slot - 200, itemstack);
+                }
+            }
+        }
     }
 }
