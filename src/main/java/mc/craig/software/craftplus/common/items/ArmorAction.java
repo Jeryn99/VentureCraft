@@ -10,4 +10,5 @@ public interface ArmorAction {
 
     ArmorAction getInstance();
 
+    int getColor();
 }

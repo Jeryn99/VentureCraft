@@ -2,7 +2,7 @@ package mc.craig.software.craftplus.common;
 
 import mc.craig.software.craftplus.common.items.ClimbingGearItem;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
-import mc.craig.software.craftplus.common.items.TierArmor;
+import mc.craig.software.craftplus.common.items.TierArmorItem;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -45,10 +45,10 @@ public class ModItems {
     public static final RegistryObject<Item> COPPER_FILAMENT = ITEMS.register("copper_filament", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
 
 
-    public static final RegistryObject<TierArmor> LEATHER_ARMOR_HEAD = ITEMS.register("leather_helmet", () -> new TierArmor(TierArmor.Tier.LEATHER, EquipmentSlot.HEAD, new Item.Properties().tab(MAIN)));
-    public static final RegistryObject<TierArmor> LEATHER_ARMOR_CHEST = ITEMS.register("leather_chestplate", () -> new TierArmor(TierArmor.Tier.LEATHER, EquipmentSlot.CHEST, new Item.Properties().tab(MAIN)));
-    public static final RegistryObject<TierArmor> LEATHER_ARMOR_LEGGINGS = ITEMS.register("leather_leggings", () -> new TierArmor(TierArmor.Tier.LEATHER, EquipmentSlot.LEGS, new Item.Properties().tab(MAIN)));
-    public static final RegistryObject<TierArmor> LEATHER_ARMOR_FEET = ITEMS.register("leather_boots", () -> new TierArmor(TierArmor.Tier.LEATHER, EquipmentSlot.FEET, new Item.Properties().tab(MAIN)));
+    public static final RegistryObject<TierArmorItem> LEATHER_ARMOR_HEAD = ITEMS.register("leather_helmet", () -> new TierArmorItem(TierArmorItem.Tier.LEATHER, EquipmentSlot.HEAD, new Item.Properties().tab(MAIN)));
+    public static final RegistryObject<TierArmorItem> LEATHER_ARMOR_CHEST = ITEMS.register("leather_chestplate", () -> new TierArmorItem(TierArmorItem.Tier.LEATHER, EquipmentSlot.CHEST, new Item.Properties().tab(MAIN)));
+    public static final RegistryObject<TierArmorItem> LEATHER_ARMOR_LEGGINGS = ITEMS.register("leather_leggings", () -> new TierArmorItem(TierArmorItem.Tier.LEATHER, EquipmentSlot.LEGS, new Item.Properties().tab(MAIN)));
+    public static final RegistryObject<TierArmorItem> LEATHER_ARMOR_FEET = ITEMS.register("leather_boots", () -> new TierArmorItem(TierArmorItem.Tier.LEATHER, EquipmentSlot.FEET, new Item.Properties().tab(MAIN)));
 
     public static final RegistryObject<SpawnEggItem> STALKERS_EGG = ITEMS.register("stalker_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.STALKER, DyeColor.BLACK.getTextColor(), DyeColor.ORANGE.getTextColor(), new Item.Properties().tab(MAIN)));
     public static final RegistryObject<SpawnEggItem> OWL_SPAWN_EGG = ITEMS.register("owl_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.OWL, DyeColor.BROWN.getTextColor(), DyeColor.YELLOW.getTextColor(), new Item.Properties().tab(MAIN)));

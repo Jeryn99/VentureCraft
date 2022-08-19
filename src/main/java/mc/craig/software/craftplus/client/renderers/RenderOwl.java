@@ -30,6 +30,7 @@ public class RenderOwl extends MobRenderer<Owl, OwlModel<Owl>> {
         addLayer(new OwlEyesLayer(this));
     }
 
+
     @Override
     protected void setupRotations(Owl owl, PoseStack poseStack, float p_115687_, float p_115688_, float p_115689_) {
         super.setupRotations(owl, poseStack, p_115687_, p_115688_, p_115689_);

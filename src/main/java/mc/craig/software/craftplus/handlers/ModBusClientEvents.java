@@ -6,7 +6,9 @@ import mc.craig.software.craftplus.client.models.Models;
 import mc.craig.software.craftplus.client.renderers.RenderOwl;
 import mc.craig.software.craftplus.client.renderers.RenderStalker;
 import mc.craig.software.craftplus.common.ModEntities;
+import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
+import mc.craig.software.craftplus.common.items.TierArmorItem;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -16,11 +18,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Map;
 
@@ -50,6 +54,15 @@ public class ModBusClientEvents {
     @SubscribeEvent
     public static void doClientStuff(FMLClientSetupEvent event) {
         DistExecutor.runWhenOn(Dist.CLIENT, () -> ModBusClientEvents::itemPredicates);
+    }
+
+    @SubscribeEvent
+    public static void onColors(RegisterColorHandlersEvent.Item item) {
+        for (RegistryObject<Item> entry : ModItems.ITEMS.getEntries()) {
+            if (entry.get() instanceof TierArmorItem dyeableArmorItem) {
+                item.register((itemStack, p_92673_) -> dyeableArmorItem.getTier().getArmorAction().getColor(), entry.get());
+            }
+        }
     }
 
     private static void itemPredicates() {
