@@ -28,7 +28,7 @@ public class ClimbingGearItem extends ArmorItem {
         ModCapability.get(player).ifPresent(iCap -> {
             if (!level.isClientSide()) {
                 iCap.setClimbing(isPlayerCollided);
-                if (isPlayerCollided && !player.isCreative()) {
+                if (isPlayerCollided && !player.isCreative() && player.tickCount % 20 == 0) {
                     iCap.setStamina(iCap.getStamina() - 1);
                 }
                 iCap.sync();
@@ -36,7 +36,7 @@ public class ClimbingGearItem extends ArmorItem {
 
             if (isPlayerCollided && (iCap.getStamina() > 0 || player.isCreative())) {
                 Vec3 deltaMovement = player.getDeltaMovement();
-                deltaMovement = new Vec3(deltaMovement.x, player.isCrouching() ? -0.2D : 0.2D, deltaMovement.z);
+                deltaMovement = new Vec3(deltaMovement.x, player.isCrouching() ? -0.05D : 0.05D, deltaMovement.z);
                 player.setDeltaMovement(deltaMovement);
             }
         });

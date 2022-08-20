@@ -186,7 +186,7 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
         ItemStack itemstack = player.getItemInHand(interactionHand);
-        if (!this.isTame() && itemstack.is(ModTags.OWL_FOOD)) {
+        if (!this.isTame() && (itemstack.is(Items.SPIDER_EYE) || itemstack.is(Items.FERMENTED_SPIDER_EYE))) {
             if (!player.getAbilities().instabuild) {
                 itemstack.shrink(1);
             }

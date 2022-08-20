@@ -11,7 +11,6 @@ import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
@@ -21,13 +20,12 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.*;
+import net.minecraftforge.client.event.MovementInputUpdateEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.event.RenderHandEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -111,24 +109,21 @@ public class ClientEvents {
         LocalPlayer player = Minecraft.getInstance().player;
         ItemStack itemStack = player.getItemBySlot(EquipmentSlot.CHEST);
 
-        ModCapability.get(player).ifPresent(iCap -> {
+        if (e.getOverlay().id() == VanillaGuiOverlay.EXPERIENCE_BAR.id()) {
+            e.setCanceled(true);
+            ModCapability.get(player).ifPresent(iCap -> {
 
-            Window window = Minecraft.getInstance().getWindow();
+                Window window = Minecraft.getInstance().getWindow();
 
-            boolean isGlidingOrClimbing = itemStack.getItem() instanceof ParagliderItem && GliderUtil.isGlidingWithActiveGlider(player) || iCap.isClimbing();
-            boolean isRecharging = iCap.isRecharging();
-            // Render Stamina Duration
-            if ((isGlidingOrClimbing || isRecharging) && !player.isCreative()) {
-                if (e.getOverlay().id() == VanillaGuiOverlay.EXPERIENCE_BAR.id()) {
-                    e.setCanceled(true);
-                    return;
+                // Render Stamina Duration
+                if (!player.isCreative()) {
+                    int allowedDuration = iCap.getMaxStamina();
+                    int durationUsed = iCap.getStamina();
+                    float progress = (float) durationUsed / allowedDuration;
+                    renderDurationBar(stack, window, progress);
                 }
-                int allowedDuration = iCap.getMaxStamina();
-                int durationUsed = iCap.getStamina();
-                float progress = (float) durationUsed / allowedDuration;
-                renderDurationBar(stack, window, progress);
-            }
-        });
+            });
+        }
     }
 
     public static void renderDurationBar(PoseStack stack, Window window, float progress) {
