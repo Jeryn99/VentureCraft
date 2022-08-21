@@ -2,6 +2,7 @@ package mc.craig.software.craftplus.handlers;
 
 import mc.craig.software.craftplus.common.ModDamageSource;
 import mc.craig.software.craftplus.common.ModItems;
+import mc.craig.software.craftplus.common.advancement.TriggerManager;
 import mc.craig.software.craftplus.common.capability.ICap;
 import mc.craig.software.craftplus.common.capability.ModCapability;
 import mc.craig.software.craftplus.common.entities.Owl;
@@ -10,6 +11,7 @@ import mc.craig.software.craftplus.util.GliderUtil;
 import mc.craig.software.craftplus.util.ModConstants;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -59,18 +61,23 @@ public class CommonEvents {
     public static void onAnvil(AnvilUpdateEvent event) {
         ItemStack leftStack = event.getLeft();
         ItemStack rightStack = event.getRight();
+
         if (leftStack.getItem() instanceof ParagliderItem && rightStack.getItem() == ModItems.COPPER_FILAMENT.get()) {
             ItemStack copiedStack = leftStack.copy();
             ParagliderItem.setCopper(copiedStack, true);
             event.setCost(5);
             event.setOutput(copiedStack);
+
+            if (event.getPlayer() instanceof ServerPlayer serverPlayer) {
+                TriggerManager.COPPER_MODDER.trigger(serverPlayer);
+            }
         }
     }
 
     @SubscribeEvent
     public static void onPlayerStruck(EntityStruckByLightningEvent event) {
         Entity struckEntity = event.getEntity();
-        if (struckEntity instanceof Player player) {
+        if (struckEntity instanceof ServerPlayer player) {
             ItemStack chestItem = player.getItemBySlot(EquipmentSlot.CHEST);
             boolean hasCopperMod = ParagliderItem.hasCopperMod(chestItem);
             boolean isGliding = GliderUtil.isGlidingWithActiveGlider(player);
@@ -78,6 +85,7 @@ public class CommonEvents {
                 ParagliderItem.setStruck(chestItem, true);
                 if (ParagliderItem.hasBeenStruck(chestItem)) {
                     player.hurt(ModDamageSource.LIGHTNING_GLIDER, 2F);
+                    TriggerManager.GLIDER_LIGHTNING.trigger(player);
                 }
             }
         }

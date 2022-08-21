@@ -38,7 +38,7 @@ public class OwlShoulderLayer<T extends Player> extends RenderLayer<T, PlayerMod
         EntityType.byString(compoundtag.getString("id")).filter((p_117294_) -> p_117294_ == ModEntities.OWL.get()).ifPresent((owl) -> {
             poseStack.pushPose();
             poseStack.translate(p_117326_ ? (double) 0.4F : (double) -0.4F, living.isCrouching() ? (double) -1.3F : -1.5D, 0.0D);
-            VertexConsumer vertexconsumer = multiBufferSource.getBuffer(this.model.renderType(RenderOwl.OWL_LOCATIONS[compoundtag.getInt("Variant")]));
+            VertexConsumer vertexconsumer = multiBufferSource.getBuffer(this.model.renderType(RenderOwl.getTextureLocationFromInt(compoundtag.getInt("Variant"))));
             this.model.renderOnShoulder(poseStack, vertexconsumer, p_117320_, OverlayTexture.NO_OVERLAY, getParentModel());
             poseStack.popPose();
         });

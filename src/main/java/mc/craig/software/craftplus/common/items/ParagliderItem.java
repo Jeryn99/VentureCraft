@@ -9,7 +9,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -41,9 +40,10 @@ public class ParagliderItem extends Item implements Wearable, Repairable {
         return stack.getDisplayName().getString().contains("xwing");
     }
 
-    public static void setCopper(ItemStack itemStack, boolean copper) {
+    public static ItemStack setCopper(ItemStack itemStack, boolean copper) {
         CompoundTag compound = itemStack.getOrCreateTag();
         compound.putBoolean("copper_mod", copper);
+        return itemStack;
     }
 
 

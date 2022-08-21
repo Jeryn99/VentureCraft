@@ -101,6 +101,11 @@ public class OwlModel<T extends Owl> extends HierarchicalModel<T> {
     }
 
     @Override
+    public void renderToBuffer(PoseStack p_170625_, VertexConsumer p_170626_, int p_170627_, int p_170628_, float p_170629_, float p_170630_, float p_170631_, float p_170632_) {
+        super.renderToBuffer(p_170625_, p_170626_, p_170627_, p_170628_, p_170629_, p_170630_, p_170631_, p_170632_);
+    }
+
+    @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch) {
 
         this.root().getAllParts().forEach(ModelPart::resetPose);

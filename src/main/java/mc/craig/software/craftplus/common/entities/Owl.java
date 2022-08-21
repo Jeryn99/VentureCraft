@@ -5,6 +5,7 @@ import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.ModSounds;
 import mc.craig.software.craftplus.common.entities.ai.owl.OwlChargeAttackGoal;
 import mc.craig.software.craftplus.common.entities.ai.owl.OwlSitOnBlocks;
+import mc.craig.software.craftplus.common.entities.ai.owl.OwlTypes;
 import mc.craig.software.craftplus.common.entities.ai.owl.OwlWanderGoal;
 import mc.craig.software.craftplus.util.ModTags;
 import net.minecraft.core.BlockPos;
@@ -79,6 +80,7 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
     }
 
 
+
     @Override
     public void playAmbientSound() {
         if (level.isDay()) return;
@@ -106,7 +108,7 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
 
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData p_29392_, @Nullable CompoundTag p_29393_) {
-        this.setVariant(serverLevelAccessor.getRandom().nextInt(6));
+        this.setVariant(serverLevelAccessor.getRandom().nextInt(OwlTypes.values().length));
         return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, mobSpawnType, p_29392_, p_29393_);
     }
 
@@ -138,7 +140,7 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
     }
 
     public int getVariant() {
-        return Mth.clamp(this.getEntityData().get(DATA_VARIANT_ID), 0, 7);
+        return Mth.clamp(this.getEntityData().get(DATA_VARIANT_ID), 0, OwlTypes.values().length);
     }
 
     public void setVariant(int variant) {
@@ -372,8 +374,7 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
-        Owl owl = new Owl(ModEntities.OWL.get(), serverLevel);
-        return owl;
+        return new Owl(ModEntities.OWL.get(), serverLevel);
     }
 
     @Override

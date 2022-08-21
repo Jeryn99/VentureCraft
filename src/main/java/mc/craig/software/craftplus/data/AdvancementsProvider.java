@@ -6,6 +6,7 @@ import mc.craig.software.craftplus.MinecraftPlus;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.advancement.BaseTrigger;
 import mc.craig.software.craftplus.common.advancement.TriggerManager;
+import mc.craig.software.craftplus.common.items.ParagliderItem;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.FrameType;
@@ -40,7 +41,11 @@ public class AdvancementsProvider implements DataProvider {
     @Override
     public void run(@NotNull CachedOutput hashCache) throws IOException {
         Path path = this.generator.getOutputFolder();
-        Advancement first_time_flyer = this.createAdvancement("first_time_flyer", new ItemStack(ModItems.PARAGLIDER_WOOD.get()), new BaseTrigger.Instance(TriggerManager.FIRST_TIME_FLYER.getId()), null, FrameType.GOAL);
+
+        Advancement firstTimePlayerPassage = this.createAdvancement("first_time_flyer", new ItemStack(ModItems.PARAGLIDER_WOOD.get()), new BaseTrigger.Instance(TriggerManager.FIRST_TIME_FLYER.getId()), null, FrameType.GOAL);
+
+        Advancement copperModder = this.createAdvancement("copper_modder", new ItemStack(ModItems.COPPER_FILAMENT.get()), new BaseTrigger.Instance(TriggerManager.COPPER_MODDER.getId()), firstTimePlayerPassage, FrameType.TASK);
+        Advancement lightningStrike = this.createAdvancement("lightning_strike", ParagliderItem.setCopper(new ItemStack(ModItems.PARAGLIDER_SAPPHIRE.get()), true), new BaseTrigger.Instance(TriggerManager.GLIDER_LIGHTNING.getId()), copperModder, FrameType.GOAL);
 
 
         for (Advancement adv : advancements) {

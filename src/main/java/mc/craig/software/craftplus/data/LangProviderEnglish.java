@@ -98,9 +98,19 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModBlocks.DEEPSLATE_SAPPHIRE_ORE.get(), "Deepslate Sapphire Ore");
         add(ModBlocks.RUBY_ORE.get(), "Ruby Ore");
         add(ModBlocks.DEEPSLATE_RUBY_ORE.get(), "Deepslate Ruby Ore");
+
+        // ===== Advancements =====
+        addAdvancement("first_time_flyer", "Paraglide!", "...and the whole worlds at your feet");
+        addAdvancement("lightning_strike", "1.21 gigawatts!", "Energize your glider!");
+        addAdvancement("copper_modder", "Tinkerer!", "Mod your glider with Copper Filament!");
     }
 
     private void addSound(SoundEvent soundEvent, String subtitle) {
         add("subtitle." + MinecraftPlus.MODID + "." + soundEvent.getLocation().getPath(), subtitle);
+    }
+
+    private void addAdvancement(String advancement, String title, String subtitle) {
+        add("advancements." + MinecraftPlus.MODID + ".title." + advancement, title);
+        add("advancements." + MinecraftPlus.MODID + ".desc." + advancement, subtitle);
     }
 }

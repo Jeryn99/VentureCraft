@@ -1,4 +1,10 @@
 {
+  "advancements.minecraft_plus.desc.copper_modder": "Mod your glider with Copper Filament!",
+  "advancements.minecraft_plus.desc.first_time_flyer": "...and the whole worlds at your feet",
+  "advancements.minecraft_plus.desc.lightning_strike": "Energize your glider!",
+  "advancements.minecraft_plus.title.copper_modder": "Tinkerer!",
+  "advancements.minecraft_plus.title.first_time_flyer": "Paraglide!",
+  "advancements.minecraft_plus.title.lightning_strike": "1.21 gigawatts!",
   "block.minecraft_plus.deepslate_ruby_ore": "Deepslate Ruby Ore",
   "block.minecraft_plus.deepslate_sapphire_ore": "Deepslate Sapphire Ore",
   "block.minecraft_plus.ruby_ore": "Ruby Ore",
