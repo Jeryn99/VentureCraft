@@ -11,6 +11,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
@@ -28,7 +29,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
 
         for (Map.Entry<ResourceKey<Item>, Item> entry : ForgeRegistries.ITEMS.getEntries()) {
             Item item = entry.getValue();
-            if(ForgeRegistries.ITEMS.getKey(item).getPath().contains("seed")){
+            if (ForgeRegistries.ITEMS.getKey(item).getPath().contains("seed")) {
                 add(ModTags.OWL_FOOD, item);
             }
         }
@@ -37,7 +38,14 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         add(ModTags.OWL_FOOD, ItemTags.FISHES);
 
         add(ModTags.BIRD_POISON, Items.COOKIE, Items.CAKE);
-        add(ModTags.TOTEMS, ModItems.TOTEM.get());
+        tag(ModTags.TOTEMS).add(ModItems.TOTEM.get());
+
+
+        tag(Tags.Items.TOOLS_SWORDS).add(ModItems.SAPPHIRE_SWORD.get());
+        tag(Tags.Items.TOOLS_AXES).add(ModItems.SAPPHIRE_AXE.get());
+        tag(Tags.Items.TOOLS_PICKAXES).add(ModItems.SAPPHIRE_PICKAXE.get());
+        tag(Tags.Items.TOOLS_SHOVELS).add(ModItems.SAPPHIRE_SHOVEL.get());
+        tag(Tags.Items.TOOLS_HOES).add(ModItems.SAPPHIRE_HOE.get());
 
     }
 

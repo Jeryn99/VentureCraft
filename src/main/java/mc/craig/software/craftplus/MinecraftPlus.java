@@ -4,6 +4,7 @@ import mc.craig.software.craftplus.common.ModBlocks;
 import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.ModSounds;
+import mc.craig.software.craftplus.common.advancement.TriggerManager;
 import mc.craig.software.craftplus.common.capability.ICap;
 import mc.craig.software.craftplus.common.entities.Owl;
 import mc.craig.software.craftplus.common.entities.Stalker;
@@ -52,7 +53,7 @@ public class MinecraftPlus {
         modBus.addListener(this::onAttributeAssign);
         modBus.addListener(this::onGatherData);
         modBus.addListener(this::onAddCaps);
-
+        TriggerManager.init();
     }
 
     public void onAddCaps(RegisterCapabilitiesEvent capabilitiesEvent) {
@@ -81,6 +82,7 @@ public class MinecraftPlus {
         generator.addProvider(true, new EntityTypeTagsProvider(generator, Registry.ENTITY_TYPE, existingFileHelper));
         generator.addProvider(true, new BiomeModifierProvider(generator));
         generator.addProvider(true, new ModelProviderBlock(generator, existingFileHelper));
+        generator.addProvider(true, new AdvancementsProvider(generator));
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

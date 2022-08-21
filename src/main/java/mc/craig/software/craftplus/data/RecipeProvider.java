@@ -34,6 +34,13 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
         ShapedRecipeBuilder.shaped(ModItems.PARAGLIDER_NETHERITE.get()).pattern("RRR").pattern("SWS").pattern("WOW").define('O', ModItems.OWL_FEATHER.get()).define('R', ModItems.REINFORCED_PAPER_NETHERITE.get()).define('W', Items.STICK).define('S', Items.STRING).group("gliders").unlockedBy("has_crafting_table", has(Blocks.CRAFTING_TABLE)).save(consumer);
         ShapedRecipeBuilder.shaped(ModItems.PARAGLIDER_SAPPHIRE.get()).pattern("RRR").pattern("SWS").pattern("WOW").define('O', ModItems.OWL_FEATHER.get()).define('R', ModItems.REINFORCED_PAPER_SAPPHIRE.get()).define('W', Items.STICK).define('S', Items.STRING).group("gliders").unlockedBy("has_crafting_table", has(Blocks.CRAFTING_TABLE)).save(consumer);
 
+        // Sapphire Tools
+        ShapedRecipeBuilder.shaped(ModItems.SAPPHIRE_AXE.get()).define('#', Items.STICK).define('X', ModItems.SAPPHIRE_GEM.get()).pattern("XX").pattern("X#").pattern(" #").unlockedBy("has_sapphire", has(ModItems.SAPPHIRE_GEM.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(ModItems.SAPPHIRE_PICKAXE.get()).define('#', Items.STICK).define('X', ModItems.SAPPHIRE_GEM.get()).pattern("XXX").pattern(" # ").pattern(" # ").unlockedBy("has_sapphire", has(ModItems.SAPPHIRE_GEM.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(ModItems.SAPPHIRE_SHOVEL.get()).define('#', Items.STICK).define('X', ModItems.SAPPHIRE_GEM.get()).pattern("X").pattern("#").pattern("#").unlockedBy("has_sapphire", has(ModItems.SAPPHIRE_GEM.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(ModItems.SAPPHIRE_SWORD.get()).define('#', Items.STICK).define('X', ModItems.SAPPHIRE_GEM.get()).pattern("X").pattern("X").pattern("#").unlockedBy("has_sapphire", has(ModItems.SAPPHIRE_GEM.get())).save(consumer);
+        ShapedRecipeBuilder.shaped(ModItems.SAPPHIRE_HOE.get()).define('#', Items.STICK).define('X', ModItems.SAPPHIRE_GEM.get()).pattern("XX").pattern(" #").pattern(" #").unlockedBy("has_sapphire", has(ModItems.SAPPHIRE_GEM.get())).save(consumer);
+
 
     }
 }

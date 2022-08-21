@@ -21,7 +21,7 @@ public class ModItems {
     public static CreativeModeTab MAIN = new CreativeModeTab(MODID) {
         @Override
         public @NotNull ItemStack makeIcon() {
-            return new ItemStack(ModItems.PARAGLIDER_WOOD.get());
+            return new ItemStack(ModItems.PARAGLIDER_SAPPHIRE.get());
         }
     };
 
@@ -45,11 +45,13 @@ public class ModItems {
     public static final RegistryObject<Item> COPPER_FILAMENT = ITEMS.register("copper_filament", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
 
 
+    // Run Armor 
     public static final RegistryObject<TierArmorItem> LEATHER_ARMOR_HEAD = ITEMS.register("leather_helmet", () -> new TierArmorItem(TierArmorItem.Tier.LEATHER, EquipmentSlot.HEAD, new Item.Properties().tab(MAIN)));
     public static final RegistryObject<TierArmorItem> LEATHER_ARMOR_CHEST = ITEMS.register("leather_chestplate", () -> new TierArmorItem(TierArmorItem.Tier.LEATHER, EquipmentSlot.CHEST, new Item.Properties().tab(MAIN)));
     public static final RegistryObject<TierArmorItem> LEATHER_ARMOR_LEGGINGS = ITEMS.register("leather_leggings", () -> new TierArmorItem(TierArmorItem.Tier.LEATHER, EquipmentSlot.LEGS, new Item.Properties().tab(MAIN)));
     public static final RegistryObject<TierArmorItem> LEATHER_ARMOR_FEET = ITEMS.register("leather_boots", () -> new TierArmorItem(TierArmorItem.Tier.LEATHER, EquipmentSlot.FEET, new Item.Properties().tab(MAIN)));
 
+    // Spawn Eggs 
     public static final RegistryObject<SpawnEggItem> STALKERS_EGG = ITEMS.register("stalker_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.STALKER, DyeColor.BLACK.getTextColor(), DyeColor.ORANGE.getTextColor(), new Item.Properties().tab(MAIN)));
     public static final RegistryObject<SpawnEggItem> OWL_SPAWN_EGG = ITEMS.register("owl_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.OWL, DyeColor.BROWN.getTextColor(), DyeColor.YELLOW.getTextColor(), new Item.Properties().tab(MAIN)));
 
@@ -60,6 +62,19 @@ public class ModItems {
     public static final RegistryObject<Item> CLIMBING_GEAR = ITEMS.register("climbing_gear", () -> new ClimbingGearItem(ArmorMaterials.LEATHER, EquipmentSlot.FEET, new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
 
     public static final RegistryObject<Item> TOTEM = ITEMS.register("totem", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.RARE)));
+
+    // Keys 
+    public static final RegistryObject<Item> IRON_KEY = ITEMS.register("iron_key", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
+    public static final RegistryObject<Item> GOLD_KEY = ITEMS.register("gold_key", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
+    public static final RegistryObject<Item> SAPPHIRE_KEY = ITEMS.register("sapphire_key", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
+    public static final RegistryObject<Item> VOID_KEY = ITEMS.register("void_key", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
+
+    // Sapphire Tools
+    public static final RegistryObject<Item> SAPPHIRE_SWORD = ITEMS.register("sapphire_sword", () -> new SwordItem(Tiers.DIAMOND, 3, -2.4F, (new Item.Properties()).tab(MAIN)));
+    public static final RegistryObject<Item> SAPPHIRE_SHOVEL = ITEMS.register("sapphire_shovel", () -> new ShovelItem(Tiers.DIAMOND, 1.5F, -3.0F, (new Item.Properties()).tab(MAIN)));
+    public static final RegistryObject<Item> SAPPHIRE_PICKAXE = ITEMS.register("sapphire_pickaxe", () -> new PickaxeItem(Tiers.DIAMOND, 1, -2.8F, (new Item.Properties()).tab(MAIN)));
+    public static final RegistryObject<Item> SAPPHIRE_AXE = ITEMS.register("sapphire_axe", () -> new AxeItem(Tiers.DIAMOND, 5.0F, -3.0F, (new Item.Properties()).tab(MAIN)));
+    public static final RegistryObject<Item> SAPPHIRE_HOE = ITEMS.register("sapphire_hoe", () -> new HoeItem(Tiers.DIAMOND, -3, 0.0F, (new Item.Properties()).tab(MAIN)));
 
 
 }

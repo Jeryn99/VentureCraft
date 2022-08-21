@@ -13,10 +13,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;
 import net.minecraft.world.entity.animal.Cat;
-import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
@@ -35,18 +35,22 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nonnull;
-import java.util.function.Predicate;
 
 @Mod.EventBusSubscriber
 public class CommonEvents {
 
     @SubscribeEvent
-    public static void onJoin(EntityJoinLevelEvent levelEvent){
+    public static void onJoin(EntityJoinLevelEvent levelEvent) {
         Entity entity = levelEvent.getEntity();
 
         // Make Cats attack Owls
-        if(entity instanceof Cat cat){
+        if (entity instanceof Cat cat) {
             cat.targetSelector.addGoal(1, new NonTameRandomTargetGoal<>(cat, Owl.class, false, null));
+        }
+
+        // Stop all kinds of XP
+        if (entity instanceof ExperienceOrb) {
+            levelEvent.setCanceled(true);
         }
 
     }

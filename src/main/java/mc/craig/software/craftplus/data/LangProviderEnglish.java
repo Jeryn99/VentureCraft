@@ -30,6 +30,12 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModItems.PARAGLIDER_NETHERITE.get(), "Netherite Paraglider");
         add(ModItems.PARAGLIDER_SAPPHIRE.get(), "Sapphire Paraglider");
 
+        // Keys
+        add(ModItems.GOLD_KEY.get(), "Gold Key");
+        add(ModItems.IRON_KEY.get(), "Iron Key");
+        add(ModItems.SAPPHIRE_KEY.get(), "Sapphire Key");
+        add(ModItems.VOID_KEY.get(), "Void Key");
+
         // Paper
         add(ModItems.REINFORCED_PAPER.get(), "Re-Inforced Paper");
         add(ModItems.REINFORCED_PAPER_IRON.get(), "Re-Inforced Paper (Iron)");
@@ -56,6 +62,13 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModItems.LEATHER_ARMOR_CHEST.get(), "Leather Chestplate");
         add(ModItems.LEATHER_ARMOR_LEGGINGS.get(), "Leather Leggings");
         add(ModItems.LEATHER_ARMOR_FEET.get(), "Leather Feet");
+
+        // Sapphire Tools
+        add(ModItems.SAPPHIRE_SWORD.get(), "Sapphire Sword");
+        add(ModItems.SAPPHIRE_HOE.get(), "Sapphire Hoe");
+        add(ModItems.SAPPHIRE_SHOVEL.get(), "Sapphire Shovel");
+        add(ModItems.SAPPHIRE_PICKAXE.get(), "Sapphire Pickaxe");
+        add(ModItems.SAPPHIRE_AXE.get(), "Sapphire Axe");
 
         // ===== Messages =====
         add(ModConstants.INSTALLED_MODS, ChatFormatting.BOLD + "Installed Modifications");
