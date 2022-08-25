@@ -21,16 +21,21 @@ public class OwlEyesLayer extends EyesLayer<Owl, OwlModel<Owl>> {
         super(renderLayerParent);
     }
 
+    private final RenderType renderType = RenderType.entityTranslucent(new ResourceLocation(MinecraftPlus.MODID, "textures/entity/owl/owl_eyes.png"));
+
+
     @Override
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int lightning, Owl owl, float p_116987_, float p_116988_, float p_116989_, float p_116990_, float p_116991_, float p_116992_) {
         poseStack.pushPose();
+        int packedOverlayCoords = OverlayTexture.NO_OVERLAY;
+        int packedLightmapCoords = 0x00F000F0;
         VertexConsumer vertexconsumer = multiBufferSource.getBuffer(this.renderType());
-        this.getParentModel().renderToBuffer(poseStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 0.5F);
+        this.getParentModel().renderToBuffer(poseStack, vertexconsumer, packedLightmapCoords, packedOverlayCoords, 1.0F, 1.0F, 1.0F, 0.5F);
         poseStack.popPose();
     }
 
     @Override
     public RenderType renderType() {
-        return RenderType.entityCutoutNoCull(new ResourceLocation(MinecraftPlus.MODID, "textures/entity/owl/owl_eyes.png"));
+        return renderType;
     }
 }

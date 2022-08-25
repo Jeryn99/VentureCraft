@@ -27,18 +27,22 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-public class Stalker extends QuantumLockedLifeform {
+public class Stalker extends QuantumLockedLifeform implements RangedAttackMob {
 
     private static final EntityDataAccessor<String> POSE = SynchedEntityData.defineId(Stalker.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Boolean> IS_ALIVE = SynchedEntityData.defineId(Stalker.class, EntityDataSerializers.BOOLEAN);
@@ -56,6 +60,7 @@ public class Stalker extends QuantumLockedLifeform {
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(1, new ClimbOnTopOfPowderSnowGoal(this, this.level));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
@@ -65,10 +70,10 @@ public class Stalker extends QuantumLockedLifeform {
 
     protected boolean teleport() {
         if (!this.level.isClientSide() && this.isAlive()) {
-            double d0 = this.getX() + (this.random.nextDouble() - 0.5D) * 64.0D;
-            double d1 = this.getY() + (double) (this.random.nextInt(64) - 32);
-            double d2 = this.getZ() + (this.random.nextDouble() - 0.5D) * 64.0D;
-            return this.teleport(d0, d1, d2);
+            double xCoord = this.getX() + (this.random.nextDouble() - 0.5D) * 64.0D;
+            double yCoord = this.getY() + (double) (this.random.nextInt(64) - 32);
+            double zCoord = this.getZ() + (this.random.nextDouble() - 0.5D) * 64.0D;
+            return this.teleport(xCoord, yCoord, zCoord);
         } else {
             return false;
         }
@@ -77,21 +82,20 @@ public class Stalker extends QuantumLockedLifeform {
     boolean teleportTowards(Entity p_32501_) {
         Vec3 vec3 = new Vec3(this.getX() - p_32501_.getX(), this.getY(0.5D) - p_32501_.getEyeY(), this.getZ() - p_32501_.getZ());
         vec3 = vec3.normalize();
-        double d0 = 16.0D;
-        double d1 = this.getX() + (this.random.nextDouble() - 0.5D) * 8.0D - vec3.x * 16.0D;
-        double d2 = this.getY() + (double) (this.random.nextInt(16) - 8) - vec3.y * 16.0D;
-        double d3 = this.getZ() + (this.random.nextDouble() - 0.5D) * 8.0D - vec3.z * 16.0D;
-        return this.teleport(d1, d2, d3);
+        double xCoord = this.getX() + (this.random.nextDouble() - 0.5D) * 8.0D - vec3.x * 16.0D;
+        double yCoord = this.getY() + (double) (this.random.nextInt(16) - 8) - vec3.y * 16.0D;
+        double zCoord = this.getZ() + (this.random.nextDouble() - 0.5D) * 8.0D - vec3.z * 16.0D;
+        return this.teleport(xCoord, yCoord, zCoord);
     }
 
     private boolean teleport(double x, double y, double z) {
-        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(x, y, z);
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(x, y, z);
 
-        while (blockpos$mutableblockpos.getY() > this.level.getMinBuildHeight() && !this.level.getBlockState(blockpos$mutableblockpos).getMaterial().blocksMotion()) {
-            blockpos$mutableblockpos.move(Direction.DOWN);
+        while (mutableBlockPos.getY() > this.level.getMinBuildHeight() && !this.level.getBlockState(mutableBlockPos).getMaterial().blocksMotion()) {
+            mutableBlockPos.move(Direction.DOWN);
         }
 
-        BlockState blockstate = this.level.getBlockState(blockpos$mutableblockpos);
+        BlockState blockstate = this.level.getBlockState(mutableBlockPos);
         boolean flag = blockstate.getMaterial().blocksMotion();
         boolean flag1 = blockstate.getFluidState().is(FluidTags.WATER);
         if (flag && !flag1) {
@@ -116,8 +120,13 @@ public class Stalker extends QuantumLockedLifeform {
         getEntityData().define(IS_ALIVE, random.nextBoolean());
     }
 
+    public boolean getIsAlive() {
+        return getEntityData().get(IS_ALIVE);
+    }
+
+
     @Override
-    protected SoundEvent getHurtSound(DamageSource p_33034_) {
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
         return SoundEvents.STONE_HIT;
     }
 
@@ -161,7 +170,12 @@ public class Stalker extends QuantumLockedLifeform {
 
     @Override
     public void tick() {
-        setNoAi(isSeen());
+
+        if (getIsAlive()) {
+            setNoAi(true);
+        } else {
+            setNoAi(isSeen());
+        }
         super.tick();
 
         if ((ViewUtil.isInPrison(this)) && tickCount % 200 == 0) {
@@ -249,6 +263,21 @@ public class Stalker extends QuantumLockedLifeform {
     @Override
     protected void pushEntities() {
         super.pushEntities();
+    }
+
+    @Override
+    public void performRangedAttack(LivingEntity livingEntity, float p_33318_) {
+        ItemStack itemstack = this.getProjectile(this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, item -> item instanceof BowItem)));
+        AbstractArrow abstractarrow = ProjectileUtil.getMobArrow(this, itemstack, p_33318_);
+        if (this.getMainHandItem().getItem() instanceof net.minecraft.world.item.BowItem)
+            abstractarrow = ((net.minecraft.world.item.BowItem) this.getMainHandItem().getItem()).customArrow(abstractarrow);
+        double d0 = livingEntity.getX() - this.getX();
+        double d1 = livingEntity.getY(0.3333333333333333D) - abstractarrow.getY();
+        double d2 = livingEntity.getZ() - this.getZ();
+        double d3 = Math.sqrt(d0 * d0 + d2 * d2);
+        abstractarrow.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - this.level.getDifficulty().getId() * 4));
+        this.playSound(SoundEvents.ARROW_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+        this.level.addFreshEntity(abstractarrow);
     }
 
 

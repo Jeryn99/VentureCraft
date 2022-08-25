@@ -40,7 +40,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         add(ModTags.BIRD_POISON, Items.COOKIE, Items.CAKE);
         tag(ModTags.TOTEMS).add(ModItems.TOTEM.get());
 
-
+        tag(ItemTags.ARROWS).add(ModItems.ADVANCED_ARROW.get());
         tag(Tags.Items.TOOLS_SWORDS).add(ModItems.SAPPHIRE_SWORD.get());
         tag(Tags.Items.TOOLS_AXES).add(ModItems.SAPPHIRE_AXE.get());
         tag(Tags.Items.TOOLS_PICKAXES).add(ModItems.SAPPHIRE_PICKAXE.get());

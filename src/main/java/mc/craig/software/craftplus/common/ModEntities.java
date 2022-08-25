@@ -2,6 +2,7 @@ package mc.craig.software.craftplus.common;
 
 import mc.craig.software.craftplus.common.entities.Owl;
 import mc.craig.software.craftplus.common.entities.Stalker;
+import mc.craig.software.craftplus.common.entities.projectile.AdvancedArrow;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.registries.DeferredRegister;
@@ -29,5 +30,7 @@ public class ModEntities {
                     .setCustomClientFactory((ent, world) -> ModEntities.OWL.get().create(world))
                     .setShouldReceiveVelocityUpdates(true)
                     .build(MODID + ":owl"));
+
+    public static final RegistryObject<EntityType<AdvancedArrow>> ADVANCED_ARROW = ENTITY_TYPES.register("advanced_arrow", () -> EntityType.Builder.<AdvancedArrow>of(AdvancedArrow::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20).build(MODID + ":advanced_arrow"));
 
 }

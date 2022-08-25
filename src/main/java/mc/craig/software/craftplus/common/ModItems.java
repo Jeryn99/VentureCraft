@@ -1,5 +1,6 @@
 package mc.craig.software.craftplus.common;
 
+import mc.craig.software.craftplus.common.items.AdvancedArrowItem;
 import mc.craig.software.craftplus.common.items.ClimbingGearItem;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.common.items.TierArmorItem;
@@ -76,5 +77,6 @@ public class ModItems {
     public static final RegistryObject<Item> SAPPHIRE_AXE = ITEMS.register("sapphire_axe", () -> new AxeItem(Tiers.DIAMOND, 5.0F, -3.0F, (new Item.Properties()).tab(MAIN)));
     public static final RegistryObject<Item> SAPPHIRE_HOE = ITEMS.register("sapphire_hoe", () -> new HoeItem(Tiers.DIAMOND, -3, 0.0F, (new Item.Properties()).tab(MAIN)));
 
+    public static final RegistryObject<Item> ADVANCED_ARROW = ITEMS.register("advanced_arrow", () -> new AdvancedArrowItem((new Item.Properties()).tab(MAIN)));
 
 }

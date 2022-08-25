@@ -3,6 +3,7 @@ package mc.craig.software.craftplus.handlers;
 import mc.craig.software.craftplus.client.layers.OwlShoulderLayer;
 import mc.craig.software.craftplus.client.layers.PlayerGliderLayer;
 import mc.craig.software.craftplus.client.models.Models;
+import mc.craig.software.craftplus.client.renderers.RenderAdvancedArrow;
 import mc.craig.software.craftplus.client.renderers.RenderOwl;
 import mc.craig.software.craftplus.client.renderers.RenderStalker;
 import mc.craig.software.craftplus.common.ModEntities;
@@ -34,6 +35,7 @@ public class ModBusClientEvents {
     @SubscribeEvent
     public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.STALKER.get(), RenderStalker::new);
+        event.registerEntityRenderer(ModEntities.ADVANCED_ARROW.get(), RenderAdvancedArrow::new);
         event.registerEntityRenderer(ModEntities.OWL.get(), RenderOwl::new);
     }
 

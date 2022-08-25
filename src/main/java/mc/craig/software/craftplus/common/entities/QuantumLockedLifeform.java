@@ -44,7 +44,7 @@ public class QuantumLockedLifeform extends Monster implements Enemy {
 
         super.aiStep();
         if (!level.isClientSide) {
-            List<Player> players = level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(25));
+            List<Player> players = level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(300));
             players.removeIf(player -> player.isSpectator() || player.isInvisible() || player.isSleeping() || player.level != level);
 
             if (players.isEmpty()) {

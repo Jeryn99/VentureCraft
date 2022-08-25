@@ -29,8 +29,8 @@ public class RenderOwl extends MobRenderer<Owl, OwlModel<Owl>> {
     }
 
     @Override
-    public void render(Owl owl, float p_115456_, float p_115457_, PoseStack poseStack, MultiBufferSource multiBufferSource, int p_115460_) {
-        super.render(owl, p_115456_, p_115457_, poseStack, multiBufferSource, p_115460_);
+    public void render(Owl owl, float entityYaw, float partialTicks, PoseStack matrixStack, MultiBufferSource bufferIn, int packedLightIn) {
+        super.render(owl, entityYaw, partialTicks, matrixStack, bufferIn, packedLightIn);
     }
 
     @Override
