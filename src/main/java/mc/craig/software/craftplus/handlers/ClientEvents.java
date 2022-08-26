@@ -6,11 +6,15 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import mc.craig.software.craftplus.MinecraftPlus;
 import mc.craig.software.craftplus.client.layers.PlayerGliderLayer;
+import mc.craig.software.craftplus.client.screen.ExtendedInventoryScreen;
 import mc.craig.software.craftplus.common.capability.ModCapability;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
+import mc.craig.software.craftplus.networking.Network;
+import mc.craig.software.craftplus.networking.packets.MessageOpenInventory;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
@@ -22,28 +26,24 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.MovementInputUpdateEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.client.event.RenderHandEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.network.PacketDistributor;
 
 @Mod.EventBusSubscriber(modid = MinecraftPlus.MODID, value = Dist.CLIENT)
 public class ClientEvents {
 
-
     private static int lightLevel;
 
-/*    @SubscribeEvent
-    public static void onOpenInventory(ScreenEvent.Init pre){
-        if(pre.getScreen() instanceof InventoryScreen inventoryScreen){
-            Inventory inv = Minecraft.getInstance().player.getInventory();
-            InventoryMenu inventoryMenu = Minecraft.getInstance().player.inventoryMenu;
-            inventoryMenu.slots.add(201, new Slot(inv, 0, 56, 17));
+    @SubscribeEvent
+    public static void onOpenScreen(ScreenEvent.Opening e) {
+        if(e.getScreen() instanceof InventoryScreen) {
+            e.setCanceled(true);
+            Network.INSTANCE.sendToServer(new MessageOpenInventory());
         }
-    }*/
+    }
 
     @SubscribeEvent
     public static void onRenderHand(RenderHandEvent event) {
@@ -63,8 +63,6 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void onRenderLevelLast(RenderLevelStageEvent event) {
-
-
         RenderBuffers bufferSource = Minecraft.getInstance().renderBuffers();
 
         LocalPlayer living = Minecraft.getInstance().player;

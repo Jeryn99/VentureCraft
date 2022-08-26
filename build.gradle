@@ -1,5 +1,7 @@
-
 buildscript {
+    repositories {
+        maven { url = 'https://maven.parchmentmc.org' }
+    }
     dependencies {
         // Can't use the newer 'plugins' block for Mixin, need to use the old 'apply plugin' method
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
@@ -10,6 +12,7 @@ plugins {
     id 'eclipse'
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 
 version = '1.0'
@@ -23,7 +26,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
-    mappings channel: 'official', version: '1.19.2'
+    mappings channel: 'parchment', version: '2022.08.10-1.19.2'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
@@ -143,6 +146,7 @@ dependencies {
 
     implementation fg.deobf("curse.maven:jei-238222:3905244")
     implementation fg.deobf("curse.maven:shoulder-surfing-reloaded-243190:3914089")
+    implementation fg.deobf("curse.maven:smoothboot-633412:3894618")
 
 }
 

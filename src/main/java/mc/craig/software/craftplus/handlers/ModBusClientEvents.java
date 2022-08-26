@@ -8,6 +8,7 @@ import mc.craig.software.craftplus.client.renderers.RenderOwl;
 import mc.craig.software.craftplus.client.renderers.RenderStalker;
 import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.ModItems;
+import mc.craig.software.craftplus.common.ModMenus;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.common.items.TierArmorItem;
 import net.minecraft.client.model.EntityModel;
@@ -55,7 +56,8 @@ public class ModBusClientEvents {
 
     @SubscribeEvent
     public static void doClientStuff(FMLClientSetupEvent event) {
-        DistExecutor.runWhenOn(Dist.CLIENT, () -> ModBusClientEvents::itemPredicates);
+        ModBusClientEvents.itemPredicates();
+        ModMenus.registerScreens();
     }
 
     @SubscribeEvent
