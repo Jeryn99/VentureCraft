@@ -12,17 +12,10 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.*;
 import net.minecraft.resources.ResourceLocation;
 
-public class RenderStalker extends LivingEntityRenderer<Stalker, PlayerModel<Stalker>> {
+public class RenderStalker extends LivingEntityRenderer<Stalker, PlayerModelChanges> {
 
     public RenderStalker(EntityRendererProvider.Context context) {
-        super(context, new PlayerModelChanges(context.bakeLayer(Models.PLAYER), true), 0.5F);
-        this.addLayer(new HumanoidArmorLayer<>(this, new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER_SLIM_INNER_ARMOR)), new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER_SLIM_OUTER_ARMOR))));
-        this.addLayer(new ItemInHandLayer<>(this, context.getItemInHandRenderer()));
-        this.addLayer(new ArrowLayer<>(context, this));
-        this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), context.getItemInHandRenderer()));
-        this.addLayer(new ElytraLayer<>(this, context.getModelSet()));
-        this.addLayer(new SpinAttackEffectLayer<>(this, context.getModelSet()));
-        this.addLayer(new BeeStingerLayer<>(this));
+        super(context, new PlayerModelChanges(context.bakeLayer(Models.PLAYER)), 0.5F);
     }
 
     @Override

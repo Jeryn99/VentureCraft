@@ -18,7 +18,7 @@ public class Models {
         registerLayerDefinitions.registerLayerDefinition(GLIDER, GliderModel::getModelData);
         registerLayerDefinitions.registerLayerDefinition(OWL, OwlModel::createBodyLayer);
         registerLayerDefinitions.registerLayerDefinition(X_WING, XWingModel::createBodyLayer);
-        registerLayerDefinitions.registerLayerDefinition(PLAYER, () -> LayerDefinition.create(PlayerModelChanges.createMesh(CubeDeformation.NONE, true), 64, 64));
+        registerLayerDefinitions.registerLayerDefinition(PLAYER, PlayerModelChanges::createBodyLayer);
     }
 
 }

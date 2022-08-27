@@ -16,6 +16,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -46,6 +47,8 @@ public class Stalker extends QuantumLockedLifeform implements RangedAttackMob {
 
     private static final EntityDataAccessor<String> POSE = SynchedEntityData.defineId(Stalker.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Boolean> IS_ALIVE = SynchedEntityData.defineId(Stalker.class, EntityDataSerializers.BOOLEAN);
+
+    public AnimationState POSES_STATE = new AnimationState();
 
     public Stalker(EntityType<? extends QuantumLockedLifeform> type, Level worldIn) {
         super(worldIn, type);
@@ -170,6 +173,10 @@ public class Stalker extends QuantumLockedLifeform implements RangedAttackMob {
 
     @Override
     public void tick() {
+
+        if(!POSES_STATE.isStarted()){
+            POSES_STATE.start(tickCount - random.nextInt(10000));
+        }
 
         if (getIsAlive()) {
             setNoAi(true);
