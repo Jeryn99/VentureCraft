@@ -34,7 +34,7 @@ public class AnimationHandler {
 
 
             float horizontalDistance = (float) livingEntity.getDeltaMovement().horizontalDistance();
-            if (horizontalDistance < 0.01F && !livingEntity.isCrouching()) {
+            if (horizontalDistance < 0.01F && !livingEntity.isCrouching() && !livingEntity.swinging) {
                 humanoidModel.leftArm.getAllParts().forEach(ModelPart::resetPose);
                 humanoidModel.rightArm.getAllParts().forEach(ModelPart::resetPose);
                 humanoidModel.body.getAllParts().forEach(ModelPart::resetPose);

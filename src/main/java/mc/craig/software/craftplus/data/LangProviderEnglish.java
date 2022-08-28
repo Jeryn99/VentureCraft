@@ -58,10 +58,10 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModItems.OWL_SPAWN_EGG.get(), "Spawn Owl");
 
         // Armor
-        add(ModItems.LEATHER_ARMOR_HEAD.get(), "Leather Helmet");
+     /*   add(ModItems.LEATHER_ARMOR_HEAD.get(), "Leather Helmet");
         add(ModItems.LEATHER_ARMOR_CHEST.get(), "Leather Chestplate");
         add(ModItems.LEATHER_ARMOR_LEGGINGS.get(), "Leather Leggings");
-        add(ModItems.LEATHER_ARMOR_FEET.get(), "Leather Feet");
+        add(ModItems.LEATHER_ARMOR_FEET.get(), "Leather Feet");*/
 
         // Sapphire Tools
         add(ModItems.SAPPHIRE_SWORD.get(), "Sapphire Sword");

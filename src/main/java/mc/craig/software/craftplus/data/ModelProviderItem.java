@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.TieredItem;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -43,6 +44,11 @@ public class ModelProviderItem extends ItemModelProvider {
                 continue;
             }
 
+            if(entry.get() instanceof TieredItem){
+                toolItem(entry.get());
+                continue;
+            }
+
             if (entry.get() instanceof BlockItem) {
                 blockItem(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(entry.get())));
                 continue;
@@ -51,6 +57,19 @@ public class ModelProviderItem extends ItemModelProvider {
             basicItem(entry.get());
         }
     }
+
+    public ItemModelBuilder toolItem(Item item)
+    {
+        return toolItem(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)));
+    }
+
+    public ItemModelBuilder toolItem(ResourceLocation item)
+    {
+        return getBuilder(item.toString())
+                .parent(new ModelFile.UncheckedModelFile("item/handheld"))
+                .texture("layer0", new ResourceLocation(item.getNamespace(), "item/" + item.getPath()));
+    }
+
 
     public ItemModelBuilder blockItem(ResourceLocation item) {
         return getBuilder(item.toString())

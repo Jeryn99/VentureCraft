@@ -35,16 +35,6 @@ public class ClientEvents {
 
 
     private static int lightLevel;
-
-/*    @SubscribeEvent
-    public static void onOpenInventory(ScreenEvent.Init pre){
-        if(pre.getScreen() instanceof InventoryScreen inventoryScreen){
-            Inventory inv = Minecraft.getInstance().player.getInventory();
-            InventoryMenu inventoryMenu = Minecraft.getInstance().player.inventoryMenu;
-            inventoryMenu.slots.add(201, new Slot(inv, 0, 56, 17));
-        }
-    }*/
-
     @SubscribeEvent
     public static void onRenderHand(RenderHandEvent event) {
         lightLevel = event.getPackedLight(); // My precious little hack, my precious
