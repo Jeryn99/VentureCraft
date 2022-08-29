@@ -3,7 +3,9 @@ package mc.craig.software.craftplus.handlers;
 import mc.craig.software.craftplus.common.ModDamageSource;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.advancement.TriggerManager;
+import mc.craig.software.craftplus.common.capability.ExtendedInventoryCapability;
 import mc.craig.software.craftplus.common.capability.ICap;
+import mc.craig.software.craftplus.common.capability.IExtendedInventory;
 import mc.craig.software.craftplus.common.capability.ModCapability;
 import mc.craig.software.craftplus.common.entities.Owl;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
@@ -55,6 +57,10 @@ public class CommonEvents {
             levelEvent.setCanceled(true);
         }
 
+        if (entity instanceof ServerPlayer player) {
+            entity.getCapability(ExtendedInventoryCapability.CAPABILITY).ifPresent(inv -> inv.syncTo(player));
+            entity.getCapability(ModCapability.CAPABILITY).ifPresent(inv -> inv.syncTo(player));
+        }
     }
 
     @SubscribeEvent
@@ -115,7 +121,28 @@ public class CommonEvents {
                 @Nonnull
                 @Override
                 public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @javax.annotation.Nullable Direction side) {
-                    return cap == ModCapability.CAPABILITY ? (LazyOptional<T>) capInstance : LazyOptional.empty();
+                    return cap == ModCapability.CAPABILITY ? capInstance.cast() : LazyOptional.empty();
+                }
+
+                @Override
+                public CompoundTag serializeNBT() {
+                    return cap.serializeNBT();
+                }
+
+                @Override
+                public void deserializeNBT(CompoundTag nbt) {
+                    cap.deserializeNBT(nbt);
+                }
+            });
+
+            event.addCapability(ModConstants.EXTENDED_INV_CAPABILITY_ID, new ICapabilitySerializable<CompoundTag>() {
+                final ExtendedInventoryCapability cap = new ExtendedInventoryCapability(player);
+                final LazyOptional<IExtendedInventory> capInstance = LazyOptional.of(() -> cap);
+
+                @Nonnull
+                @Override
+                public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @javax.annotation.Nullable Direction side) {
+                    return cap == ExtendedInventoryCapability.CAPABILITY ? capInstance.cast() : LazyOptional.empty();
                 }
 
                 @Override
@@ -133,12 +160,15 @@ public class CommonEvents {
 
     @SubscribeEvent
     public static void onTrackPlayer(PlayerEvent.StartTracking startTracking) {
-        ModCapability.get(startTracking.getEntity()).ifPresent(ICap::sync);
+        if (startTracking.getTarget() instanceof Player player && startTracking.getEntity() instanceof ServerPlayer tracker) {
+            ModCapability.get(player).ifPresent(cap -> cap.syncTo((tracker)));
+            player.getCapability(ExtendedInventoryCapability.CAPABILITY).ifPresent(inv -> inv.syncTo(tracker));
+        }
     }
 
     @SubscribeEvent
     public static void living(LivingEvent.LivingTickEvent event) {
-        if(event.getEntity() instanceof Player player){
+        if (event.getEntity() instanceof Player player) {
             ModCapability.get(player).ifPresent(iCap -> iCap.tick(player));
         }
     }

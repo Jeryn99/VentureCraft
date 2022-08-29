@@ -8,6 +8,7 @@ import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
@@ -167,7 +168,17 @@ public class ModCapability implements ICap {
         }
 
         CompoundTag nbt = serializeNBT();
-        Network.INSTANCE.send(PacketDistributor.DIMENSION.with(() -> player.getCommandSenderWorld().dimension()), new MessageSyncCap(this.player.getUUID(), nbt));
+        Network.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new MessageSyncCap(this.player.getUUID(), nbt));
+    }
+
+    @Override
+    public void syncTo(ServerPlayer target) {
+        if (player != null && player.level.isClientSide) {
+            throw new IllegalStateException("Don't sync client -> server");
+        }
+
+        CompoundTag nbt = serializeNBT();
+        Network.INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new MessageSyncCap(this.player.getUUID(), nbt));
     }
 
     @Override

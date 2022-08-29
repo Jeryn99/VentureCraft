@@ -10,6 +10,9 @@
   "mixins": [
     "AbstractContainerMenuMixin",
     "GrindstoneMenuMixin",
-    "LivingEntityMixin"
+    "InventoryAccessor",
+    "InventoryMixin",
+    "LivingEntityMixin",
+    "PlayerMixin"
   ]
 }

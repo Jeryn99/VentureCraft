@@ -6,7 +6,8 @@ import net.minecraft.resources.ResourceLocation;
 public class ModConstants {
 
     // ResourceLocations
-    public static final ResourceLocation CAPABILITY_ID = new ResourceLocation(MinecraftPlus.MODID, "capability");
+    public static final ResourceLocation CAPABILITY_ID = MinecraftPlus.id("capability");
+    public static final ResourceLocation EXTENDED_INV_CAPABILITY_ID = MinecraftPlus.id("extended_inventory");
 
     // Tooltip
     public static final String INSTALLED_MODS = createToolTip("installed_mods");
