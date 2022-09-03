@@ -1,6 +1,9 @@
 package mc.craig.software.craftplus;
 
-import mc.craig.software.craftplus.common.*;
+import mc.craig.software.craftplus.common.ModBlocks;
+import mc.craig.software.craftplus.common.ModEntities;
+import mc.craig.software.craftplus.common.ModItems;
+import mc.craig.software.craftplus.common.ModSounds;
 import mc.craig.software.craftplus.common.advancement.TriggerManager;
 import mc.craig.software.craftplus.common.capability.ICap;
 import mc.craig.software.craftplus.common.entities.Owl;
@@ -15,8 +18,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -26,7 +27,6 @@ import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
@@ -50,7 +50,6 @@ public class MinecraftPlus {
         ModSounds.SOUNDS.register(modBus);
         ModOres.PLACED_FEATURES.register(modBus);
         ModOres.CONFIGURED_FEATURES.register(modBus);
-        ModMenus.MENU_TYPES.register(modBus);
 
         modBus.addListener(this::onAttributeAssign);
         modBus.addListener(this::onGatherData);

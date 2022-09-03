@@ -8,7 +8,6 @@ import mc.craig.software.craftplus.client.renderers.RenderOwl;
 import mc.craig.software.craftplus.client.renderers.RenderStalker;
 import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.ModItems;
-import mc.craig.software.craftplus.common.ModMenus;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.common.items.TierArmorItem;
 import net.minecraft.client.model.EntityModel;
@@ -22,7 +21,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -57,7 +55,6 @@ public class ModBusClientEvents {
     @SubscribeEvent
     public static void doClientStuff(FMLClientSetupEvent event) {
         ModBusClientEvents.itemPredicates();
-        ModMenus.registerScreens();
     }
 
     @SubscribeEvent

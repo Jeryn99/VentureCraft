@@ -14,4 +14,9 @@ public class InventoryMixin {
         ci.setReturnValue(pIndex >= 0 && pIndex < 11);
     }
 
+    @Inject(at = @At("HEAD"), method = "getSelectionSize", cancellable = true)
+    private static void getSelectionSize(CallbackInfoReturnable<Integer> ci) {
+        ci.setReturnValue(11);
+    }
+
 }

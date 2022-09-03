@@ -1,6 +1,7 @@
 package mc.craig.software.craftplus.mixin;
 
 import mc.craig.software.craftplus.common.ModItems;
+import mc.craig.software.craftplus.common.menu.ExtendedInventoryMenu;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.GrindstoneMenu;
@@ -29,8 +30,14 @@ public class AbstractContainerMenuMixin {
     private NonNullList<ItemStack> remoteSlots;
 
     // This is horrible, but Forge has forced my hand
-    @Inject(at = @At("HEAD"), method = "addSlot(Lnet/minecraft/world/inventory/Slot;)Lnet/minecraft/world/inventory/Slot;")
+    @Inject(at = @At("HEAD"), method = "addSlot(Lnet/minecraft/world/inventory/Slot;)Lnet/minecraft/world/inventory/Slot;", cancellable = true)
     private void addSlot(Slot slot, CallbackInfoReturnable<Slot> cir) {
+        if (ExtendedInventoryMenu.PREVENT_SLOTS) {
+            cir.setReturnValue(null);
+            cir.cancel();
+            return;
+        }
+
         if (((Object) this) instanceof GrindstoneMenu && slot.index == 0 && slot.x == 49) {
 
             Slot newSlot = new Slot(slot.container, 0, 49, 19) {
@@ -41,7 +48,6 @@ public class AbstractContainerMenuMixin {
             };
 
             hackSlots(newSlot);
-
         }
     }
 

@@ -9,8 +9,6 @@ import mc.craig.software.craftplus.client.layers.PlayerGliderLayer;
 import mc.craig.software.craftplus.client.screen.ExtendedInventoryScreen;
 import mc.craig.software.craftplus.common.capability.ModCapability;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
-import mc.craig.software.craftplus.networking.Network;
-import mc.craig.software.craftplus.networking.packets.MessageOpenInventory;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
@@ -30,7 +28,8 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.network.PacketDistributor;
+
+import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = MinecraftPlus.MODID, value = Dist.CLIENT)
 public class ClientEvents {
@@ -40,8 +39,7 @@ public class ClientEvents {
     @SubscribeEvent
     public static void onOpenScreen(ScreenEvent.Opening e) {
         if(e.getScreen() instanceof InventoryScreen) {
-            e.setCanceled(true);
-            Network.INSTANCE.sendToServer(new MessageOpenInventory());
+            e.setNewScreen(new ExtendedInventoryScreen(Objects.requireNonNull(Minecraft.getInstance().player)));
         }
     }
 

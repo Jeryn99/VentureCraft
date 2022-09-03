@@ -1,21 +1,22 @@
 package mc.craig.software.craftplus.common.menu;
 
-import mc.craig.software.craftplus.common.ModMenus;
 import mc.craig.software.craftplus.common.capability.ExtendedInventoryCapability;
 import mc.craig.software.craftplus.common.capability.IExtendedInventory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class ExtendedInventoryMenu extends AbstractContainerMenu {
+public class ExtendedInventoryMenu extends InventoryMenu {
 
+    public static boolean PREVENT_SLOTS = false;
     public static final Component CONTAINER_TITLE = Component.translatable("container.minecraft_plus.extended_inventory");
 
-    public ExtendedInventoryMenu(int pContainerId, Inventory pPlayerInventory) {
-        super(ModMenus.EXTENDED_INVENTORY.get(), pContainerId);
+    public ExtendedInventoryMenu(Inventory pPlayerInventory, boolean pActive, final Player pOwner) {
+        super(pPlayerInventory, pActive, pOwner);
+        PREVENT_SLOTS = false;
 
         IExtendedInventory extendedInventory = pPlayerInventory.player.getCapability(ExtendedInventoryCapability.CAPABILITY).resolve().orElseThrow();
 
