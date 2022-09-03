@@ -13,12 +13,14 @@ public class Models {
     public static ModelLayerLocation OWL = new ModelLayerLocation(new ResourceLocation(MinecraftPlus.MODID, "model"), "owl");
     public static ModelLayerLocation X_WING = new ModelLayerLocation(new ResourceLocation(MinecraftPlus.MODID, "model"), "x_wing");
     public static ModelLayerLocation PLAYER = new ModelLayerLocation(new ResourceLocation(MinecraftPlus.MODID, "model"), "player");
+    public static ModelLayerLocation CHEST = new ModelLayerLocation(new ResourceLocation(MinecraftPlus.MODID, "model"), "chest");
 
     public static void init(EntityRenderersEvent.RegisterLayerDefinitions registerLayerDefinitions) {
         registerLayerDefinitions.registerLayerDefinition(GLIDER, GliderModel::getModelData);
         registerLayerDefinitions.registerLayerDefinition(OWL, OwlModel::createBodyLayer);
         registerLayerDefinitions.registerLayerDefinition(X_WING, XWingModel::createBodyLayer);
         registerLayerDefinitions.registerLayerDefinition(PLAYER, PlayerModelChanges::createBodyLayer);
+        registerLayerDefinitions.registerLayerDefinition(CHEST, ChestModel::getModelData);
     }
 
 }

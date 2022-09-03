@@ -1,9 +1,6 @@
 package mc.craig.software.craftplus;
 
-import mc.craig.software.craftplus.common.ModBlocks;
-import mc.craig.software.craftplus.common.ModEntities;
-import mc.craig.software.craftplus.common.ModItems;
-import mc.craig.software.craftplus.common.ModSounds;
+import mc.craig.software.craftplus.common.*;
 import mc.craig.software.craftplus.common.advancement.TriggerManager;
 import mc.craig.software.craftplus.common.capability.ICap;
 import mc.craig.software.craftplus.common.entities.Owl;
@@ -49,6 +46,7 @@ public class MinecraftPlus {
         ModSounds.SOUNDS.register(modBus);
         ModOres.PLACED_FEATURES.register(modBus);
         ModOres.CONFIGURED_FEATURES.register(modBus);
+        ModBlockEntities.TILES.register(modBus);
 
         modBus.addListener(this::onAttributeAssign);
         modBus.addListener(this::onGatherData);

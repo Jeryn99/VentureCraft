@@ -1,6 +1,7 @@
 package mc.craig.software.craftplus.common;
 
 import com.google.common.base.Supplier;
+import mc.craig.software.craftplus.common.block.LockedLootChestBlock;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -27,6 +28,7 @@ public class ModBlocks {
 
     public static RegistryObject<Block> RUBY_ORE = register("ruby_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(3, 7)), ModItems.MAIN);
     public static RegistryObject<Block> DEEPSLATE_RUBY_ORE = register("deepslate_ruby_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(EMERALD_ORE).color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE), UniformInt.of(3, 7)), ModItems.MAIN);
+    public static RegistryObject<Block> LOOT_CHESTS = register("loot_chest", () -> new LockedLootChestBlock(BlockBehaviour.Properties.copy(EMERALD_ORE).color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE)), ModItems.MAIN);
 
     /**
      * Registers a Block and BlockItem to the ItemGroup of your choice
