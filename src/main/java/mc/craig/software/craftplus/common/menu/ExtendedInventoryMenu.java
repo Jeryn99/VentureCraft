@@ -3,6 +3,7 @@ package mc.craig.software.craftplus.common.menu;
 import com.mojang.datafixers.util.Pair;
 import mc.craig.software.craftplus.common.capability.ExtendedInventoryCapability;
 import mc.craig.software.craftplus.common.capability.IExtendedInventory;
+import mc.craig.software.craftplus.common.capability.PlayerInventoryWrapper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -79,6 +80,13 @@ public class ExtendedInventoryMenu extends InventoryMenu {
                 }
             });
         }
+
+        // Offhand
+        this.addSlot(new Slot(pPlayerInventory, PlayerInventoryWrapper.OFF_HAND_SLOT, 77, 62) {
+            public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                return Pair.of(InventoryMenu.BLOCK_ATLAS, InventoryMenu.EMPTY_ARMOR_SLOT_SHIELD);
+            }
+        });
     }
 
     @Override

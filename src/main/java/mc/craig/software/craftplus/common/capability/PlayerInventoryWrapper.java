@@ -8,6 +8,8 @@ import net.minecraft.world.item.ItemStack;
 
 public class PlayerInventoryWrapper extends Inventory {
 
+    public static final int OFF_HAND_SLOT = 11 * 5 + 4;
+
     public PlayerInventoryWrapper(Inventory parent) {
         super(parent.player);
 
@@ -50,7 +52,22 @@ public class PlayerInventoryWrapper extends Inventory {
 
     @Override
     public int getSlotWithRemainingSpace(ItemStack pStack) {
-        // Fix offhand thing (currently offhand is index=40)
-        return super.getSlotWithRemainingSpace(pStack);
+        if (this.hasRemainingSpaceForItem(this.getItem(this.selected), pStack)) {
+            return this.selected;
+        } else if (this.hasRemainingSpaceForItem(this.getItem(OFF_HAND_SLOT), pStack)) {
+            return OFF_HAND_SLOT;
+        } else {
+            for(int i = 0; i < this.items.size(); ++i) {
+                if (this.hasRemainingSpaceForItem(this.items.get(i), pStack)) {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+    }
+
+    private boolean hasRemainingSpaceForItem(ItemStack pDestination, ItemStack pOrigin) {
+        return !pDestination.isEmpty() && ItemStack.isSameItemSameTags(pDestination, pOrigin) && pDestination.isStackable() && pDestination.getCount() < pDestination.getMaxStackSize() && pDestination.getCount() < this.getMaxStackSize();
     }
 }

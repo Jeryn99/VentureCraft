@@ -52,9 +52,9 @@ public class HotbarRenderer {
             if (!offHandItem.isEmpty()) {
                 int j2 = screenHeight - 16 - 3;
                 if (humanoidarm == HumanoidArm.LEFT) {
-                    renderSlot.renderSlot(i - 91 - 26, j2, pPartialTick, player, offHandItem, i1++);
+                    renderSlot.renderSlot(i - leftShift - 26, j2, pPartialTick, player, offHandItem, i1++);
                 } else {
-                    renderSlot.renderSlot(i + 91 + 10, j2, pPartialTick, player, offHandItem, i1++);
+                    renderSlot.renderSlot(i + leftShift + 10, j2, pPartialTick, player, offHandItem, i1++);
                 }
             }
 
