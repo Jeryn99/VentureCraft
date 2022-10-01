@@ -1,6 +1,6 @@
 package mc.craig.software.craftplus.common.items;
 
-import mc.craig.software.craftplus.common.capability.ModCapability;
+import mc.craig.software.craftplus.common.entities.VenturePlayerData;
 import mc.craig.software.craftplus.util.GliderUtil;
 import mc.craig.software.craftplus.util.ModConstants;
 import net.minecraft.core.particles.ParticleTypes;
@@ -20,14 +20,15 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Wearable;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.server.ServerLifecycleHooks;
+import net.threetag.palladiumcore.item.IPalladiumItem;
+import net.threetag.palladiumcore.util.Platform;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Supplier;
 
-public class ParagliderItem extends Item implements Wearable, Repairable {
+public class ParagliderItem extends Item implements Wearable, Repairable, IPalladiumItem {
 
     private final Supplier<Item> repairItem;
 
@@ -76,10 +77,8 @@ public class ParagliderItem extends Item implements Wearable, Repairable {
     }
 
     @Override
-    public void onArmorTick(ItemStack stack, Level level, Player player) {
-        super.onArmorTick(stack, level, player);
-
-        ModCapability.get(player).ifPresent(iCap -> {
+    public void armorTick(ItemStack stack, Level level, Player player) {
+        VenturePlayerData.get(player).ifPresent(iCap -> {
 
         boolean playerCanGlide = !GliderUtil.isPlayerOnGroundOrWater(player) && !player.getAbilities().flying;
         boolean gliderCanGlide = glidingEnabled(stack) && iCap.getStamina() > 0;
@@ -105,7 +104,7 @@ public class ParagliderItem extends Item implements Wearable, Repairable {
 
                 if (!level.isClientSide()) {
                     for (int i = 0; i < 2; ++i) {
-                        for (ServerPlayer serverplayer : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
+                        for (ServerPlayer serverplayer : Platform.getCurrentServer().getPlayerList().getPlayers()) {
                             ((ServerLevel) serverplayer.level).sendParticles(ParticleTypes.DRAGON_BREATH, player.getRandomX(0.5D), player.getY() + 2.5, player.getRandomZ(0.5D), 1, 0.0D, 0.0D, 0.0D, 0.0D);
                         }
                     }
@@ -117,7 +116,7 @@ public class ParagliderItem extends Item implements Wearable, Repairable {
 
                 if (!level.isClientSide() && horizonalSpeed >= 0.01F) {
                     for (int i = 0; i < 2; ++i) {
-                        for (ServerPlayer serverplayer : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
+                        for (ServerPlayer serverplayer : Platform.getCurrentServer().getPlayerList().getPlayers()) {
                             ((ServerLevel) serverplayer.level).sendParticles(ParticleTypes.GLOW, player.getRandomX(0.5D), player.getY() + 2.5, player.getRandomZ(0.5D), 1, 0.0D, 0.0D, 0.0D, 0.0D);
                         }
                     }

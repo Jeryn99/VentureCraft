@@ -19,6 +19,9 @@
     ],
     "client": [
       "mc.craig.software.craftplus.fabric.VentureCraftClientFabric"
+    ],
+    "cardinal-components": [
+      "mc.craig.software.craftplus.common.entities.fabric.VCComponents"
     ]
   },
   "mixins": [
@@ -28,5 +31,10 @@
   "depends": {
     "fabric": "*",
     "minecraft": ">=1.19.2"
+  },
+  "custom": {
+    "cardinal-components": [
+      "venturecraft:player_data"
+    ]
   }
 }

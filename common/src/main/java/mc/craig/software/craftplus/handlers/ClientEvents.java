@@ -6,7 +6,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import mc.craig.software.craftplus.VentureCraft;
 import mc.craig.software.craftplus.client.layers.PlayerGliderLayer;
-import mc.craig.software.craftplus.common.capability.ModCapability;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.client.CameraType;

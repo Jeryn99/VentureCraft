@@ -1,35 +1,29 @@
-package mc.craig.software.craftplus.common.capability;
+package mc.craig.software.craftplus.common.entities;
 
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
-import mc.craig.software.craftplus.networking.Network;
 import mc.craig.software.craftplus.networking.packets.MessageSyncCap;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.CapabilityToken;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.network.PacketDistributor;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
+import java.util.Optional;
 
-public class ModCapability implements ICap {
-
-
-    public static final Capability<ICap> CAPABILITY = CapabilityManager.get(new CapabilityToken<ICap>() {
-    });
+public class VenturePlayerData {
 
     public final NonNullList<ItemStack> TOTEM_INV = NonNullList.withSize(3, ItemStack.EMPTY);
 
-    private Player player;
+    @NotNull
+    private final Player player;
     private boolean isClimbing = false;
 
     private boolean falling = false;
@@ -47,20 +41,15 @@ public class ModCapability implements ICap {
     public AnimationState breathing = new AnimationState();
     public AnimationState runningAnimation = new AnimationState();
 
-    public ModCapability() {
-
+    public VenturePlayerData(@NotNull Player player) {
+        this.player = player;
     }
 
-    public ModCapability(Player livingEntity) {
-        this.player = livingEntity;
+    @ExpectPlatform
+    public static Optional<VenturePlayerData> get(LivingEntity player) {
+        throw new AssertionError();
     }
 
-    @Nonnull
-    public static LazyOptional<ICap> get(LivingEntity player) {
-        return player.getCapability(ModCapability.CAPABILITY, null);
-    }
-
-    @Override
     public void tick(LivingEntity livingEntity) {
         if (glideAndFallLogic(livingEntity)) return;
 
@@ -100,10 +89,10 @@ public class ModCapability implements ICap {
 
     private boolean glideAndFallLogic(LivingEntity livingEntity) {
 
-        if(!livingEntity.level.isClientSide){
+        if (!livingEntity.level.isClientSide) {
             boolean prev = isFalling();
             setFalling(player.fallDistance > 1.1309066 && !GliderUtil.isGlidingWithActiveGlider(livingEntity));
-            if(isFalling() != prev){
+            if (isFalling() != prev) {
                 sync();
             }
 
@@ -145,47 +134,46 @@ public class ModCapability implements ICap {
         }
     }
 
-    @Override
     public boolean isClimbing() {
         return isClimbing;
     }
 
-    @Override
     public void setClimbing(boolean climbing) {
         this.isClimbing = climbing;
     }
 
-    @Override
     public boolean canClimb(LivingEntity livingEntity) {
         return getStamina() > 0 && player.getItemBySlot(EquipmentSlot.FEET).getItem() == ModItems.CLIMBING_GEAR.get();
     }
 
-    @Override
     public void sync() {
-        if (player != null && player.level.isClientSide) {
+        if (this.player.level.isClientSide) {
             throw new IllegalStateException("Don't sync client -> server");
         }
 
-        CompoundTag nbt = serializeNBT();
-        Network.INSTANCE.send(PacketDistributor.DIMENSION.with(() -> player.getCommandSenderWorld().dimension()), new MessageSyncCap(this.player.getUUID(), nbt));
+        new MessageSyncCap(this.player.getId(), serializeNBT()).sendToTracking(this.player);
     }
 
-    @Override
+    public void syncTo(ServerPlayer receiver) {
+        if (this.player.level.isClientSide) {
+            throw new IllegalStateException("Don't sync client -> server");
+        }
+
+        new MessageSyncCap(this.player.getId(), serializeNBT()).send(receiver);
+    }
+
     public boolean isFalling() {
         return falling;
     }
 
-    @Override
     public void setFalling(boolean falling) {
         this.falling = falling;
     }
 
-    @Override
     public boolean isRecharging() {
         return !GliderUtil.isGlidingWithActiveGlider(player) && getStamina() < getMaxStamina() && !isFalling() && GliderUtil.isPlayerOnGroundOrWater(player) && !isClimbing();
     }
 
-    @Override
     public AnimationState getAnimation(AnimationStates animationStates) {
         return switch (animationStates) {
             case FALLING -> fallingAnimation;
@@ -196,28 +184,22 @@ public class ModCapability implements ICap {
         };
     }
 
-    @Override
     public void setStamina(int stamina) {
         this.stamina = Mth.clamp(stamina, 0, maxStamina);
     }
 
-    @Override
     public int getStamina() {
         return stamina;
     }
 
-    @Override
     public void setMaxStamina(int stamina) {
         this.maxStamina = stamina;
     }
 
-    @Override
     public int getMaxStamina() {
         return maxStamina;
     }
 
-
-    @Override
     public CompoundTag serializeNBT() {
         CompoundTag compoundTag = new CompoundTag();
         compoundTag.putBoolean("isClimbing", isClimbing);
@@ -241,7 +223,6 @@ public class ModCapability implements ICap {
         return compoundTag;
     }
 
-    @Override
     public void deserializeNBT(CompoundTag nbt) {
         isClimbing = nbt.getBoolean("isClimbing");
         falling = nbt.getBoolean("isFalling");
@@ -261,4 +242,5 @@ public class ModCapability implements ICap {
             }
         }
     }
+
 }

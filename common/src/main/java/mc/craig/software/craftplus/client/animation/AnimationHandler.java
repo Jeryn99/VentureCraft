@@ -1,7 +1,7 @@
 package mc.craig.software.craftplus.client.animation;
 
 import mc.craig.software.craftplus.client.PlayerAnimations;
-import mc.craig.software.craftplus.common.capability.ModCapability;
+import mc.craig.software.craftplus.common.entities.VenturePlayerData;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
@@ -15,12 +15,12 @@ public class AnimationHandler {
 
     public static void setupAnimPre(HumanoidModel<?> humanoidModel, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo callbackInfo) {
 
-        ModCapability.get(livingEntity).ifPresent(iCap -> {
+        VenturePlayerData.get(livingEntity).ifPresent(iCap -> {
             // Falling Animation
             if (livingEntity instanceof Player) {
                 if (iCap.isFalling()) {
                     resetPoseAll(humanoidModel);
-                    AnimationUtil.animate(humanoidModel, iCap.getAnimation(ModCapability.AnimationStates.FALLING), PlayerAnimations.FALLING, ageInTicks, 1);
+                    AnimationUtil.animate(humanoidModel, iCap.getAnimation(VenturePlayerData.AnimationStates.FALLING), PlayerAnimations.FALLING, ageInTicks, 1);
                     fixLayers(humanoidModel);
                     callbackInfo.cancel();
                 }
@@ -30,7 +30,7 @@ public class AnimationHandler {
     }
 
     public static void setupAnimPost(HumanoidModel<?> humanoidModel, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo callbackInfo) {
-        ModCapability.get(livingEntity).ifPresent(iCap -> {
+        VenturePlayerData.get(livingEntity).ifPresent(iCap -> {
 
 
             float horizontalDistance = (float) livingEntity.getDeltaMovement().horizontalDistance();
@@ -39,13 +39,13 @@ public class AnimationHandler {
                 humanoidModel.rightArm.getAllParts().forEach(ModelPart::resetPose);
                 humanoidModel.body.getAllParts().forEach(ModelPart::resetPose);
                 resetPose(humanoidModel.body, humanoidModel.leftArm, humanoidModel.rightArm);
-                AnimationUtil.animate(humanoidModel, iCap.getAnimation(ModCapability.AnimationStates.BREATHING), PlayerAnimations.BREATHING, ageInTicks, 1);
+                AnimationUtil.animate(humanoidModel, iCap.getAnimation(VenturePlayerData.AnimationStates.BREATHING), PlayerAnimations.BREATHING, ageInTicks, 1);
                 fixLayers(humanoidModel);
             }
 
             if (GliderUtil.isGlidingWithActiveGlider(livingEntity)) {
                 resetPose(humanoidModel.body, humanoidModel.leftArm, humanoidModel.rightArm, humanoidModel.leftLeg, humanoidModel.rightLeg);
-                AnimationUtil.animate(humanoidModel, iCap.getAnimation(ModCapability.AnimationStates.GLIDING), PlayerAnimations.GLIDING, ageInTicks, 1);
+                AnimationUtil.animate(humanoidModel, iCap.getAnimation(VenturePlayerData.AnimationStates.GLIDING), PlayerAnimations.GLIDING, ageInTicks, 1);
                 fixLayers(humanoidModel);
             }
 

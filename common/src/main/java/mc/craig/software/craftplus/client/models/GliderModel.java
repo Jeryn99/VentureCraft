@@ -1,8 +1,7 @@
 package mc.craig.software.craftplus.client.models;
 
 
-import mc.craig.software.craftplus.client.PlayerAnimations;
-import mc.craig.software.craftplus.common.capability.ModCapability;
+import mc.craig.software.craftplus.common.entities.VenturePlayerData;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
@@ -79,10 +78,10 @@ public class GliderModel extends HierarchicalModel {
     @Override
     public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         if(entity instanceof LivingEntity livingEntity) {
-            ModCapability.get(livingEntity).ifPresent(iCap -> {
+            VenturePlayerData.get(livingEntity).ifPresent(iCap -> {
                 this.root().getAllParts().forEach(ModelPart::resetPose);
                 if (GliderUtil.isGlidingWithActiveGlider(livingEntity)) {
-                    this.animate(iCap.getAnimation(ModCapability.AnimationStates.GLIDER_OPENING), OPENING, ageInTicks);
+                    this.animate(iCap.getAnimation(VenturePlayerData.AnimationStates.GLIDER_OPENING), OPENING, ageInTicks);
                 }
             });
         }

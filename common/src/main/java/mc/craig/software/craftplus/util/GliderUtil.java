@@ -1,6 +1,6 @@
 package mc.craig.software.craftplus.util;
 
-import mc.craig.software.craftplus.common.capability.ModCapability;
+import mc.craig.software.craftplus.common.entities.VenturePlayerData;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,7 +17,7 @@ public class GliderUtil {
 
     public static boolean isGliderActive(LivingEntity livingEntity) {
         AtomicBoolean atomicBoolean = new AtomicBoolean();
-        ModCapability.get(livingEntity).ifPresent(iCap -> {
+        VenturePlayerData.get(livingEntity).ifPresent(iCap -> {
             ItemStack stack = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
             if (stack.getItem() instanceof ParagliderItem) {
                 atomicBoolean.set(ParagliderItem.glidingEnabled(stack) && iCap.getStamina() > 0);
