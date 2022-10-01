@@ -1,11 +1,15 @@
 {
   "required": true,
-  "package": "net.examplemod.mixin",
+  "package": "mc.craig.software.craftplus.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "MixinTitleScreen"
+    "",
+    "BipedBodyMixin",
+    "LocalPlayerMixin"
   ],
   "mixins": [
+    "AbstractContainerMenuMixin",
+    "GrindstoneMenuMixin"
   ],
   "injectors": {
     "defaultRequire": 1

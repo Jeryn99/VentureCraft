@@ -3,6 +3,7 @@ package mc.craig.software.craftplus;
 import mc.craig.software.craftplus.common.*;
 import mc.craig.software.craftplus.common.advancement.TriggerManager;
 import mc.craig.software.craftplus.common.level.ModOres;
+import mc.craig.software.craftplus.handlers.CommonEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.threetag.palladiumcore.event.LifecycleEvents;
 import org.apache.logging.log4j.LogManager;
@@ -24,6 +25,7 @@ public class VentureCraft {
 
         TriggerManager.init();
         ModEntities.initAttributes();
+        CommonEvents.init();
 
         LifecycleEvents.SETUP.register(() -> {
             ModEntities.initSpawns();

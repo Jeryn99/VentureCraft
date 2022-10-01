@@ -21,6 +21,7 @@ import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -35,16 +36,22 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.threetag.palladiumcore.event.EntityEvents;
+import net.threetag.palladiumcore.event.EventResult;
+import net.threetag.palladiumcore.event.LivingEntityEvents;
 
 import javax.annotation.Nonnull;
 
-@Mod.EventBusSubscriber
-public class CommonEvents {
+public class CommonEvents implements EntityEvents.JoinLevel, LivingEntityEvents.Hurt {
 
-    @SubscribeEvent
-    public static void onJoin(EntityJoinLevelEvent levelEvent) {
-        Entity entity = levelEvent.getEntity();
+    public static void init() {
+        var instance = new CommonEvents();
+        EntityEvents.JOIN_LEVEL.register(instance);
+        LivingEntityEvents.HURT.register(instance);
+    }
 
+    @Override
+    public void entityJoinLevel(Entity entity, Level level) {
         // Make Cats attack Owls
         if (entity instanceof Cat cat) {
             cat.targetSelector.addGoal(1, new NonTameRandomTargetGoal<>(cat, Owl.class, false, null));
@@ -52,9 +59,8 @@ public class CommonEvents {
 
         // Stop all kinds of XP
         if (entity instanceof ExperienceOrb) {
-            levelEvent.setCanceled(true);
+            entity.discard();
         }
-
     }
 
     @SubscribeEvent
@@ -91,18 +97,18 @@ public class CommonEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void onHurt(LivingHurtEvent event) {
-        LivingEntity entity = event.getEntity();
+    @Override
+    public EventResult livingEntityHurt(LivingEntity entity, DamageSource damageSource, float amount) {
         if (entity instanceof Player player) {
             ItemStack chestItem = player.getItemBySlot(EquipmentSlot.CHEST);
             boolean hasCopperMod = ParagliderItem.hasCopperMod(chestItem);
             boolean isGliding = GliderUtil.isGlidingWithActiveGlider(player);
-            boolean isLightning = event.getSource() == DamageSource.LIGHTNING_BOLT;
+            boolean isLightning = damageSource == DamageSource.LIGHTNING_BOLT;
             if (hasCopperMod && isGliding && isLightning) {
-                event.setAmount(0.0F);
+                return EventResult.cancel();
             }
         }
+        return EventResult.pass();
     }
 
     @SubscribeEvent
@@ -157,5 +163,4 @@ public class CommonEvents {
                 attackEvent.setCanceled(true);
             }
     }
-
 }
