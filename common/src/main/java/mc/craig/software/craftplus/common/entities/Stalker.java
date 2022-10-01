@@ -40,7 +40,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.client.NetworkHooks;
+import net.threetag.palladiumcore.network.NetworkManager;
 import org.jetbrains.annotations.Nullable;
 
 public class Stalker extends QuantumLockedLifeform implements RangedAttackMob {
@@ -239,7 +240,7 @@ public class Stalker extends QuantumLockedLifeform implements RangedAttackMob {
 
     @Override
     public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+        return NetworkManager.createAddEntityPacket(this);
     }
 
 

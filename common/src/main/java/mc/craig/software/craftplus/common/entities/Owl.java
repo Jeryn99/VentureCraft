@@ -48,7 +48,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -78,7 +77,6 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
         this.setPathfindingMalus(BlockPathTypes.COCOA, -1.0F);
         this.setCanPickUpLoot(true);
     }
-
 
 
     @Override
@@ -185,6 +183,7 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
     public boolean checkSpawnRules(LevelAccessor levelAccessor, MobSpawnType mobSpawnType) {
         return !level.isDay() && super.checkSpawnRules(levelAccessor, mobSpawnType);
     }
+
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
         ItemStack itemstack = player.getItemInHand(interactionHand);
@@ -198,7 +197,7 @@ public class Owl extends ShoulderRidingEntity implements FlyingAnimal, NeutralMo
             }
 
             if (!this.level.isClientSide) {
-                if (this.random.nextInt(10) == 0 && !ForgeEventFactory.onAnimalTame(this, player)) {
+                if (this.random.nextInt(10) == 0) {
                     this.tame(player);
                     this.level.broadcastEntityEvent(this, (byte) 7);
                 } else {

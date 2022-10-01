@@ -6,6 +6,8 @@ import mc.craig.software.craftplus.client.models.Models;
 import mc.craig.software.craftplus.client.models.OwlModel;
 import mc.craig.software.craftplus.client.renderers.RenderOwl;
 import mc.craig.software.craftplus.common.ModEntities;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -15,11 +17,10 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+@Environment(EnvType.CLIENT)
 public class OwlShoulderLayer<T extends Player> extends RenderLayer<T, PlayerModel<T>> {
+
     private final OwlModel model;
 
     public OwlShoulderLayer(RenderLayerParent<T, PlayerModel<T>> renderLayerParent, EntityModelSet p_174512_) {

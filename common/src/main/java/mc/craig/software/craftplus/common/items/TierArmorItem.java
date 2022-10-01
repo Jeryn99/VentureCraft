@@ -9,8 +9,9 @@ import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.threetag.palladiumcore.item.IPalladiumItem;
 
-public class TierArmorItem extends ArmorItem implements DyeableLeatherItem {
+public class TierArmorItem extends ArmorItem implements DyeableLeatherItem, IPalladiumItem {
     public Tier armorTier;
 
 
@@ -20,8 +21,7 @@ public class TierArmorItem extends ArmorItem implements DyeableLeatherItem {
     }
 
     @Override
-    public void onArmorTick(ItemStack stack, Level level, Player player) {
-        super.onArmorTick(stack, level, player);
+    public void armorTick(ItemStack stack, Level level, Player player) {
         if (checkIfFullTier(player, getTier())) {
             armorTier.getArmorAction().tick(player);
         }
