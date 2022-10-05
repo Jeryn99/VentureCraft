@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "venturecraft:item/climbing_gear",
+    "layer1": "venturecraft:item/climbing_gear_overlay"
+  }
+}

@@ -21,6 +21,12 @@ loom {
             mod "venturecraft"
         }
     }
+
+    launches {
+        data {
+            arg "--existing", project(":common").file("src/main/resources/").absolutePath
+        }
+    }
 }
 
 configurations {
