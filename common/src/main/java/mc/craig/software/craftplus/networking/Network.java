@@ -4,9 +4,6 @@ import mc.craig.software.craftplus.VentureCraft;
 import mc.craig.software.craftplus.networking.packets.MessagePlaySound;
 import mc.craig.software.craftplus.networking.packets.MessageSyncCap;
 import mc.craig.software.craftplus.networking.packets.MessageToggleGlide;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
 import net.threetag.palladiumcore.network.MessageType;
 import net.threetag.palladiumcore.network.NetworkManager;
 

@@ -34,6 +34,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -42,6 +43,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.client.NetworkHooks;
 import net.threetag.palladiumcore.network.NetworkManager;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class Stalker extends QuantumLockedLifeform implements RangedAttackMob {
@@ -144,7 +146,7 @@ public class Stalker extends QuantumLockedLifeform implements RangedAttackMob {
     protected void playStepSound(BlockPos blockPos, BlockState state) {
         if (!state.getMaterial().isLiquid()) {
             BlockState blockstate = this.level.getBlockState(blockPos.above());
-            SoundType soundtype = blockstate.is(Blocks.SNOW) ? blockstate.getSoundType(level, blockPos, this) : state.getSoundType(level, blockPos, this);
+            SoundType soundtype = blockstate.is(Blocks.SNOW) ? blockstate.getSoundType() : state.getSoundType();
             this.playSound(ModSounds.STALKER_MOVE.get(), soundtype.getVolume() * 0.15F, soundtype.getPitch());
         }
     }
@@ -243,20 +245,17 @@ public class Stalker extends QuantumLockedLifeform implements RangedAttackMob {
         return NetworkManager.createAddEntityPacket(this);
     }
 
-
     @Override
-    public void deserializeNBT(CompoundTag compound) {
-        super.deserializeNBT(compound);
-        setStalkerPose(Pose.getPoseByName(compound.getString("stalker_pose")));
-    }
-
-    @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag compound = super.serializeNBT();
+    public void addAdditionalSaveData(@NotNull CompoundTag compound) {
         compound.putString("stalker_pose", getStalkerPose().id());
-        return compound;
+        super.addAdditionalSaveData(compound);
     }
 
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+        setStalkerPose(Pose.getPoseByName(compound.getString("stalker_pose")));
+        super.readAdditionalSaveData(compound);
+    }
 
     @Override
     public boolean isPushable() {
@@ -274,18 +273,16 @@ public class Stalker extends QuantumLockedLifeform implements RangedAttackMob {
     }
 
     @Override
-    public void performRangedAttack(LivingEntity livingEntity, float p_33318_) {
-        ItemStack itemstack = this.getProjectile(this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, item -> item instanceof BowItem)));
-        AbstractArrow abstractarrow = ProjectileUtil.getMobArrow(this, itemstack, p_33318_);
-        if (this.getMainHandItem().getItem() instanceof net.minecraft.world.item.BowItem)
-            abstractarrow = ((net.minecraft.world.item.BowItem) this.getMainHandItem().getItem()).customArrow(abstractarrow);
-        double d0 = livingEntity.getX() - this.getX();
-        double d1 = livingEntity.getY(0.3333333333333333D) - abstractarrow.getY();
-        double d2 = livingEntity.getZ() - this.getZ();
-        double d3 = Math.sqrt(d0 * d0 + d2 * d2);
-        abstractarrow.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - this.level.getDifficulty().getId() * 4));
-        this.playSound(SoundEvents.ARROW_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
-        this.level.addFreshEntity(abstractarrow);
+    public void performRangedAttack(LivingEntity target, float velocity) {
+        ItemStack itemStack = this.getProjectile(this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, Items.BOW)));
+        AbstractArrow abstractArrow = ProjectileUtil.getMobArrow(this, itemStack, velocity);
+        double d = target.getX() - this.getX();
+        double e = target.getY(0.3333333333333333) - abstractArrow.getY();
+        double f = target.getZ() - this.getZ();
+        double g = Math.sqrt(d * d + f * f);
+        abstractArrow.shoot(d, e + g * 0.20000000298023224, f, 1.6F, (float)(14 - this.level.getDifficulty().getId() * 4));
+        this.playSound(SoundEvents.SKELETON_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+        this.level.addFreshEntity(abstractArrow);
     }
 
 

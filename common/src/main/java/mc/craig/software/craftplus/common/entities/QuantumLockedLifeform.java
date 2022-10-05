@@ -92,11 +92,6 @@ public class QuantumLockedLifeform extends Monster implements Enemy {
     }
 
     @Override
-    public void deserializeNBT(CompoundTag compound) {
-        super.deserializeNBT(compound);
-    }
-
-    @Override
     public void addAdditionalSaveData(@NotNull CompoundTag compound) {
         super.addAdditionalSaveData(compound);
     }

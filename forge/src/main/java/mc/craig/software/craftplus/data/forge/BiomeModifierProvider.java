@@ -40,7 +40,7 @@ public record BiomeModifierProvider(DataGenerator dataGenerator) implements Data
         {
             try {
                 final Path biomeModifierPath = outputFolder.resolve(biomeModifierPathString);
-                saveStable(cache, json, biomeModifierPath);
+                DataProvider.saveStable(cache, json, biomeModifierPath);
             } catch (
                     IOException e) {
                 VentureCraft.LOGGER.error("Failed to save " + biomeModifierPathString, e);

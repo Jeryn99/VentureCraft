@@ -49,7 +49,7 @@ public class AdvancementsProvider implements DataProvider {
 
 
         for (Advancement adv : advancements) {
-            saveStable(hashCache, adv.deconstruct().serializeToJson(), getPath(path, adv));
+            DataProvider.saveStable(hashCache, adv.deconstruct().serializeToJson(), getPath(path, adv));
         }
     }
 

@@ -74,15 +74,6 @@ public class LockedLootChestBlockEntity extends ChestBlockEntity implements Bloc
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
-        handleUpdateTag(pkt.getTag());
-    }
-
-
     @Override
     public void tick(Level level, BlockPos blockPos, BlockState blockState, LockedLootChestBlockEntity lockedLootChestBlockEntity) {
         if (OPEN.isStarted()) {
