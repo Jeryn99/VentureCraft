@@ -27,9 +27,7 @@ public class VentureCraft {
         ModEntities.initAttributes();
         CommonEvents.init();
 
-        LifecycleEvents.SETUP.register(() -> {
-            ModEntities.initSpawns();
-        });
+        LifecycleEvents.SETUP.register(ModEntities::initSpawns);
     }
 
     public static ResourceLocation id(String path) {

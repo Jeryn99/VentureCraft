@@ -12,6 +12,7 @@ import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.common.items.TierArmorItem;
+import mc.craig.software.craftplus.util.ClientUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -45,7 +46,7 @@ public class VentureCraftClient {
             // Item Predicates
             for (RegistrySupplier<Item> supplier : ModItems.ITEMS) {
                 if (supplier.get() instanceof ParagliderItem paragliderItem) {
-                    ItemProperties.register(paragliderItem, new ResourceLocation("copper_mod"), (stack, p_call_2_, livingEntity, something) -> ParagliderItem.hasCopperMod(stack) ? 1 : 0);
+                    ClientUtil.addPredicate(paragliderItem, new ResourceLocation("copper_mod"), (stack, p_call_2_, livingEntity, something) -> ParagliderItem.hasCopperMod(stack) ? 1 : 0);
                 }
             }
 
