@@ -28,11 +28,11 @@ public class VentureCraftForge {
         ExistingFileHelper existingFileHelper = e.getExistingFileHelper();
 
         generator.addProvider(e.includeClient(), new LangProviderEnglish(generator));
-/*
+
         generator.addProvider(e.includeClient(), new ModelProviderItem(generator, existingFileHelper));
         generator.addProvider(e.includeClient(), new ModelProviderBlock(generator, existingFileHelper));
         generator.addProvider(e.includeClient(), new SoundProvider(generator, existingFileHelper));
-*/
+
 
         BlockTagsProvider blockTagsProvider = new BlockTagsProvider(generator, existingFileHelper);
         generator.addProvider(e.includeServer(), new RecipeProvider(generator));
