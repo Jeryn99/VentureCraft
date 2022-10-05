@@ -1,0 +1,29 @@
+{
+  "parent": "venturecraft:first_time_flyer",
+  "criteria": {
+    "0": {
+      "trigger": "minecraft:copper_modder"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "venturecraft:textures/block/deepslate_sapphire_ore.png",
+    "description": {
+      "translate": "advancements.venturecraft.desc.copper_modder"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "venturecraft:copper_filament"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.venturecraft.title.copper_modder"
+    }
+  },
+  "requirements": [
+    [
+      "0"
+    ]
+  ]
+}

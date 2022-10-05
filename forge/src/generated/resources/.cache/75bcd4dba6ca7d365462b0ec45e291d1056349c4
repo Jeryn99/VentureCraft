@@ -1,0 +1,7 @@
+// 1.19.2	2022-10-05T21:13:19.8459368	Tags for minecraft:block
+c60a045723578fbf3e4213e0340607cc47b2499d data/forge/tags/blocks/needs_gold_tool.json
+c60a045723578fbf3e4213e0340607cc47b2499d data/forge/tags/blocks/ores.json
+5b3690cdb7451e7f548f59ed19a393924e149549 data/forge/tags/blocks/ores_in_ground/deepslate.json
+baaa7ac55fce8072f8cd8d52246a603edc53936d data/forge/tags/blocks/ores_in_ground/stone.json
+c60a045723578fbf3e4213e0340607cc47b2499d data/minecraft/tags/blocks/mineable/pickaxe.json
+321f8b0b29bb87f1033de83e383fca15ee8b3b37 data/venturecraft/tags/blocks/owl_sit.json

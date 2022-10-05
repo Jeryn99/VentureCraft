@@ -1,0 +1,17 @@
+{
+  "values": [
+    "minecraft:wheat_seeds",
+    "minecraft:pumpkin_seeds",
+    "minecraft:melon_seeds",
+    "minecraft:beetroot_seeds",
+    "minecraft:rabbit",
+    "minecraft:cooked_rabbit",
+    "minecraft:rabbit_foot",
+    "minecraft:rabbit_hide",
+    "minecraft:turtle_egg",
+    "minecraft:spider_eye",
+    "minecraft:chicken",
+    "minecraft:cooked_chicken",
+    "#minecraft:fishes"
+  ]
+}

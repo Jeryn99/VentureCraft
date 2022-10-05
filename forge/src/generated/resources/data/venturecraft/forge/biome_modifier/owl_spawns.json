@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#venturecraft:owl_spawns",
+  "spawners": {
+    "type": "venturecraft:owl",
+    "maxCount": 2,
+    "minCount": 1,
+    "weight": 40
+  }
+}

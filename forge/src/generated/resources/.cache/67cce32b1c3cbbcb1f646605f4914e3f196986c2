@@ -1,0 +1,8 @@
+// 1.19.2	2022-10-05T21:13:19.850463	LootTables
+a19080502519679100764d6da65f6ec9ff94129e data/venturecraft/loot_tables/blocks/deepslate_ruby_ore.json
+b8ce220d447489f8ce676d418691fd163790b45b data/venturecraft/loot_tables/blocks/deepslate_sapphire_ore.json
+1d4929d7d6176f60e5ea991a577527ed251ef375 data/venturecraft/loot_tables/blocks/loot_chest.json
+bd8abb4e716b4b6259b30a84ec8e7f077508a875 data/venturecraft/loot_tables/blocks/ruby_ore.json
+fa99c5d8c6dce5269d98256a7aa27742a3cb6c25 data/venturecraft/loot_tables/blocks/sapphire_ore.json
+a1d6e72a8a0f649a898fabc01785fc67f3b147f7 data/venturecraft/loot_tables/entities/owl.json
+ef017fe8afbc1e704a7cfb4818ece7ba018f9c91 data/venturecraft/loot_tables/entities/stalker.json
