@@ -11,11 +11,11 @@ public class Network {
 
     public static final NetworkManager INSTANCE = NetworkManager.create(VentureCraft.id("main"));
 
-    public static final MessageType TOGGLE_GLIDE = INSTANCE.registerC2S("toggle_glide", MessageToggleGlide::new);
-    public static final MessageType SYNC_CAP = INSTANCE.registerS2C("sync_cap", MessageSyncCap::new);
-    public static final MessageType PLAY_SOUND = INSTANCE.registerS2C("play_sound", MessagePlaySound::new);
+    public static MessageType TOGGLE_GLIDE, SYNC_CAP, PLAY_SOUND;
 
     public static void init() {
-
+        PLAY_SOUND = INSTANCE.registerS2C("play_sound", MessagePlaySound::new);
+        SYNC_CAP = INSTANCE.registerS2C("sync_cap", MessageSyncCap::new);
+        TOGGLE_GLIDE = INSTANCE.registerC2S("toggle_glide", MessageToggleGlide::new);
     }
 }
