@@ -57,6 +57,11 @@ allprojects {
             name = 'Ladysnake Mods'
             url = 'https://ladysnake.jfrog.io/artifactory/mods'
         }
+
+        // JEI
+        maven {
+            url "https://dvs1.progwml6.com/files/maven/"
+        }
     }
 
     tasks.withType(JavaCompile) {
