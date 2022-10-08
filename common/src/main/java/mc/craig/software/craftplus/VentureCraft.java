@@ -4,7 +4,7 @@ import mc.craig.software.craftplus.common.*;
 import mc.craig.software.craftplus.common.advancement.TriggerManager;
 import mc.craig.software.craftplus.common.level.ModOres;
 import mc.craig.software.craftplus.handlers.CommonEvents;
-import mc.craig.software.craftplus.networking.Network;
+import mc.craig.software.craftplus.networking.VCNetwork;
 import net.minecraft.resources.ResourceLocation;
 import net.threetag.palladiumcore.event.LifecycleEvents;
 import org.apache.logging.log4j.LogManager;
@@ -23,7 +23,7 @@ public class VentureCraft {
         ModOres.PLACED_FEATURES.register();
         ModOres.CONFIGURED_FEATURES.register();
         ModBlockEntities.TILES.register();
-        Network.init();
+        VCNetwork.init();
         TriggerManager.init();
         ModEntities.initAttributes();
         CommonEvents.init();

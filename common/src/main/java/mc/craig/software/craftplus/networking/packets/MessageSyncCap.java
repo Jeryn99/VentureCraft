@@ -1,7 +1,7 @@
 package mc.craig.software.craftplus.networking.packets;
 
 import mc.craig.software.craftplus.common.entities.VenturePlayerData;
-import mc.craig.software.craftplus.networking.Network;
+import mc.craig.software.craftplus.networking.VCNetwork;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -33,7 +33,7 @@ public class MessageSyncCap extends MessageS2C {
     @NotNull
     @Override
     public MessageType getType() {
-        return Network.SYNC_CAP;
+        return VCNetwork.SYNC_CAP;
     }
 
     @Override

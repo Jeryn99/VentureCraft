@@ -16,6 +16,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTables;
 import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
 import net.minecraft.world.level.storage.loot.functions.LootingEnchantFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
@@ -56,7 +57,15 @@ public class ModLootTableProvider extends LootTableProvider {
             this.add(ModBlocks.DEEPSLATE_SAPPHIRE_ORE.get(), (block) -> createOreDrop(block, ModItems.SAPPHIRE_GEM.get()));
             this.add(ModBlocks.RUBY_ORE.get(), (block) -> createOreDrop(block, ModItems.UNREFINED_RUBY.get()));
             this.add(ModBlocks.DEEPSLATE_RUBY_ORE.get(), (block) -> createOreDrop(block, ModItems.UNREFINED_RUBY.get()));
-            this.add(ModBlocks.LOOT_CHESTS.get(), LootTable.lootTable());
+
+            this.add(ModBlocks.SAPPHIRE_LOOT_CHEST.get(), this::createContainerLootDrops);
+            this.add(ModBlocks.VOID_LOOT_CHEST.get(), this::createContainerLootDrops);
+            this.add(ModBlocks.GOLD_LOOT_CHEST.get(), this::createContainerLootDrops);
+            this.add(ModBlocks.IRON_LOOT_CHEST.get(), this::createContainerLootDrops);
+        }
+
+        private LootTable.Builder createContainerLootDrops(Block block) {
+            return LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY)))));
         }
 
         @Override

@@ -7,7 +7,7 @@ import mc.craig.software.craftplus.networking.packets.MessageToggleGlide;
 import net.threetag.palladiumcore.network.MessageType;
 import net.threetag.palladiumcore.network.NetworkManager;
 
-public class Network {
+public class VCNetwork {
 
     public static final NetworkManager INSTANCE = NetworkManager.create(VentureCraft.id("main"));
 

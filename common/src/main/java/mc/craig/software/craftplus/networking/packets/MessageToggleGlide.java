@@ -3,7 +3,7 @@ package mc.craig.software.craftplus.networking.packets;
 import mc.craig.software.craftplus.common.ModSounds;
 import mc.craig.software.craftplus.common.advancement.TriggerManager;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
-import mc.craig.software.craftplus.networking.Network;
+import mc.craig.software.craftplus.networking.VCNetwork;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
@@ -28,7 +28,7 @@ public class MessageToggleGlide extends MessageC2S {
     @NotNull
     @Override
     public MessageType getType() {
-        return Network.TOGGLE_GLIDE;
+        return VCNetwork.TOGGLE_GLIDE;
     }
 
     public void toBytes(FriendlyByteBuf buf) {

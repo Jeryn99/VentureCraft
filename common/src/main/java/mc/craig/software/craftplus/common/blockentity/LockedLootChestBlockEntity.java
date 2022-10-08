@@ -16,30 +16,6 @@ import net.minecraft.world.level.block.state.BlockState;
 public class LockedLootChestBlockEntity extends ChestBlockEntity implements BlockEntityTicker<LockedLootChestBlockEntity> {
 
 
-    public enum ChestType {
-        VOID(ModItems.VOID_KEY.get()), SAPPHIRE(ModItems.SAPPHIRE_KEY.get()), GOLD(ModItems.GOLD_KEY.get()), IRON(ModItems.IRON_KEY.get());
-
-        private final Item unlockedBy;
-
-        ChestType(Item item) {
-            this.unlockedBy = item;
-        }
-
-        public Item getUnlockedBy() {
-            return unlockedBy;
-        }
-    }
-
-    public ChestType chestType = ChestType.SAPPHIRE;
-
-    public ChestType getChestType() {
-        return chestType;
-    }
-
-    public void setChestType(ChestType chestType) {
-        this.chestType = chestType;
-    }
-
     private AnimationState OPEN = new AnimationState();
 
     public LockedLootChestBlockEntity(BlockPos blockPos, BlockState state) {
@@ -49,17 +25,11 @@ public class LockedLootChestBlockEntity extends ChestBlockEntity implements Bloc
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.putString("chestType", chestType.name());
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        for (ChestType value : ChestType.values()) {
-            if(value.name().equals(tag.getString("chestType"))){
-                setChestType(value);
-            }
-        }
     }
 
     @Override

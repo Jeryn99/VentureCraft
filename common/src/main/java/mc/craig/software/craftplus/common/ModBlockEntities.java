@@ -13,11 +13,11 @@ public class ModBlockEntities {
 
     public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(VentureCraft.MODID, Registry.BLOCK_ENTITY_TYPE_REGISTRY);
 
-    public static RegistrySupplier<BlockEntityType<LockedLootChestBlockEntity>> LOOT_CHEST = TILES.register("loot_chest", () -> registerTiles(LockedLootChestBlockEntity::new, ModBlocks.LOOT_CHESTS.get()));
+    public static RegistrySupplier<BlockEntityType<LockedLootChestBlockEntity>> LOOT_CHEST = TILES.register("loot_chest", () -> registerTiles(LockedLootChestBlockEntity::new, ModBlocks.VOID_LOOT_CHEST.get(), ModBlocks.GOLD_LOOT_CHEST.get(), ModBlocks.IRON_LOOT_CHEST.get(), ModBlocks.SAPPHIRE_LOOT_CHEST.get()));
 
 
-    private static <T extends BlockEntity> BlockEntityType<T> registerTiles(BlockEntityType.BlockEntitySupplier<T> tile, Block validBlock) {
-        return BlockEntityType.Builder.of(tile, validBlock).build(null);
+    private static <T extends BlockEntity> BlockEntityType<T> registerTiles(BlockEntityType.BlockEntitySupplier<T> tile, Block... validBlocks) {
+        return BlockEntityType.Builder.of(tile, validBlocks).build(null);
     }
 
 

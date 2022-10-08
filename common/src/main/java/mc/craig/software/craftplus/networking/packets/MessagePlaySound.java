@@ -1,6 +1,6 @@
 package mc.craig.software.craftplus.networking.packets;
 
-import mc.craig.software.craftplus.networking.Network;
+import mc.craig.software.craftplus.networking.VCNetwork;
 import mc.craig.software.craftplus.util.ClientUtil;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.fabricmc.api.EnvType;
@@ -41,7 +41,7 @@ public class MessagePlaySound extends MessageS2C {
     @NotNull
     @Override
     public MessageType getType() {
-        return Network.PLAY_SOUND;
+        return VCNetwork.PLAY_SOUND;
     }
 
     @Override

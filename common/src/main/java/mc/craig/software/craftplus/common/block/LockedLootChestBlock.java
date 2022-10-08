@@ -13,8 +13,16 @@ import org.jetbrains.annotations.Nullable;
 
 public class LockedLootChestBlock extends ChestBlock {
 
-    public LockedLootChestBlock(Properties p_48677_) {
-        super(p_48677_.noOcclusion(), () -> ModBlockEntities.LOOT_CHEST.get());
+    private final VCChestTypes chestType;
+
+
+    public LockedLootChestBlock(Properties properties, VCChestTypes chestType) {
+        super(properties.noOcclusion(), () -> ModBlockEntities.LOOT_CHEST.get());
+        this.chestType = chestType;
+    }
+
+    public VCChestTypes getChestType() {
+        return chestType;
     }
 
     @Nullable
