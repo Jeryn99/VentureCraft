@@ -12,6 +12,10 @@ dependencies {
 
     // Forge Config API Port
     modCompileOnlyApi "net.minecraftforge:forgeconfigapiport-fabric:${rootProject.forge_config_api_port_version}"
+
+    // JEI
+    modCompileOnlyApi "mezz.jei:jei-${rootProject.minecraft_version}-common:${rootProject.jei_version}"
+    modCompileOnlyApi "mezz.jei:jei-${rootProject.minecraft_version}-common-api:${rootProject.jei_version}"
 }
 
 publishing {

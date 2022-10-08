@@ -22,6 +22,9 @@
     ],
     "cardinal-components": [
       "mc.craig.software.craftplus.common.entities.fabric.VCComponents"
+    ],
+    "jei_mod_plugin": [
+      "mc.craig.software.craftplus.compat.JEIAnvil"
     ]
   },
   "mixins": [
