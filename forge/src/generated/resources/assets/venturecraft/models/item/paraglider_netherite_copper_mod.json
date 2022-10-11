@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "venturecraft:item/paraglider_netherite",
+    "layer1": "venturecraft:item/glider_copper_mod"
+  }
+}

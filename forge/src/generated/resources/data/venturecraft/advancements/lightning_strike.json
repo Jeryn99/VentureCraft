@@ -1,0 +1,30 @@
+{
+  "parent": "venturecraft:copper_modder",
+  "criteria": {
+    "0": {
+      "trigger": "minecraft:glider_lightning"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "venturecraft:textures/block/deepslate_sapphire_ore.png",
+    "description": {
+      "translate": "advancements.venturecraft.desc.lightning_strike"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "venturecraft:paraglider_sapphire",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.venturecraft.title.lightning_strike"
+    }
+  },
+  "requirements": [
+    [
+      "0"
+    ]
+  ]
+}

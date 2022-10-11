@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "minecraft_plus:item/paraglider_wood",
-    "layer1": "minecraft_plus:item/glider_copper_mod"
-  }
-}

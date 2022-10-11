@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "package": "mc.craig.software.craftplus.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "BipedBodyMixin",
+    "GuiMixin",
+    "ItemInHandRendererMixin",
+    "GuiMixin",
+    "LocalPlayerMixin"
+  ],
+  "mixins": [
+    "AbstractContainerMenuMixin",
+    "GrindstoneMenuMixin",
+    "InventoryAccessor",
+    "InventoryMixin",
+    "LivingEntityMixin",
+    "PlayerMixin",
+    "GrindstoneMenuMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

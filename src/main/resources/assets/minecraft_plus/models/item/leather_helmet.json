@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "minecraft_plus:item/leather_helmet",
-    "layer1": "minecraft_plus:item/leather_helmet_overlay"
-  }
-}

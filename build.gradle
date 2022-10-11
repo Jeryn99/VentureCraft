@@ -1,191 +1,75 @@
-buildscript {
-    repositories {
-        maven { url = 'https://maven.parchmentmc.org' }
-    }
-    dependencies {
-        // Can't use the newer 'plugins' block for Mixin, need to use the old 'apply plugin' method
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-    }
-}
-
 plugins {
-    id 'eclipse'
-    id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.1.+'
-    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id "architectury-plugin" version "3.4-SNAPSHOT"
+    id "dev.architectury.loom" version "0.12.0-SNAPSHOT" apply false
 }
 
-version = '1.0'
-group = 'mc.craig.software.craftplus'
-archivesBaseName = 'minecraft_plus'
+architectury {
+    minecraft = rootProject.minecraft_version
+}
 
-apply plugin: 'org.spongepowered.mixin'
+subprojects {
+    apply plugin: "dev.architectury.loom"
 
+    loom {
+        silentMojangMappingsLicense()
+    }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-
-println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
-minecraft {
-    mappings channel: 'parchment', version: '2022.08.10-1.19.2'
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-
-    runs {
-        client {
-            workingDirectory project.file('run')
-
-            if (project.hasProperty('mc_uuid')) {
-                args '--uuid', project.getProperty('mc_uuid')
-            }
-            if (project.hasProperty('mc_username')) {
-                args '--username', project.getProperty('mc_username')
-            }
-            if (project.hasProperty('mc_accessToken')) {
-                args '--accessToken', project.getProperty('mc_accessToken')
-            }
-
-            arg "-mixin.config=minecraft_plus.mixins.json"
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'minecraft_plus'
-
-            mods {
-                minecraft_plus {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        client_2 {
-            workingDirectory project.file('run')
-
-            if (project.hasProperty('mc_username')) {
-                args '--username', project.getProperty('mc_username') + "_2"
-            }
-
-            arg "-mixin.config=minecraft_plus.mixins.json"
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'minecraft_plus'
-
-            mods {
-                minecraft_plus {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            property 'forge.logging.console.level', 'debug'
-
-            property 'forge.enabledGameTestNamespaces', 'minecraft_plus'
-
-            mods {
-                minecraft_plus {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        gameTestServer {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            property 'forge.logging.console.level', 'debug'
-
-            property 'forge.enabledGameTestNamespaces', 'minecraft_plus'
-
-            mods {
-                minecraft_plus {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            property 'forge.logging.console.level', 'debug'
-
-            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'minecraft_plus', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
-            mods {
-                minecraft_plus {
-                    source sourceSets.main
-                }
-            }
+    dependencies {
+        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+        mappings loom.layered() {
+            officialMojangMappings()
+            parchment("org.parchmentmc.data:parchment-${rootProject.mappings}")
         }
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
+allprojects {
+    apply plugin: "java"
+    apply plugin: "architectury-plugin"
+    apply plugin: "maven-publish"
 
-repositories {
-    maven {
-        url "https://cursemaven.com"
-        content {
-            includeGroup "curse.maven"
-        }
-    }
+    archivesBaseName = rootProject.archives_base_name
+    version = "${rootProject.minecraft_version}-${rootProject.mod_version}" as Object
+    group = rootProject.maven_group
 
-}
-
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
-
-dependencies {
-    minecraft 'net.minecraftforge:forge:1.19.2-43.0.2'
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-
-    implementation fg.deobf("curse.maven:jei-238222:3905244")
-    implementation fg.deobf("curse.maven:shoulder-surfing-reloaded-243190:3914089")
-    implementation fg.deobf("curse.maven:smoothboot-633412:3894618")
-
-}
-
-jar {
-    manifest {
-        attributes([
-                "Specification-Title"     : "minecraft_plus",
-                "Specification-Vendor"    : "Suff99",
-                "Specification-Version"   : "1",
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "Suff99",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs"            : "minecraft_plus.mixins.json"
-
-        ])
-    }
-}
-
-mixin {
-    add sourceSets.main, "minecraft_plus.refmap.json"
-    config "minecraft_plus.mixins.json"
-}
-
-jar.finalizedBy('reobfJar')
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact jar
-        }
-    }
     repositories {
+        // Parchment
         maven {
-            url "file://${project.projectDir}/mcmodsrepo"
+            url = 'https://maven.parchmentmc.net/'
+            content {
+                includeGroup 'org.parchmentmc.data'
+            }
+        }
+
+        // Forge Config API Port
+        maven {
+            name = "Fuzs Mod Resources"
+            url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+        }
+
+        // PalladiumCore
+        maven {
+            url 'https://repo.repsy.io/mvn/lucraft/threetag'
+        }
+
+        // Cardinal Components
+        maven {
+            name = 'Ladysnake Mods'
+            url = 'https://ladysnake.jfrog.io/artifactory/mods'
+        }
+
+        // JEI
+        maven {
+            url "https://dvs1.progwml6.com/files/maven/"
         }
     }
-}
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.release = 17
+    }
+
+    java {
+        withSourcesJar()
+    }
 }
