@@ -2,6 +2,7 @@ package mc.craig.software.craftplus.common;
 
 import com.google.common.base.Supplier;
 import mc.craig.software.craftplus.common.block.LockedLootChestBlock;
+import mc.craig.software.craftplus.common.block.PotBlock;
 import mc.craig.software.craftplus.common.block.VCChestTypes;
 import mc.craig.software.craftplus.common.blockentity.LockedLootChestBlockEntity;
 import net.minecraft.core.Registry;
@@ -27,6 +28,8 @@ public class ModBlocks {
 
     public static RegistrySupplier<Block> SAPPHIRE_ORE = register("sapphire_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(3, 7)), ModItems.MAIN);
     public static RegistrySupplier<Block> DEEPSLATE_SAPPHIRE_ORE = register("deepslate_sapphire_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE), UniformInt.of(3, 7)), ModItems.MAIN);
+
+    public static RegistrySupplier<Block> POT = register("pot", () -> new PotBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE)), ModItems.MAIN);
 
     public static RegistrySupplier<Block> RUBY_ORE = register("ruby_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(3, 7)), ModItems.MAIN);
     public static RegistrySupplier<Block> DEEPSLATE_RUBY_ORE = register("deepslate_ruby_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(EMERALD_ORE).color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE), UniformInt.of(3, 7)), ModItems.MAIN);
