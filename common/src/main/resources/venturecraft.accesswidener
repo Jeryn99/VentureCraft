@@ -10,3 +10,8 @@ accessible method net/minecraft/world/entity/SpawnPlacements register (Lnet/mine
 
 accessible field net/minecraft/world/entity/Mob targetSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
 accessible method net/minecraft/advancements/CriteriaTriggers register (Lnet/minecraft/advancements/CriterionTrigger;)Lnet/minecraft/advancements/CriterionTrigger;
+
+accessible class net/minecraft/client/gui/Gui$HeartType
+accessible method net/minecraft/client/gui/Gui$HeartType forPlayer (Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/client/gui/Gui$HeartType;
+
+accessible field net/minecraft/world/inventory/InventoryMenu resultSlots Lnet/minecraft/world/inventory/ResultContainer;

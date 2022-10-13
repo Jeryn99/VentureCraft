@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -20,26 +21,35 @@ public class ExtendedInventoryMenu extends InventoryMenu {
     private static final EquipmentSlot[] SLOT_IDS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
     static final ResourceLocation[] TEXTURE_EMPTY_SLOTS = new ResourceLocation[]{EMPTY_ARMOR_SLOT_BOOTS, EMPTY_ARMOR_SLOT_LEGGINGS, EMPTY_ARMOR_SLOT_CHESTPLATE, EMPTY_ARMOR_SLOT_HELMET};
 
-    public ExtendedInventoryMenu(Inventory pPlayerInventory, boolean pActive, final Player pOwner) {
-        super(pPlayerInventory, pActive, pOwner);
+    public ExtendedInventoryMenu(Inventory inventory, boolean pActive, final Player pOwner) {
+        super(inventory, pActive, pOwner);
         PREVENT_SLOTS = false;
+
+        // Craft Result Slot
+        this.addSlot(new ResultSlot(inventory.player, this.getCraftSlots(), this.resultSlots, 0, 366, 37));
+
+        for(int i = 0; i < 2; ++i) {
+            for(int j = 0; j < 2; ++j) {
+                this.addSlot(new Slot(this.getCraftSlots(), j + i * 2, 310 + j * 18, 37 + i * 18));
+            }
+        }
 
         // Main Inv
         for (int row = 0; row < 4; ++row) {
             for (int col = 0; col < 11; ++col) {
-                this.addSlot(new Slot(pPlayerInventory, col + (row + 1) * 11, 87 + 8 + col * 18, 216 + 8 + row * 18));
+                this.addSlot(new Slot(inventory, col + (row + 1) * 11, 87 + 8 + col * 18, 216 + 8 + row * 18));
             }
         }
 
         // Hotbar
         for (int col = 0; col < 11; ++col) {
-            this.addSlot(new Slot(pPlayerInventory, col, 87 + 8 + col * 18, 300));
+            this.addSlot(new Slot(inventory, col, 87 + 8 + col * 18, 300));
         }
 
         // Armor
         for (int k = 0; k < 4; ++k) {
             final EquipmentSlot equipmentslot = SLOT_IDS[k];
-            this.addSlot(new Slot(pPlayerInventory, 11 * 5 + 3 - k, 116, 6 + k * 36) {
+            this.addSlot(new Slot(inventory, 11 * 5 + 3 - k, 116, 6 + k * 36) {
                 /**
                  * Helper method to put a stack in the slot.
                  */
@@ -79,7 +89,7 @@ public class ExtendedInventoryMenu extends InventoryMenu {
         }
 
         // Offhand
-        this.addSlot(new Slot(pPlayerInventory, PlayerInventoryWrapper.OFF_HAND_SLOT, 77, 62) {
+        this.addSlot(new Slot(inventory, PlayerInventoryWrapper.OFF_HAND_SLOT, 77, 62) {
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
                 return Pair.of(BLOCK_ATLAS, EMPTY_ARMOR_SLOT_SHIELD);
             }
