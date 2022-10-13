@@ -37,7 +37,8 @@
   },
   "custom": {
     "cardinal-components": [
-      "venturecraft:player_data"
+      "venturecraft:player_data",
+      "venturecraft:extended_inventory"
     ]
   }
 }

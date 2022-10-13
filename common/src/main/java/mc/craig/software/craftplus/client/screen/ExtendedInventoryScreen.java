@@ -72,8 +72,12 @@ public class ExtendedInventoryScreen extends AbstractContainerScreen<InventoryMe
         // Main Inv
         this.blit(pPoseStack, i + 87, j + 216, 0, 0, 212, 108);
 
-        // Health
-        var texture = new ResourceLocation("textures/gui/icons.png");
+        // Upgrades
+        int upgrades = (Minecraft.getInstance().player.tickCount / 20) % 4;
+        for (int u = 0; u < upgrades; u++) {
+            this.blit(pPoseStack, i + 69 - (u * 18), j + 216, u == 0 ? 0 : 50, 108, 25, 85);
+            this.blit(pPoseStack, i + 292 + (u * 18), j + 216, u == 0 ? 25 : 75, 108, 25, 85);
+        }
 
         // Slots around player
         for (int k = 0; k < 4; k++) {

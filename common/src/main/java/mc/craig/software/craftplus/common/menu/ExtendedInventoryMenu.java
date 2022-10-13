@@ -1,7 +1,10 @@
 package mc.craig.software.craftplus.common.menu;
 
 import com.mojang.datafixers.util.Pair;
+import mc.craig.software.craftplus.common.entities.ExtendedInventory;
 import mc.craig.software.craftplus.common.entities.PlayerInventoryWrapper;
+import mc.craig.software.craftplus.util.item.AdvItemStackHandler;
+import mc.craig.software.craftplus.util.item.SlotItemHandler;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -24,12 +27,13 @@ public class ExtendedInventoryMenu extends InventoryMenu {
     public ExtendedInventoryMenu(Inventory inventory, boolean pActive, final Player pOwner) {
         super(inventory, pActive, pOwner);
         PREVENT_SLOTS = false;
+        var extendedInv = ExtendedInventory.get(pOwner).get();
 
         // Craft Result Slot
         this.addSlot(new ResultSlot(inventory.player, this.getCraftSlots(), this.resultSlots, 0, 366, 37));
 
-        for(int i = 0; i < 2; ++i) {
-            for(int j = 0; j < 2; ++j) {
+        for (int i = 0; i < 2; ++i) {
+            for (int j = 0; j < 2; ++j) {
                 this.addSlot(new Slot(this.getCraftSlots(), j + i * 2, 310 + j * 18, 37 + i * 18));
             }
         }
@@ -38,6 +42,16 @@ public class ExtendedInventoryMenu extends InventoryMenu {
         for (int row = 0; row < 4; ++row) {
             for (int col = 0; col < 11; ++col) {
                 this.addSlot(new Slot(inventory, col + (row + 1) * 11, 87 + 8 + col * 18, 216 + 8 + row * 18));
+            }
+        }
+
+        // Upgrades
+        for (int i = 0; i < 3; i++) {
+            AdvItemStackHandler inv = i == 0 ? extendedInv.upgrade1 : (i == 1 ? extendedInv.upgrade2 : extendedInv.upgrade3);
+            for (int x = 0; x < 2; x++) {
+                for (int y = 0; y < 4; y++) {
+                    this.addSlot(new SlotItemHandler(inv, x + y * 2, (x == 0 ? 77 : 293) + 18 * (x == 0 ? -1 : 1) * i, 224 + y * 18));
+                }
             }
         }
 

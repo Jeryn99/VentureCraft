@@ -12,8 +12,12 @@ public class VCComponents implements EntityComponentInitializer {
     public static final ComponentKey<VenturePlayerDataImpl> PLAYER_DATA =
             ComponentRegistryV3.INSTANCE.getOrCreate(VentureCraft.id("player_data"), VenturePlayerDataImpl.class);
 
+    public static final ComponentKey<ExtendedInventoryImpl> EXTENDED_INVENTORY =
+            ComponentRegistryV3.INSTANCE.getOrCreate(VentureCraft.id("extended_inventory"), ExtendedInventoryImpl.class);
+
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         registry.registerForPlayers(PLAYER_DATA, VenturePlayerDataImpl::new, RespawnCopyStrategy.CHARACTER);
+        registry.registerForPlayers(EXTENDED_INVENTORY, ExtendedInventoryImpl::new, RespawnCopyStrategy.CHARACTER);
     }
 }
