@@ -2,7 +2,7 @@ package mc.craig.software.craftplus.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import mc.craig.software.craftplus.MinecraftPlus;
+import mc.craig.software.craftplus.VentureCraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public class ExtendedInventoryScreen extends AbstractContainerScreen<InventoryMenu> {
 
-    public static final ResourceLocation TEXTURE = MinecraftPlus.id("textures/gui/inventory.png");
+    public static final ResourceLocation TEXTURE = VentureCraft.id("textures/gui/inventory.png");
 
     public ExtendedInventoryScreen(Player player) {
         super(player.inventoryMenu, player.getInventory(), Component.translatable("container.crafting"));

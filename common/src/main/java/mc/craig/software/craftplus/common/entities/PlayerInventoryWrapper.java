@@ -1,4 +1,4 @@
-package mc.craig.software.craftplus.common.capability;
+package mc.craig.software.craftplus.common.entities;
 
 import com.google.common.collect.ImmutableList;
 import mc.craig.software.craftplus.mixin.InventoryAccessor;

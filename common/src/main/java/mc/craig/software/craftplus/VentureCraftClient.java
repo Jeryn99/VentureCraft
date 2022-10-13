@@ -12,9 +12,9 @@ import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.common.items.TierArmorItem;
+import mc.craig.software.craftplus.handlers.ClientEvents;
 import mc.craig.software.craftplus.util.ClientUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.threetag.palladiumcore.event.LifecycleEvents;
@@ -27,6 +27,9 @@ public class VentureCraftClient {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static void init() {
+        // Event Handler
+        ClientEvents.init();
+
         // Entity Renderers
         EntityRendererRegistry.register(ModEntities.STALKER, RenderStalker::new);
         EntityRendererRegistry.register(ModEntities.ADVANCED_ARROW, RenderAdvancedArrow::new);

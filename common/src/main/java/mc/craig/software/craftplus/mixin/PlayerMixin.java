@@ -1,7 +1,7 @@
 package mc.craig.software.craftplus.mixin;
 
 import com.mojang.authlib.GameProfile;
-import mc.craig.software.craftplus.common.capability.PlayerInventoryWrapper;
+import mc.craig.software.craftplus.common.entities.PlayerInventoryWrapper;
 import mc.craig.software.craftplus.common.menu.ExtendedInventoryMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;

@@ -1,12 +1,11 @@
 package mc.craig.software.craftplus.common.menu;
 
 import com.mojang.datafixers.util.Pair;
-import mc.craig.software.craftplus.common.capability.ExtendedInventoryCapability;
-import mc.craig.software.craftplus.common.capability.IExtendedInventory;
-import mc.craig.software.craftplus.common.capability.PlayerInventoryWrapper;
+import mc.craig.software.craftplus.common.entities.PlayerInventoryWrapper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -17,15 +16,13 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 public class ExtendedInventoryMenu extends InventoryMenu {
 
     public static boolean PREVENT_SLOTS = false;
-    public static final Component CONTAINER_TITLE = Component.translatable("container.minecraft_plus.extended_inventory");
+    public static final Component CONTAINER_TITLE = Component.translatable("container.venturecraft.extended_inventory");
     private static final EquipmentSlot[] SLOT_IDS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
     static final ResourceLocation[] TEXTURE_EMPTY_SLOTS = new ResourceLocation[]{EMPTY_ARMOR_SLOT_BOOTS, EMPTY_ARMOR_SLOT_LEGGINGS, EMPTY_ARMOR_SLOT_CHESTPLATE, EMPTY_ARMOR_SLOT_HELMET};
 
     public ExtendedInventoryMenu(Inventory pPlayerInventory, boolean pActive, final Player pOwner) {
         super(pPlayerInventory, pActive, pOwner);
         PREVENT_SLOTS = false;
-
-        IExtendedInventory extendedInventory = pPlayerInventory.player.getCapability(ExtendedInventoryCapability.CAPABILITY).resolve().orElseThrow();
 
         // Main Inv
         for (int row = 0; row < 4; ++row) {
@@ -64,7 +61,7 @@ public class ExtendedInventoryMenu extends InventoryMenu {
                  * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace fuel.
                  */
                 public boolean mayPlace(ItemStack pStack) {
-                    return pStack.canEquip(equipmentslot, pOwner);
+                    return equipmentslot == Mob.getEquipmentSlotForItem(pStack);
                 }
 
                 /**
@@ -76,7 +73,7 @@ public class ExtendedInventoryMenu extends InventoryMenu {
                 }
 
                 public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-                    return Pair.of(InventoryMenu.BLOCK_ATLAS, TEXTURE_EMPTY_SLOTS[equipmentslot.getIndex()]);
+                    return Pair.of(BLOCK_ATLAS, TEXTURE_EMPTY_SLOTS[equipmentslot.getIndex()]);
                 }
             });
         }
@@ -84,7 +81,7 @@ public class ExtendedInventoryMenu extends InventoryMenu {
         // Offhand
         this.addSlot(new Slot(pPlayerInventory, PlayerInventoryWrapper.OFF_HAND_SLOT, 77, 62) {
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-                return Pair.of(InventoryMenu.BLOCK_ATLAS, InventoryMenu.EMPTY_ARMOR_SLOT_SHIELD);
+                return Pair.of(BLOCK_ATLAS, EMPTY_ARMOR_SLOT_SHIELD);
             }
         });
     }
