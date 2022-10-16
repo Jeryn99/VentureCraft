@@ -58,6 +58,7 @@ public class ModLootTableProvider extends LootTableProvider {
             this.add(ModBlocks.RUBY_ORE.get(), (block) -> createOreDrop(block, ModItems.UNREFINED_RUBY.get()));
             this.add(ModBlocks.DEEPSLATE_RUBY_ORE.get(), (block) -> createOreDrop(block, ModItems.UNREFINED_RUBY.get()));
             dropSelf(ModBlocks.POT.get());
+            dropSelf(ModBlocks.PEDASTAL.get());
 
             this.add(ModBlocks.SAPPHIRE_LOOT_CHEST.get(), this::createContainerLootDrops);
             this.add(ModBlocks.VOID_LOOT_CHEST.get(), this::createContainerLootDrops);

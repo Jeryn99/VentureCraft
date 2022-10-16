@@ -1,4 +1,4 @@
-package mc.craig.software.craftplus.client.renderers;
+package mc.craig.software.craftplus.client.renderers.entity;
 
 import mc.craig.software.craftplus.common.entities.projectile.AdvancedArrow;
 import net.minecraft.client.renderer.entity.ArrowRenderer;

@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import mc.craig.software.craftplus.client.models.Models;
 import mc.craig.software.craftplus.client.models.OwlModel;
-import mc.craig.software.craftplus.client.renderers.RenderOwl;
+import mc.craig.software.craftplus.client.renderers.entity.RenderOwl;
 import mc.craig.software.craftplus.common.ModEntities;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

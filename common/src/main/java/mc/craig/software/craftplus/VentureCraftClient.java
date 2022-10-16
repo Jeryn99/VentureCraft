@@ -3,10 +3,11 @@ package mc.craig.software.craftplus;
 import mc.craig.software.craftplus.client.layers.OwlShoulderLayer;
 import mc.craig.software.craftplus.client.layers.PlayerGliderLayer;
 import mc.craig.software.craftplus.client.models.Models;
-import mc.craig.software.craftplus.client.renderers.RenderAdvancedArrow;
-import mc.craig.software.craftplus.client.renderers.RenderLootChest;
-import mc.craig.software.craftplus.client.renderers.RenderOwl;
-import mc.craig.software.craftplus.client.renderers.RenderStalker;
+import mc.craig.software.craftplus.client.renderers.blockentity.RenderPedastal;
+import mc.craig.software.craftplus.client.renderers.entity.RenderAdvancedArrow;
+import mc.craig.software.craftplus.client.renderers.blockentity.RenderLootChest;
+import mc.craig.software.craftplus.client.renderers.entity.RenderOwl;
+import mc.craig.software.craftplus.client.renderers.entity.RenderStalker;
 import mc.craig.software.craftplus.common.ModBlockEntities;
 import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.ModItems;
@@ -14,7 +15,6 @@ import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.common.items.TierArmorItem;
 import mc.craig.software.craftplus.util.ClientUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.threetag.palladiumcore.event.LifecycleEvents;
@@ -34,6 +34,7 @@ public class VentureCraftClient {
 
         // Block Entity Renderers
         BlockEntityRendererRegistry.register(ModBlockEntities.LOOT_CHEST, RenderLootChest::new);
+        BlockEntityRendererRegistry.register(ModBlockEntities.PEDASTAL, new RenderPedastal());
 
         // Model Layers
         Models.init();

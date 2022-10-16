@@ -1,4 +1,4 @@
-package mc.craig.software.craftplus.client.renderers;
+package mc.craig.software.craftplus.client.renderers.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;

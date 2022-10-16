@@ -80,7 +80,8 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModDamageSource.STATUE.getKey(), "Something happened to %s...");
 
         // ===== Tabs =====
-        add("itemGroup." + VentureCraft.MODID, "Minecraft+");
+        add("itemGroup." + VentureCraft.MODID, "VentureCraft");
+        add("itemGroup." + VentureCraft.MODID + ".main", "VentureCraft");
 
 
         // ===== Subtitles/Sounds =====
@@ -98,6 +99,12 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModBlocks.DEEPSLATE_SAPPHIRE_ORE.get(), "Deepslate Sapphire Ore");
         add(ModBlocks.RUBY_ORE.get(), "Ruby Ore");
         add(ModBlocks.DEEPSLATE_RUBY_ORE.get(), "Deepslate Ruby Ore");
+        add(ModBlocks.IRON_LOOT_CHEST.get(), "Iron Loot Chest");
+        add(ModBlocks.VOID_LOOT_CHEST.get(), "Void Loot Chest");
+        add(ModBlocks.SAPPHIRE_LOOT_CHEST.get(), "Sapphire Loot Chest");
+        add(ModBlocks.GOLD_LOOT_CHEST.get(), "Gold Loot Chest");
+        add(ModBlocks.PEDASTAL.get(), "Pedastal");
+        add(ModBlocks.POT.get(), "Pot");
 
         // ===== Advancements =====
         addAdvancement("first_time_flyer", "Paraglide!", "...and the whole worlds at your feet");
