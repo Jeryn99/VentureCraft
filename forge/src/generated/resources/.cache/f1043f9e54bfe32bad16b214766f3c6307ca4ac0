@@ -1,13 +1,12 @@
-// 1.19.2	2022-10-16T11:45:36.9043452	Item Models: venturecraft
+// 1.19.2	2022-10-16T16:22:05.2435195	Item Models: venturecraft
 459eca8d379aa95d19755248034b200dcee637d5 assets/venturecraft/models/item/advanced_arrow.json
+cc2efcbc6db5f11262f7a58a320bb21e5b0f4696 assets/venturecraft/models/item/big_key.json
 73befaf6486c101d5749620cccbcb2ac6c2d3e26 assets/venturecraft/models/item/climbing_gear.json
 75b6ad7a8afceaf0718d0a8176f7ccf26db82fa8 assets/venturecraft/models/item/copper_filament.json
 b7dd4603538edcf7e2569dc4f6a34e4987203461 assets/venturecraft/models/item/deepslate_ruby_ore.json
 329e59278e67b9c7c3374fc53f6f7ab294745b20 assets/venturecraft/models/item/deepslate_sapphire_ore.json
 fa79e1aaf0e177f18e939ff771dba2443224112d assets/venturecraft/models/item/gold_key.json
-eece5449f54a1e038771b78d54ee758848d7bab3 assets/venturecraft/models/item/gold_loot_chest.json
 4dd5350ca76b1de0c41fa06b02da7f2d85da790c assets/venturecraft/models/item/iron_key.json
-08cea39b5335f56e76806df6acb476f3d8d654cf assets/venturecraft/models/item/iron_loot_chest.json
 ed9c3001e69aabe594762782d8fb0ee0cdd79cbe assets/venturecraft/models/item/owl_feather.json
 9e8073108b01d66485fd9da71fde4f98d21d6fdf assets/venturecraft/models/item/paraglider_diamond_copper_mod.json
 fb005041a9eb6c8bf83d572ce93fb8b4abb49f3d assets/venturecraft/models/item/paraglider_gold_copper_mod.json
@@ -29,7 +28,6 @@ c9a955ff5d880829382ae0f643369cfda3d7df7d assets/venturecraft/models/item/reinfor
 29400bc32f2d11a53e2df27a87bc86cfcdf864a1 assets/venturecraft/models/item/sapphire_gem.json
 d7df9e6735dc193fd483819a44053fcb08272815 assets/venturecraft/models/item/sapphire_hoe.json
 13069c746fd2ad2684b3b19599d20a3d158c86b0 assets/venturecraft/models/item/sapphire_key.json
-f8a1e19e05e5ab6fa76f97dbc3dbf6a04382e54a assets/venturecraft/models/item/sapphire_loot_chest.json
 5ff9c1ea2727a27a2e6e11867ff6d9dca85581d1 assets/venturecraft/models/item/sapphire_ore.json
 33a6977dd979406450f69a739a2708bbb1b19300 assets/venturecraft/models/item/sapphire_pickaxe.json
 b11488cd85677ace9212a077b4c6181aa56e22fd assets/venturecraft/models/item/sapphire_shovel.json
@@ -37,4 +35,3 @@ b11488cd85677ace9212a077b4c6181aa56e22fd assets/venturecraft/models/item/sapphir
 3fcc5ff2368c1ce0d2c8e0e3666861e1043173af assets/venturecraft/models/item/totem.json
 3f45ce457c2e75cea0be98a6a70c4ea128c0043b assets/venturecraft/models/item/unrefined_ruby.json
 9b8f5de8de783525a427adb03c9f3f916702a0e4 assets/venturecraft/models/item/void_key.json
-6935714488fe1379924853921208439deac00cdb assets/venturecraft/models/item/void_loot_chest.json

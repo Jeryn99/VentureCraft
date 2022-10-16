@@ -2,6 +2,7 @@ package mc.craig.software.craftplus.data.forge;
 
 import mc.craig.software.craftplus.VentureCraft;
 import mc.craig.software.craftplus.common.ModItems;
+import mc.craig.software.craftplus.common.block.LockedLootChestBlock;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -46,7 +47,12 @@ public class ModelProviderItem extends ItemModelProvider {
                 continue;
             }
 
-            if (entry.get() instanceof BlockItem) {
+            if (entry.get() instanceof BlockItem blockItem) {
+
+                if(blockItem.getBlock() instanceof LockedLootChestBlock){
+                    continue;
+                }
+
                 blockItem(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(entry.get())));
                 continue;
             }

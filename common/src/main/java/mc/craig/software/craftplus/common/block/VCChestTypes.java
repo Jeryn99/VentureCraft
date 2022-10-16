@@ -17,4 +17,14 @@ public enum VCChestTypes {
     public Item getUnlockedBy() {
         return unlockedBy.get();
     }
+
+    public static VCChestTypes find(String name) {
+        for (VCChestTypes value : values()) {
+            if (value.name().equalsIgnoreCase(name)) {
+                return value;
+            }
+        }
+        return SAPPHIRE;
+    }
+
 }

@@ -35,6 +35,7 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModItems.IRON_KEY.get(), "Iron Key");
         add(ModItems.SAPPHIRE_KEY.get(), "Sapphire Key");
         add(ModItems.VOID_KEY.get(), "Void Key");
+        add(ModItems.BIG_KEY.get(), "Big Key");
 
         // Paper
         add(ModItems.REINFORCED_PAPER.get(), "Re-Inforced Paper");

@@ -1,6 +1,7 @@
 package mc.craig.software.craftplus.common.blockentity;
 
 import mc.craig.software.craftplus.common.ModBlockEntities;
+import mc.craig.software.craftplus.util.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -33,7 +34,7 @@ public class PedastalBlockEntity extends BlockEntity {
                 clearContent();
             }
         }
-        sendUpdates();
+        Utils.sendUpdates(this, level, worldPosition, getBlockState());
     }
 
     public void clearContent() {
@@ -67,12 +68,6 @@ public class PedastalBlockEntity extends BlockEntity {
         CompoundTag tag = super.getUpdateTag();
         saveAdditional(tag);
         return tag;
-    }
-
-    public void sendUpdates() {
-        level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
-        level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 3);
-        setChanged();
     }
 
     @Override
