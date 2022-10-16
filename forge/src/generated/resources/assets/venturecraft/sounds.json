@@ -1,0 +1,63 @@
+{
+  "glider_open": {
+    "sounds": [
+      "venturecraft:glider/glider_open_0",
+      "venturecraft:glider/glider_open_1"
+    ],
+    "subtitle": "subtitle.venturecraft.glider_open"
+  },
+  "owl_hoots": {
+    "sounds": [
+      "venturecraft:owl/owl_single_hoot",
+      "venturecraft:owl/owl_double_hoot"
+    ],
+    "subtitle": "subtitle.venturecraft.owl_hoots"
+  },
+  "owl_hurt": {
+    "sounds": [
+      "venturecraft:owl/owl_hurt"
+    ],
+    "subtitle": "subtitle.venturecraft.owl_hurt"
+  },
+  "space_deploy": {
+    "sounds": [
+      "venturecraft:glider/space_deploy"
+    ],
+    "subtitle": "subtitle.venturecraft.space_deploy"
+  },
+  "space_glide": {
+    "sounds": [
+      "venturecraft:glider/space_glide"
+    ],
+    "subtitle": "subtitle.venturecraft.space_glide"
+  },
+  "stalker_breath": {
+    "sounds": [
+      "venturecraft:stalker/stalker_breath"
+    ],
+    "subtitle": "subtitle.venturecraft.stalker_breath"
+  },
+  "stalker_laugh": {
+    "sounds": [
+      "venturecraft:stalker/stalker_giggle_1",
+      "venturecraft:stalker/stalker_giggle_2",
+      "venturecraft:stalker/stalker_giggle_3"
+    ],
+    "subtitle": "subtitle.venturecraft.stalker_laugh"
+  },
+  "stalker_move": {
+    "sounds": [
+      "venturecraft:stalker/stalker_glide_1",
+      "venturecraft:stalker/stalker_glide_2",
+      "venturecraft:stalker/stalker_glide_3",
+      "venturecraft:stalker/stalker_glide_4"
+    ],
+    "subtitle": "subtitle.venturecraft.stalker_move"
+  },
+  "stalker_strike": {
+    "sounds": [
+      "venturecraft:stalker/stalker_striking"
+    ],
+    "subtitle": "subtitle.venturecraft.stalker_strike"
+  }
+}

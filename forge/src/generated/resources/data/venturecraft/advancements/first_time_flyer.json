@@ -1,0 +1,29 @@
+{
+  "criteria": {
+    "0": {
+      "trigger": "minecraft:first_time_flyer"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "venturecraft:textures/block/deepslate_sapphire_ore.png",
+    "description": {
+      "translate": "advancements.venturecraft.desc.first_time_flyer"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "venturecraft:paraglider_wood",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.venturecraft.title.first_time_flyer"
+    }
+  },
+  "requirements": [
+    [
+      "0"
+    ]
+  ]
+}

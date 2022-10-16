@@ -1,0 +1,10 @@
+// 1.19.2	2022-10-05T21:13:19.8494614	Tags for minecraft:item
+3c64e5cf6b182c4f0914bbc720513a2f426b367b data/forge/tags/items/tools/axes.json
+d76895981321328d30fc294a39b720288c8d60dd data/forge/tags/items/tools/hoes.json
+e7e14cdce3558bb6d7130abb9b8c023c69560597 data/forge/tags/items/tools/pickaxes.json
+5e27b5edad5de242c4436e9a82f266ef10545215 data/forge/tags/items/tools/shovels.json
+ea7f10b8433afd4759b4141f3cffd06bf3468c37 data/forge/tags/items/tools/swords.json
+44b93ea9a1d873d5348b0761762a73e0f95c1989 data/minecraft/tags/items/arrows.json
+1971023bb8b76edb3f94c7c4a5969c068a642dbb data/venturecraft/tags/items/bird_poison.json
+80be321343d846afd950645189dba7ab9af13356 data/venturecraft/tags/items/owl_food.json
+edb982608202485ef92997aaba26994373ea5c2e data/venturecraft/tags/items/totems.json

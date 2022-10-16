@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "venturecraft",
+  "version": "${version}",
+  "name": "VentureCraft",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "Suff99", "TommyCBricks", "teacup", "Miles"
+  ],
+  "contact": {
+    "sources": "https://github.com/Suff99/VentureCraft"
+  },
+  "license": "https://github.com/Suff99/VentureCraft/blob/master/LICENSE",
+  "icon": "assets/examplemod/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "mc.craig.software.craftplus.fabric.VentureCraftFabric"
+    ],
+    "client": [
+      "mc.craig.software.craftplus.fabric.VentureCraftClientFabric"
+    ],
+    "cardinal-components": [
+      "mc.craig.software.craftplus.common.entities.fabric.VCComponents"
+    ],
+    "jei_mod_plugin": [
+      "mc.craig.software.craftplus.compat.JEIAnvil"
+    ]
+  },
+  "mixins": [
+    "venturecraft.mixins.json",
+    "venturecraft-common.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.19.2"
+  },
+  "custom": {
+    "cardinal-components": [
+      "venturecraft:player_data"
+    ]
+  }
+}
