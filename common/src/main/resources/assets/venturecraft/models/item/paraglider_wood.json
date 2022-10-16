@@ -1,0 +1,20 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "venturecraft:item/paraglider_wood"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "copper_mod": 0
+      },
+      "model": "venturecraft:item/paraglider_wood"
+    },
+    {
+      "predicate": {
+        "copper_mod": 1
+      },
+      "model": "venturecraft:item/paraglider_wood_copper_mod"
+    }
+  ]
+}

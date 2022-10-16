@@ -1,8 +1,10 @@
 package mc.craig.software.craftplus.common;
 
 import mc.craig.software.craftplus.VentureCraft;
+import mc.craig.software.craftplus.common.block.VCChestTypes;
 import mc.craig.software.craftplus.common.items.AdvancedArrowItem;
 import mc.craig.software.craftplus.common.items.ClimbingGearItem;
+import mc.craig.software.craftplus.common.items.KeyItem;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import net.minecraft.core.Registry;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -58,10 +60,11 @@ public class ModItems {
     public static final RegistrySupplier<Item> TOTEM = ITEMS.register("totem", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.RARE)));
 
     // Keys 
-    public static final RegistrySupplier<Item> IRON_KEY = ITEMS.register("iron_key", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
-    public static final RegistrySupplier<Item> GOLD_KEY = ITEMS.register("gold_key", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
-    public static final RegistrySupplier<Item> SAPPHIRE_KEY = ITEMS.register("sapphire_key", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
-    public static final RegistrySupplier<Item> VOID_KEY = ITEMS.register("void_key", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
+    public static final RegistrySupplier<Item> IRON_KEY = ITEMS.register("iron_key", () -> new KeyItem(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON), VCChestTypes.IRON));
+    public static final RegistrySupplier<Item> GOLD_KEY = ITEMS.register("gold_key", () -> new KeyItem(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON), VCChestTypes.GOLD));
+    public static final RegistrySupplier<Item> SAPPHIRE_KEY = ITEMS.register("sapphire_key", () -> new KeyItem(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON), VCChestTypes.SAPPHIRE));
+    public static final RegistrySupplier<Item> VOID_KEY = ITEMS.register("void_key", () -> new KeyItem(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON), VCChestTypes.VOID));
+    public static final RegistrySupplier<Item> BIG_KEY = ITEMS.register("big_key", () -> new KeyItem(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON), null));
 
     // Sapphire Tools
     public static final RegistrySupplier<Item> SAPPHIRE_SWORD = ITEMS.register("sapphire_sword", () -> new SwordItem(Tiers.DIAMOND, 3, -2.4F, (new Item.Properties()).tab(MAIN)));

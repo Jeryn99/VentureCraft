@@ -1,11 +1,14 @@
 package mc.craig.software.craftplus.common.block;
 
 import mc.craig.software.craftplus.common.blockentity.PedastalBlockEntity;
+import mc.craig.software.craftplus.util.Utils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -31,7 +34,6 @@ public class PedastalBlock extends Block implements EntityBlock {
             Block.box(3, 0, 3, 13, 2, 13)
     ).reduce((v1, v2) -> Shapes.join(v1, v2, OR)).get();
 
-
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 
@@ -42,13 +44,13 @@ public class PedastalBlock extends Block implements EntityBlock {
         if (player.getItemInHand(hand).isEmpty()) {
             player.swing(hand);
             pedastalBlockEntity.dropItemIfPresent(player);
-            pedastalBlockEntity.sendUpdates();
+            Utils.sendUpdates(pedastalBlockEntity, level, pos, state);
             return InteractionResult.CONSUME_PARTIAL;
         } else if (pedastalBlockEntity.getHeldItem().isEmpty()) {
             player.swing(hand);
             pedastalBlockEntity.setHeldItem(player.getMainHandItem().copy());
             player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
-            pedastalBlockEntity.sendUpdates();
+            Utils.sendUpdates(pedastalBlockEntity, level, pos, state);
             return InteractionResult.SUCCESS;
         }
         return super.use(state, level, pos, player, hand, hit);
