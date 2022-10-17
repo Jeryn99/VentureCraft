@@ -1,8 +1,10 @@
-// 1.19.2	2022-10-08T21:46:32.0492189	LootTables
+// 1.19.2	2022-10-16T11:45:36.9068473	LootTables
 a19080502519679100764d6da65f6ec9ff94129e data/venturecraft/loot_tables/blocks/deepslate_ruby_ore.json
 b8ce220d447489f8ce676d418691fd163790b45b data/venturecraft/loot_tables/blocks/deepslate_sapphire_ore.json
 fbc94dbd43fc8b5baedfd08482752fb0a0bb0120 data/venturecraft/loot_tables/blocks/gold_loot_chest.json
 5d63feded90657af56d56c43dd77f465272f15bc data/venturecraft/loot_tables/blocks/iron_loot_chest.json
+0c18d83bdcce04ace341938c949062ac27888a2e data/venturecraft/loot_tables/blocks/pedastal.json
+c068866186f12f39b0413074dd0e8af5763ed1f2 data/venturecraft/loot_tables/blocks/pot.json
 bd8abb4e716b4b6259b30a84ec8e7f077508a875 data/venturecraft/loot_tables/blocks/ruby_ore.json
 95496206ebf20912f238236f5a92825818ae373e data/venturecraft/loot_tables/blocks/sapphire_loot_chest.json
 fa99c5d8c6dce5269d98256a7aa27742a3cb6c25 data/venturecraft/loot_tables/blocks/sapphire_ore.json

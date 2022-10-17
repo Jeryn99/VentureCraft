@@ -1,4 +1,4 @@
-package mc.craig.software.craftplus.client.renderers;
+package mc.craig.software.craftplus.client.renderers.entity;
 
 import mc.craig.software.craftplus.VentureCraft;
 import mc.craig.software.craftplus.client.models.Models;
