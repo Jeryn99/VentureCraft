@@ -12,6 +12,7 @@ public class Models {
     public static ModelLayerLocation X_WING = new ModelLayerLocation(new ResourceLocation(VentureCraft.MODID, "model"), "x_wing");
     public static ModelLayerLocation PLAYER = new ModelLayerLocation(new ResourceLocation(VentureCraft.MODID, "model"), "player");
     public static ModelLayerLocation CHEST = new ModelLayerLocation(new ResourceLocation(VentureCraft.MODID, "model"), "chest");
+    public static ModelLayerLocation CATALYST_MODEL = new ModelLayerLocation(new ResourceLocation(VentureCraft.MODID, "model"), "catalyst");
 
     public static void init() {
         EntityRendererRegistry.registerModelLayer(GLIDER, GliderModel::getModelData);
@@ -19,6 +20,7 @@ public class Models {
         EntityRendererRegistry.registerModelLayer(X_WING, XWingModel::createBodyLayer);
         EntityRendererRegistry.registerModelLayer(PLAYER, PlayerModelChanges::createBodyLayer);
         EntityRendererRegistry.registerModelLayer(CHEST, ChestModel::getModelData);
+        EntityRendererRegistry.registerModelLayer(CATALYST_MODEL, CatalystModel::createBodyLayer);
     }
 
 }

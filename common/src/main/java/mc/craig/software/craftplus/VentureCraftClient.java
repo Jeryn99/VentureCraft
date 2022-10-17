@@ -3,6 +3,7 @@ package mc.craig.software.craftplus;
 import mc.craig.software.craftplus.client.layers.OwlShoulderLayer;
 import mc.craig.software.craftplus.client.layers.PlayerGliderLayer;
 import mc.craig.software.craftplus.client.models.Models;
+import mc.craig.software.craftplus.client.renderers.blockentity.RenderCatalyst;
 import mc.craig.software.craftplus.client.renderers.blockentity.RenderPedastal;
 import mc.craig.software.craftplus.client.renderers.entity.RenderAdvancedArrow;
 import mc.craig.software.craftplus.client.renderers.blockentity.RenderLootChest;
@@ -35,6 +36,7 @@ public class VentureCraftClient {
         // Block Entity Renderers
         BlockEntityRendererRegistry.register(ModBlockEntities.LOOT_CHEST, RenderLootChest::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.PEDASTAL, new RenderPedastal());
+        BlockEntityRendererRegistry.register(ModBlockEntities.CATALYST, RenderCatalyst::new);
 
         // Model Layers
         Models.init();

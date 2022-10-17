@@ -3,6 +3,7 @@ package mc.craig.software.craftplus.data.forge;
 import mc.craig.software.craftplus.VentureCraft;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.block.LockedLootChestBlock;
+import mc.craig.software.craftplus.common.items.ClimbingGearItem;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -34,6 +35,11 @@ public class ModelProviderItem extends ItemModelProvider {
             if (entry.get() instanceof ParagliderItem) {
                 ResourceLocation gliderId = ForgeRegistries.ITEMS.getKey(entry.get());
                 layeredItem(new ResourceLocation(gliderId.getNamespace(), gliderId.getPath() + "_copper_mod"), Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(entry.get())), new ResourceLocation(VentureCraft.MODID, "glider_copper_mod"));
+                continue;
+            }
+
+            if(entry.get() instanceof ClimbingGearItem climbingGearItem){
+                basicItem(entry.get());
                 continue;
             }
 
