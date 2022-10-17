@@ -2,8 +2,10 @@ package mc.craig.software.craftplus.forge;
 
 import mc.craig.software.craftplus.VentureCraft;
 import mc.craig.software.craftplus.VentureCraftClient;
+import mc.craig.software.craftplus.common.menu.ExtendedInventoryMenu;
 import mc.craig.software.craftplus.data.forge.*;
 import net.minecraft.data.DataGenerator;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -41,6 +43,17 @@ public class VentureCraftForge {
         generator.addProvider(e.includeServer(), new EntityTypeTagsProvider(generator, existingFileHelper));
         generator.addProvider(e.includeServer(), new BiomeModifierProvider(generator));
         generator.addProvider(e.includeServer(), new AdvancementsProvider(generator));
+    }
+
+    @SubscribeEvent
+    public static void onTextureStitch(TextureStitchEvent.Pre e) {
+        e.addSprite(ExtendedInventoryMenu.EMPTY_TOTEM_SLOT);
+        e.addSprite(ExtendedInventoryMenu.EMPTY_TOOL_SLOT_COMPASS);
+        e.addSprite(ExtendedInventoryMenu.EMPTY_TOOL_SLOT_CLOCK);
+        e.addSprite(ExtendedInventoryMenu.EMPTY_TOOL_SLOT_MAP);
+        e.addSprite(ExtendedInventoryMenu.EMPTY_GEAR_SLOT_CLIMBING);
+        e.addSprite(ExtendedInventoryMenu.EMPTY_GEAR_SLOT_ELYTRA);
+        e.addSprite(ExtendedInventoryMenu.EMPTY_GEAR_SLOT_BACKPACK);
     }
 
 }

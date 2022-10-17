@@ -1,6 +1,7 @@
 package mc.craig.software.craftplus.common.menu;
 
 import com.mojang.datafixers.util.Pair;
+import mc.craig.software.craftplus.VentureCraft;
 import mc.craig.software.craftplus.common.entities.ExtendedInventory;
 import mc.craig.software.craftplus.common.entities.PlayerInventoryWrapper;
 import mc.craig.software.craftplus.util.item.AdvItemStackHandler;
@@ -23,6 +24,13 @@ public class ExtendedInventoryMenu extends InventoryMenu {
     public static final Component CONTAINER_TITLE = Component.translatable("container.venturecraft.extended_inventory");
     private static final EquipmentSlot[] SLOT_IDS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
     static final ResourceLocation[] TEXTURE_EMPTY_SLOTS = new ResourceLocation[]{EMPTY_ARMOR_SLOT_BOOTS, EMPTY_ARMOR_SLOT_LEGGINGS, EMPTY_ARMOR_SLOT_CHESTPLATE, EMPTY_ARMOR_SLOT_HELMET};
+    public static final ResourceLocation EMPTY_TOTEM_SLOT = VentureCraft.id("item/empty_totem_slot");
+    public static final ResourceLocation EMPTY_TOOL_SLOT_COMPASS = VentureCraft.id("item/empty_tool_slot_compass");
+    public static final ResourceLocation EMPTY_TOOL_SLOT_CLOCK = VentureCraft.id("item/empty_tool_slot_clock");
+    public static final ResourceLocation EMPTY_TOOL_SLOT_MAP = VentureCraft.id("item/empty_tool_slot_map");
+    public static final ResourceLocation EMPTY_GEAR_SLOT_CLIMBING = VentureCraft.id("item/empty_gear_slot_climbing");
+    public static final ResourceLocation EMPTY_GEAR_SLOT_ELYTRA = VentureCraft.id("item/empty_gear_slot_elytra");
+    public static final ResourceLocation EMPTY_GEAR_SLOT_BACKPACK = VentureCraft.id("item/empty_gear_slot_backpack");
 
     public ExtendedInventoryMenu(Inventory inventory, boolean pActive, final Player pOwner) {
         super(inventory, pActive, pOwner);
@@ -63,7 +71,7 @@ public class ExtendedInventoryMenu extends InventoryMenu {
         // Armor
         for (int k = 0; k < 4; ++k) {
             final EquipmentSlot equipmentslot = SLOT_IDS[k];
-            this.addSlot(new Slot(inventory, 11 * 5 + 3 - k, 116, 6 + k * 36) {
+            this.addSlot(new Slot(inventory, 11 * 5 + 3 - k, 256, 6 + k * 36) {
                 /**
                  * Helper method to put a stack in the slot.
                  */
@@ -102,12 +110,52 @@ public class ExtendedInventoryMenu extends InventoryMenu {
             });
         }
 
+        // Climbing
+        this.addSlot(new SlotItemHandler(extendedInv.gear, ExtendedInventory.GEAR_SLOT_CLIMBING, 116, 6) {
+            public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                return Pair.of(BLOCK_ATLAS, EMPTY_GEAR_SLOT_CLIMBING);
+            }
+        });
+
+        // Elytra
+        this.addSlot(new SlotItemHandler(extendedInv.gear, ExtendedInventory.GEAR_SLOT_ELYTRA, 116, 42) {
+            public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                return Pair.of(BLOCK_ATLAS, EMPTY_GEAR_SLOT_ELYTRA);
+            }
+        });
+
+        // Backpack
+        this.addSlot(new SlotItemHandler(extendedInv.gear, ExtendedInventory.GEAR_SLOT_BACKPACK, 116, 78) {
+            public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                return Pair.of(BLOCK_ATLAS, EMPTY_GEAR_SLOT_BACKPACK);
+            }
+        });
+
         // Offhand
-        this.addSlot(new Slot(inventory, PlayerInventoryWrapper.OFF_HAND_SLOT, 77, 62) {
+        this.addSlot(new Slot(inventory, PlayerInventoryWrapper.OFF_HAND_SLOT, 116, 114) {
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
                 return Pair.of(BLOCK_ATLAS, EMPTY_ARMOR_SLOT_SHIELD);
             }
         });
+
+        // Totems
+        for (int i = 0; i < 3; i++) {
+            this.addSlot(new SlotItemHandler(extendedInv.totems, i, 22 + i * 20, 6) {
+                public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                    return Pair.of(BLOCK_ATLAS, EMPTY_TOTEM_SLOT);
+                }
+            });
+        }
+
+        // Tools
+        for (int i = 0; i < 3; i++) {
+            int finalI = i;
+            this.addSlot(new SlotItemHandler(extendedInv.tools, finalI, 310 + i * 20, 6) {
+                public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                    return Pair.of(BLOCK_ATLAS, finalI == 0 ? EMPTY_TOOL_SLOT_COMPASS : (finalI == 1 ? EMPTY_TOOL_SLOT_CLOCK : EMPTY_TOOL_SLOT_MAP));
+                }
+            });
+        }
     }
 
     @Override
