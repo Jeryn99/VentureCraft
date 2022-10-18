@@ -22,6 +22,7 @@ public class ModSounds {
     public static final RegistrySupplier<SoundEvent> STALKER_LAUGH = SOUNDS.register("stalker_laugh", () -> setUpSound("stalker_laugh"));
     public static final RegistrySupplier<SoundEvent> STALKER_MOVE = SOUNDS.register("stalker_move", () -> setUpSound("stalker_move"));
     public static final RegistrySupplier<SoundEvent> STALKER_STRIKE = SOUNDS.register("stalker_strike", () -> setUpSound("stalker_strike"));
+    public static final RegistrySupplier<SoundEvent> BELL_TOLL = SOUNDS.register("bell_toll", () -> setUpSound("bell_toll"));
 
     private static SoundEvent setUpSound(String soundName) {
         return new SoundEvent(new ResourceLocation(VentureCraft.MODID, soundName));

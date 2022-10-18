@@ -3,6 +3,9 @@ package mc.craig.software.craftplus.data.forge;
 import mc.craig.software.craftplus.VentureCraft;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.block.LockedLootChestBlock;
+import mc.craig.software.craftplus.common.block.PedastalBlock;
+import mc.craig.software.craftplus.common.block.PotBlock;
+import mc.craig.software.craftplus.common.items.ClimbingGearItem;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -37,6 +40,11 @@ public class ModelProviderItem extends ItemModelProvider {
                 continue;
             }
 
+            if(entry.get() instanceof ClimbingGearItem climbingGearItem){
+                basicItem(entry.get());
+                continue;
+            }
+
             if (entry.get() instanceof ArmorItem) {
                 layeredItem(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(entry.get())), new ResourceLocation(VentureCraft.MODID, ForgeRegistries.ITEMS.getKey(entry.get()).getPath() + "_overlay"));
                 continue;
@@ -49,7 +57,7 @@ public class ModelProviderItem extends ItemModelProvider {
 
             if (entry.get() instanceof BlockItem blockItem) {
 
-                if(blockItem.getBlock() instanceof LockedLootChestBlock){
+                if (blockItem.getBlock() instanceof PotBlock || blockItem.getBlock() instanceof LockedLootChestBlock || blockItem.getBlock() instanceof PedastalBlock) {
                     continue;
                 }
 

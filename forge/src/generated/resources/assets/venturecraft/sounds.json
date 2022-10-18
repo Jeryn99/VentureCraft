@@ -1,4 +1,10 @@
 {
+  "bell_toll": {
+    "sounds": [
+      "venturecraft:block/bell_toll"
+    ],
+    "subtitle": "subtitle.venturecraft.bell_toll"
+  },
   "glider_open": {
     "sounds": [
       "venturecraft:glider/glider_open_0",

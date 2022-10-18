@@ -31,6 +31,7 @@ public class SoundProvider extends SoundDefinitionsProvider {
         createDefinitionAndAdd(ModSounds.STALKER_LAUGH.get(), SoundDefinition.SoundType.SOUND, "stalker_laugh", "stalker/stalker_giggle_1", "stalker/stalker_giggle_2", "stalker/stalker_giggle_3");
         createDefinitionAndAdd(ModSounds.STALKER_MOVE.get(), SoundDefinition.SoundType.SOUND, "stalker_move", "stalker/stalker_glide_1", "stalker/stalker_glide_2", "stalker/stalker_glide_3", "stalker/stalker_glide_4");
         createDefinitionAndAdd(ModSounds.STALKER_STRIKE.get(), SoundDefinition.SoundType.SOUND, "stalker_strike", "stalker/stalker_striking");
+        createDefinitionAndAdd(ModSounds.BELL_TOLL.get(), SoundDefinition.SoundType.SOUND, "bell_toll", "block/bell_toll");
 
     }
 

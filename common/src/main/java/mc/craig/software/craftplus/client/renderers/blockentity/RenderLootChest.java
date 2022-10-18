@@ -18,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class RenderLootChest implements BlockEntityRenderer<LockedLootChestBlockEntity>, BlockEntityRendererProvider<LockedLootChestBlockEntity> {
 
-    private static final ResourceLocation GOLD_TEXTURE = new ResourceLocation(VentureCraft.MODID, "textures/block_entity/gold_loot_chest.png");
     private static ChestModel chestModel;
 
     public RenderLootChest(Context context) {
