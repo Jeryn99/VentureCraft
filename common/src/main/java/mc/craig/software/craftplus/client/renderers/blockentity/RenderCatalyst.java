@@ -31,6 +31,8 @@ public class RenderCatalyst implements BlockEntityRenderer<CatalystBlockEntity>,
         poseStack.popPose();
     }
 
+
+
     private ResourceLocation getTexture(CatalystBlockEntity lootChestBlock) {
         return new ResourceLocation(VentureCraft.MODID, "textures/block_entity/catalyst.png");
     }

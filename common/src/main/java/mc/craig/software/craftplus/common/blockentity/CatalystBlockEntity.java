@@ -21,7 +21,7 @@ public class CatalystBlockEntity extends BlockEntity implements BlockEntityTicke
     @Override
     public void tick(Level level, BlockPos blockPos, BlockState blockState, CatalystBlockEntity blockEntity) {
         if(!AGITATED.isStarted()){
-            AGITATED.start(1000);
+            AGITATED.start(0);
         }
     }
 }

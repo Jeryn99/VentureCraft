@@ -2,6 +2,8 @@ package mc.craig.software.craftplus.common.block;
 
 import mc.craig.software.craftplus.common.blockentity.CatalystBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -43,6 +45,21 @@ public class CatalystBlock extends BaseEntityBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return CATALYST;
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        for(int i = 0; i < 3; ++i) {
+            int j = random.nextInt(2) * 2 - 1;
+            int k = random.nextInt(2) * 2 - 1;
+            double d = (double)pos.getX() + 0.5 + 0.25 * (double)j;
+            double e = (float)pos.getY() + random.nextFloat();
+            double f = (double)pos.getZ() + 0.5 + 0.25 * (double)k;
+            double g = random.nextFloat() * (float)j;
+            double h = ((double)random.nextFloat() - 0.5) * 0.125;
+            double l = random.nextFloat() * (float)k;
+            level.addParticle(ParticleTypes.PORTAL, d, e, f, g, h, l);
+        }
     }
 
     @Nullable
