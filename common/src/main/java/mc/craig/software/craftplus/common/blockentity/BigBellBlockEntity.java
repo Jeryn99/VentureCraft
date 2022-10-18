@@ -1,6 +1,7 @@
 package mc.craig.software.craftplus.common.blockentity;
 
 import mc.craig.software.craftplus.common.ModBlockEntities;
+import mc.craig.software.craftplus.common.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -41,7 +42,7 @@ public class BigBellBlockEntity extends BlockEntity implements BlockEntityTicker
     }
 
     public void playBellNoise() {
-        level.playSound(null, worldPosition, SoundEvents.BELL_BLOCK, SoundSource.BLOCKS, 2.0F, 1.0F);
+        level.playSound(null, worldPosition, ModSounds.BELL_TOLL.get(), SoundSource.BLOCKS, 2.0F, 1.0F);
     }
 
 

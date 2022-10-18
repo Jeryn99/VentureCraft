@@ -29,6 +29,8 @@ public class AbstractContainerMenuMixin {
     @Final
     private NonNullList<ItemStack> remoteSlots;
 
+    //not that it showed me
+
     // This is horrible, but Forge has forced my hand
     @Inject(at = @At("HEAD"), method = "addSlot(Lnet/minecraft/world/inventory/Slot;)Lnet/minecraft/world/inventory/Slot;", cancellable = true)
     private void addSlot(Slot slot, CallbackInfoReturnable<Slot> cir) {
