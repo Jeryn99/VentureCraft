@@ -6,14 +6,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -46,7 +45,7 @@ public class BellBlock extends BaseEntityBlock {
             Block.box(0, 0, 14, 2, 11, 16)
     ).reduce((v1, v2) -> Shapes.join(v1, v2, OR)).get();
 
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public BellBlock(Properties properties) {
         super(properties.noOcclusion());
@@ -66,6 +65,16 @@ public class BellBlock extends BaseEntityBlock {
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction direction = context.getHorizontalDirection().getOpposite();
         return this.defaultBlockState().setValue(FACING, direction);
+    }
+
+    @Override
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @Override
+    public BlockState mirror(BlockState state, Mirror mirror) {
+        return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Nullable

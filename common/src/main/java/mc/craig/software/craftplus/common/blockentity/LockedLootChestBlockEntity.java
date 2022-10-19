@@ -63,6 +63,11 @@ public class LockedLootChestBlockEntity extends ChestBlockEntity implements Bloc
 
     @Override
     public void tick(Level level, BlockPos blockPos, BlockState blockState, LockedLootChestBlockEntity lockedLootChestBlockEntity) {
+
+        if (chestLidController.shouldBeOpen) {
+            OPEN.stop();
+        }
+
         if (blockState.getBlock() instanceof LockedLootChestBlock block) {
             if (block.getChestType() != getChestType()) {
                 chestType = block.getChestType();

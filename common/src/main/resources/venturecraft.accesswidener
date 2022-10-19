@@ -10,3 +10,5 @@ accessible method net/minecraft/world/entity/SpawnPlacements register (Lnet/mine
 
 accessible field net/minecraft/world/entity/Mob targetSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
 accessible method net/minecraft/advancements/CriteriaTriggers register (Lnet/minecraft/advancements/CriterionTrigger;)Lnet/minecraft/advancements/CriterionTrigger;
+accessible field net/minecraft/world/level/block/entity/ChestLidController shouldBeOpen Z
+accessible field net/minecraft/world/level/block/entity/ChestBlockEntity chestLidController Lnet/minecraft/world/level/block/entity/ChestLidController;

@@ -1,7 +1,6 @@
 {
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
-	"render_type": "cutout",
 	"textures": {
 		"1": "venturecraft:block/pot"
 	},
@@ -43,6 +42,39 @@
 			}
 		}
 	],
+	"display": {
+		"thirdperson_righthand": {
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"thirdperson_lefthand": {
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_righthand": {
+			"rotation": [-22, 0, 0],
+			"translation": [2.75, 2, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-22, 0, 0],
+			"translation": [2.75, 2, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [0, 1.25, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"head": {
+			"translation": [0, 6.75, 0]
+		},
+		"fixed": {
+			"rotation": [0, 133, 0],
+			"scale": [0.7, 0.7, 0.7]
+		}
+	},
 	"groups": [
 		{
 			"name": "VoxelShapes",

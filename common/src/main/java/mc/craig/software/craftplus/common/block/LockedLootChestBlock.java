@@ -1,9 +1,9 @@
 package mc.craig.software.craftplus.common.block;
 
-import mc.craig.software.craftplus.common.ModBlockEntities;
 import mc.craig.software.craftplus.common.blockentity.LockedLootChestBlockEntity;
 import mc.craig.software.craftplus.common.items.KeyItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -11,18 +11,17 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.ChestBlock;
-import net.minecraft.world.level.block.DoubleBlockCombiner;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -52,7 +51,9 @@ public class LockedLootChestBlock extends BaseEntityBlock {
         if (item.getItem() instanceof KeyItem keyItem) {
             if (keyItem.getChestType() == chestType) {
                 lootChestBlock.DENY.stop();
-                lootChestBlock.OPEN.start(player.tickCount);
+                if (lootChestBlock.chestLidController.shouldBeOpen) {
+                    lootChestBlock.OPEN.start(player.tickCount);
+                }
                 MenuProvider menuProvider = this.getMenuProvider(state, level, pos);
                 if (menuProvider != null) {
                     player.openMenu(menuProvider);
@@ -65,8 +66,6 @@ public class LockedLootChestBlock extends BaseEntityBlock {
 
         lootChestBlock.OPEN.stop();
         lootChestBlock.DENY.start(player.tickCount);
-
-
         return InteractionResult.FAIL;
     }
 
@@ -79,6 +78,23 @@ public class LockedLootChestBlock extends BaseEntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new LockedLootChestBlockEntity(blockPos, blockState, chestType);
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Direction direction = context.getHorizontalDirection().getOpposite();
+        return this.defaultBlockState().setValue(FACING, direction);
+    }
+
+    @Override
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @Override
+    public BlockState mirror(BlockState state, Mirror mirror) {
+        return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Nullable

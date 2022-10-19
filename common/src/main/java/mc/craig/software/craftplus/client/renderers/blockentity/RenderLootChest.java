@@ -31,7 +31,7 @@ public class RenderLootChest implements BlockEntityRenderer<LockedLootChestBlock
         poseStack.mulPose(Vector3f.ZP.rotationDegrees(180F)); // Make model not upside down
         BlockState blockState = tileEntityIn.getBlockState();
         float rotation = blockState.getValue(ChestBlock.FACING).toYRot();
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(rotation));
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(-rotation));
         chestModel.animate(tileEntityIn);
         chestModel.renderToBuffer(poseStack, bufferIn.getBuffer(RenderType.entityCutout(getTextureForChest(tileEntityIn))), combinedLightIn, combinedOverlayIn, 1, 1, 1, 1);
         poseStack.popPose();
