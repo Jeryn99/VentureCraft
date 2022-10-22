@@ -106,6 +106,7 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModBlocks.GOLD_LOOT_CHEST.get(), "Gold Loot Chest");
         add(ModBlocks.PEDASTAL.get(), "Pedastal");
         add(ModBlocks.POT.get(), "Pot");
+        add(ModBlocks.BELL.get(), "Bell");
 
         // ===== Advancements =====
         addAdvancement("first_time_flyer", "Paraglide!", "...and the whole worlds at your feet");

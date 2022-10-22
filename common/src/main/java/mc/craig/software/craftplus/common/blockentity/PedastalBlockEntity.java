@@ -22,19 +22,14 @@ public class PedastalBlockEntity extends BlockEntity {
     }
 
     public void dropItemIfPresent(Player player) {
-        ItemStack heldItem = getHeldItem();
-        if (!heldItem.isEmpty()) {
-            if (player != null) {
-                if (!player.addItem(heldItem)) {
-                    Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ(), heldItem);
-                    clearContent();
-                }
-            } else {
-                Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ(), heldItem);
-                clearContent();
-            }
-        }
+        ItemStack currentlyHeldItem = getHeldItem();
+        dropItem(currentlyHeldItem);
         Utils.sendUpdates(this, level, worldPosition, getBlockState());
+    }
+
+    private void dropItem(ItemStack currentlyHeldItem) {
+        Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ(), currentlyHeldItem);
+        clearContent();
     }
 
     public void clearContent() {

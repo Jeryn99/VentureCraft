@@ -27,7 +27,7 @@ public class RenderCatalyst implements BlockEntityRenderer<CatalystBlockEntity>,
         poseStack.translate(0.5F, 1.5F, 0.5F); //Translate to blockpos
         poseStack.mulPose(Vector3f.ZP.rotationDegrees(180F)); // Make model not upside down
         catalystModel.animate(tileEntityIn);
-        catalystModel.renderToBuffer(poseStack, bufferIn.getBuffer(RenderType.entityCutout(getTexture(tileEntityIn))), combinedLightIn, combinedOverlayIn, 1, 1, 1, 1);
+        catalystModel.renderToBuffer(poseStack, bufferIn.getBuffer(RenderType.entityCutoutNoCull(getTexture(tileEntityIn))), combinedLightIn, combinedOverlayIn, 1, 1, 1, 1);
         poseStack.popPose();
     }
 

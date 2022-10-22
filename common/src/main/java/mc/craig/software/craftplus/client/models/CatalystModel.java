@@ -59,10 +59,7 @@ public class CatalystModel extends HierarchicalModel implements AnimatableBEMode
     @Override
     public void animate(CatalystBlockEntity blockentity) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
-        if(blockentity.AGITATED.isStarted()) {
-            animate(blockentity.AGITATED, CORE_AGITATED, Minecraft.getInstance().player.tickCount);
-        } else {
-            animate(blockentity.CALM, CORE_CALM, Minecraft.getInstance().player.tickCount);
-        }
+        boolean close = Minecraft.getInstance().player.distanceToSqr(blockentity.getBlockPos().getX(), blockentity.getBlockPos().getY(), blockentity.getBlockPos().getZ()) < 5;
+        animate(blockentity.AGITATED, close ? CORE_AGITATED : CORE_CALM, Minecraft.getInstance().player.tickCount);
     }
 }

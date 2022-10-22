@@ -2,6 +2,7 @@ package mc.craig.software.craftplus.data.forge;
 
 import mc.craig.software.craftplus.VentureCraft;
 import mc.craig.software.craftplus.common.ModItems;
+import mc.craig.software.craftplus.common.block.BellBlock;
 import mc.craig.software.craftplus.common.block.LockedLootChestBlock;
 import mc.craig.software.craftplus.common.block.PedastalBlock;
 import mc.craig.software.craftplus.common.block.PotBlock;
@@ -29,8 +30,10 @@ public class ModelProviderItem extends ItemModelProvider {
         super(generator, VentureCraft.MODID, existingFileHelper);
     }
 
+    //TODO for loop needs removed and replaced with direct calls
     @Override
     protected void registerModels() {
+
         for (RegistrySupplier<Item> entry : ModItems.ITEMS.getEntries()) {
             if (entry.get() instanceof PalladiumSpawnEggItem) continue;
 
@@ -58,6 +61,11 @@ public class ModelProviderItem extends ItemModelProvider {
             if (entry.get() instanceof BlockItem blockItem) {
 
                 if (blockItem.getBlock() instanceof PotBlock || blockItem.getBlock() instanceof LockedLootChestBlock || blockItem.getBlock() instanceof PedastalBlock) {
+                    continue;
+                }
+
+                if (blockItem.getBlock() instanceof BellBlock) {
+                    basicItem(entry.get());
                     continue;
                 }
 

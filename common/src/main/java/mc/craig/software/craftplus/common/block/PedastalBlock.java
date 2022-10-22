@@ -39,21 +39,23 @@ public class PedastalBlock extends Block implements EntityBlock {
 
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
 
+
         PedastalBlockEntity pedastalBlockEntity = (PedastalBlockEntity) level.getBlockEntity(pos);
 
-        if (player.getItemInHand(hand).isEmpty()) {
-            player.swing(hand);
-            pedastalBlockEntity.dropItemIfPresent(player);
-            Utils.sendUpdates(pedastalBlockEntity, level, pos, state);
-            return InteractionResult.CONSUME_PARTIAL;
-        } else if (pedastalBlockEntity.getHeldItem().isEmpty()) {
-            player.swing(hand);
-            pedastalBlockEntity.setHeldItem(player.getMainHandItem().copy());
-            player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
-            Utils.sendUpdates(pedastalBlockEntity, level, pos, state);
-            return InteractionResult.SUCCESS;
-        }
-        return super.use(state, level, pos, player, hand, hit);
+        player.swing(hand); // Swing Players Hand
+
+        pedastalBlockEntity.dropItemIfPresent(player); // Drop item if Pedastal has one
+
+        ItemStack pedStack = player.getMainHandItem().copy();
+        pedStack.setCount(1);
+        ItemStack heldStack = player.getMainHandItem();
+        heldStack.shrink(1);
+
+        pedastalBlockEntity.setHeldItem(pedStack);
+        player.setItemInHand(InteractionHand.MAIN_HAND, heldStack);
+        Utils.sendUpdates(pedastalBlockEntity, level, pos, state);
+
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
