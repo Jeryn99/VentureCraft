@@ -55,7 +55,6 @@ public class ModItems {
     public static final RegistrySupplier<Item> CLIMBING_GEAR = ITEMS.register("climbing_gear", () -> new ClimbingGearItem(ArmorMaterials.LEATHER, EquipmentSlot.FEET, new Item.Properties().tab(MAIN).rarity(Rarity.COMMON)));
 
     public static final RegistrySupplier<Item> TOTEM = ITEMS.register("totem", () -> new Item(new Item.Properties().tab(MAIN).rarity(Rarity.RARE)));
-    public static final RegistrySupplier<Item> TRINKET = ITEMS.register("trinket", () -> new TrinketItem(new Item.Properties().tab(MAIN).rarity(Rarity.RARE)));
 
     // Keys 
     public static final RegistrySupplier<Item> IRON_KEY = ITEMS.register("iron_key", () -> new KeyItem(new Item.Properties().tab(MAIN).rarity(Rarity.COMMON), VCChestTypes.IRON));

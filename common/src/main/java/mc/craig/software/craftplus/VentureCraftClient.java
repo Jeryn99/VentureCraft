@@ -15,22 +15,16 @@ import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.common.items.TierArmorItem;
-import mc.craig.software.craftplus.common.items.TrinketItem;
 import mc.craig.software.craftplus.util.ClientUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.threetag.palladiumcore.event.LifecycleEvents;
 import net.threetag.palladiumcore.item.PalladiumSpawnEggItem;
 import net.threetag.palladiumcore.registry.RegistrySupplier;
 import net.threetag.palladiumcore.registry.client.BlockEntityRendererRegistry;
 import net.threetag.palladiumcore.registry.client.ColorHandlerRegistry;
 import net.threetag.palladiumcore.registry.client.EntityRendererRegistry;
-import org.jetbrains.annotations.Nullable;
 
 public class VentureCraftClient {
 
@@ -54,6 +48,8 @@ public class VentureCraftClient {
         EntityRendererRegistry.addRenderLayerToPlayer(renderLayerParent -> new PlayerGliderLayer(renderLayerParent));
         EntityRendererRegistry.addRenderLayerToPlayer(renderLayerParent -> new OwlShoulderLayer(renderLayerParent, Minecraft.getInstance().getEntityModels()));
 
+
+
         LifecycleEvents.CLIENT_SETUP.register(() -> {
             // Item Predicates
             for (RegistrySupplier<Item> supplier : ModItems.ITEMS) {
@@ -62,14 +58,6 @@ public class VentureCraftClient {
                     ClientUtil.addPredicate(paragliderItem, new ResourceLocation("copper_mod"), (stack, p_call_2_, livingEntity, something) -> ParagliderItem.hasCopperMod(stack) ? 1 : 0);
                 }
             }
-
-            ClientUtil.addPredicate(ModItems.TRINKET.get(), new ResourceLocation(VentureCraft.MODID, "trinket"), new ClampedItemPropertyFunction() {
-                @Override
-                public float unclampedCall(ItemStack itemStack, @Nullable ClientLevel clientLevel, @Nullable LivingEntity livingEntity, int i) {
-                    System.out.println(TrinketItem.getTrinket(itemStack));
-                    return TrinketItem.getTrinket(itemStack);
-                }
-            });
 
             // Color Handlers
             for (RegistrySupplier<Item> entry : ModItems.ITEMS.getEntries()) {

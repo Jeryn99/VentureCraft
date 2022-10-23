@@ -7,7 +7,9 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -36,6 +38,10 @@ public class ModBlocks {
     public static RegistrySupplier<Block> GOLD_LOOT_CHEST = register("gold_loot_chest", () -> new LockedLootChestBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD), VCChestTypes.GOLD), ModItems.MAIN);
     public static RegistrySupplier<Block> VOID_LOOT_CHEST = register("void_loot_chest", () -> new LockedLootChestBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD), VCChestTypes.VOID), ModItems.MAIN);
     public static RegistrySupplier<Block> IRON_LOOT_CHEST = register("iron_loot_chest", () -> new LockedLootChestBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD), VCChestTypes.IRON), ModItems.MAIN);
+
+    public static RegistrySupplier<Block> TRINKET_HOVERBOARD = register("trinket_hoverboard", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).noOcclusion().sound(SoundType.WOOD)), ModItems.MAIN);
+    public static RegistrySupplier<Block> TRINKET_TARDIS = register("trinket_tardis", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).noOcclusion().sound(SoundType.WOOD)), ModItems.MAIN);
+    public static RegistrySupplier<Block> TRINKET_LIBERTY = register("trinket_liberty", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).noOcclusion().sound(SoundType.WOOD)), ModItems.MAIN);
 
     /**
      * Registers a Block and BlockItem to the ItemGroup of your choice

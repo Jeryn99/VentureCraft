@@ -1,4 +1,4 @@
-// 1.19.2	2022-10-18T21:55:29.8989538	LootTables
+// 1.19.2	2022-10-23T16:28:45.1149953	LootTables
 5c3218821603193e60a815e2604c8ca329f42cc2 data/venturecraft/loot_tables/blocks/bell.json
 fab664bf6d8e7c2bcae2f5184566fad097f08fd7 data/venturecraft/loot_tables/blocks/catalyst.json
 a19080502519679100764d6da65f6ec9ff94129e data/venturecraft/loot_tables/blocks/deepslate_ruby_ore.json
@@ -10,6 +10,9 @@ c068866186f12f39b0413074dd0e8af5763ed1f2 data/venturecraft/loot_tables/blocks/po
 bd8abb4e716b4b6259b30a84ec8e7f077508a875 data/venturecraft/loot_tables/blocks/ruby_ore.json
 95496206ebf20912f238236f5a92825818ae373e data/venturecraft/loot_tables/blocks/sapphire_loot_chest.json
 fa99c5d8c6dce5269d98256a7aa27742a3cb6c25 data/venturecraft/loot_tables/blocks/sapphire_ore.json
+4b9f46a9e738925c8ad00acfa270453eec93e2fb data/venturecraft/loot_tables/blocks/trinket_hoverboard.json
+5015f22a56ee36e47c22fadad0679b05ebe9a4c9 data/venturecraft/loot_tables/blocks/trinket_liberty.json
+0f55e7482e76ead4cbda3cd11339f55a322aa1f3 data/venturecraft/loot_tables/blocks/trinket_tardis.json
 f4308b592c25f4024f53853aae9de5bd5b7a9177 data/venturecraft/loot_tables/blocks/void_loot_chest.json
 a1d6e72a8a0f649a898fabc01785fc67f3b147f7 data/venturecraft/loot_tables/entities/owl.json
 ef017fe8afbc1e704a7cfb4818ece7ba018f9c91 data/venturecraft/loot_tables/entities/stalker.json

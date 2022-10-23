@@ -107,6 +107,9 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModBlocks.PEDASTAL.get(), "Pedastal");
         add(ModBlocks.POT.get(), "Pot");
         add(ModBlocks.BELL.get(), "Bell");
+        add(ModBlocks.TRINKET_TARDIS.get(), "Tardis Trinket");
+        add(ModBlocks.TRINKET_HOVERBOARD.get(), "Hoverboard Trinket");
+        add(ModBlocks.TRINKET_LIBERTY.get(), "Liberty Trinket");
 
         // ===== Advancements =====
         addAdvancement("first_time_flyer", "Paraglide!", "...and the whole worlds at your feet");

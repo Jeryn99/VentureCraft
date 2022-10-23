@@ -62,6 +62,10 @@ public class ModLootTableProvider extends LootTableProvider {
             dropSelf(ModBlocks.CATALYST.get());
             dropSelf(ModBlocks.BELL.get());
 
+            dropSelf(ModBlocks.TRINKET_LIBERTY.get());
+            dropSelf(ModBlocks.TRINKET_HOVERBOARD.get());
+            dropSelf(ModBlocks.TRINKET_TARDIS.get());
+
             this.add(ModBlocks.SAPPHIRE_LOOT_CHEST.get(), this::createContainerLootDrops);
             this.add(ModBlocks.VOID_LOOT_CHEST.get(), this::createContainerLootDrops);
             this.add(ModBlocks.GOLD_LOOT_CHEST.get(), this::createContainerLootDrops);
