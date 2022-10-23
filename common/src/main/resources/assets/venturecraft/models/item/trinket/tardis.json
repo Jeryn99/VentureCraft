@@ -1,0 +1,58 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "venturecraft:item/trinket/tardis",
+		"particle": "venturecraft:item/trinket/tardis"
+	},
+	"elements": [
+		{
+			"from": [7.5, 10, 7.5],
+			"to": [8.5, 11, 8.5],
+			"faces": {
+				"north": {"uv": [0.25, 0.25, 0.5, 0.5], "texture": "#0"},
+				"east": {"uv": [0, 0.25, 0.25, 0.5], "texture": "#0"},
+				"south": {"uv": [0.75, 0.25, 1, 0.5], "texture": "#0"},
+				"west": {"uv": [0.5, 0.25, 0.75, 0.5], "texture": "#0"},
+				"up": {"uv": [0.5, 0.25, 0.25, 0], "texture": "#0"},
+				"down": {"uv": [0.75, 0, 0.5, 0.25], "texture": "#0"}
+			}
+		},
+		{
+			"from": [4.8, -0.2, 4.8],
+			"to": [11.2, 9.2, 11.2],
+			"faces": {
+				"north": {"uv": [7.5, 1.5, 9, 3.75], "texture": "#0"},
+				"east": {"uv": [6, 1.5, 7.5, 3.75], "texture": "#0"},
+				"south": {"uv": [10.5, 1.5, 12, 3.75], "texture": "#0"},
+				"west": {"uv": [9, 1.5, 10.5, 3.75], "texture": "#0"},
+				"up": {"uv": [9, 1.5, 7.5, 0], "texture": "#0"},
+				"down": {"uv": [10.5, 0, 9, 1.5], "texture": "#0"}
+			}
+		},
+		{
+			"from": [5, 0, 5],
+			"to": [11, 10, 11],
+			"faces": {
+				"north": {"uv": [1.5, 1.5, 3, 4], "texture": "#0"},
+				"east": {"uv": [0, 1.5, 1.5, 4], "texture": "#0"},
+				"south": {"uv": [4.5, 1.5, 6, 4], "texture": "#0"},
+				"west": {"uv": [3, 1.5, 4.5, 4], "texture": "#0"},
+				"up": {"uv": [3, 1.5, 1.5, 0], "texture": "#0"},
+				"down": {"uv": [4.5, 0, 3, 1.5], "texture": "#0"}
+			}
+		},
+		{
+			"from": [5.2, 0.2, 5.2],
+			"to": [10.8, 9.8, 10.8],
+			"faces": {
+				"north": {"uv": [1.5, 5.5, 3, 8], "texture": "#0"},
+				"east": {"uv": [0, 5.5, 1.5, 8], "texture": "#0"},
+				"south": {"uv": [4.5, 5.5, 6, 8], "texture": "#0"},
+				"west": {"uv": [3, 5.5, 4.5, 8], "texture": "#0"},
+				"up": {"uv": [3, 5.5, 1.5, 4], "texture": "#0"},
+				"down": {"uv": [4.5, 4, 3, 5.5], "texture": "#0"}
+			}
+		}
+	]
+}

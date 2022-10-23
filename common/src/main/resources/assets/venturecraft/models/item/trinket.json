@@ -1,0 +1,23 @@
+{
+  "parent": "item/generated",
+  "overrides": [
+    {
+      "predicate": {
+        "venturecraft:trinket": 0
+      },
+      "model": "venturecraft:item/trinket/tardis"
+    },
+    {
+      "predicate": {
+        "venturecraft:trinket": 1
+      },
+      "model": "venturecraft:item/trinket/hoverboard"
+    },
+    {
+      "predicate": {
+        "venturecraft:trinket": 2
+      },
+      "model": "venturecraft:item/trinket/hoverboard"
+    }
+  ]
+}
