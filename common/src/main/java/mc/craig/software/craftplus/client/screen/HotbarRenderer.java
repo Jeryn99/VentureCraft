@@ -27,8 +27,10 @@ public class HotbarRenderer {
             int k = 182;
             int leftShift = 111;
             gui.setBlitOffset(-90);
-            gui.blit(pPoseStack, i - leftShift, screenHeight - 22, 0, 0, 182, 22);
-            gui.blit(pPoseStack, i - leftShift + 181, screenHeight - 22, 141, 0, 41, 22);
+            gui.blit(pPoseStack, i - leftShift, screenHeight - 22, 0, 0, 161, 22);
+            gui.blit(pPoseStack, i - leftShift + 161, screenHeight - 22, 141, 0, 20, 22);
+            gui.blit(pPoseStack, i - leftShift + 181, screenHeight - 22, 141, 0, 20, 22);
+            gui.blit(pPoseStack, i - leftShift + 201, screenHeight - 22, 161, 0, 21, 22);
             gui.blit(pPoseStack, i - leftShift - 1 + player.getInventory().selected * 20, screenHeight - 22 - 1, 0, 22, 24, 22);
             if (!offHandItem.isEmpty()) {
                 if (humanoidarm == HumanoidArm.LEFT) {
