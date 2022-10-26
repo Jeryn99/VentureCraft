@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_red_dye": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:red_dye"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:red_pedastal_from_white_pedastal"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_white_pedastal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "venturecraft:white_pedastal"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_white_pedastal",
+      "has_red_dye",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:red_pedastal_from_white_pedastal"
+    ]
+  }
+}

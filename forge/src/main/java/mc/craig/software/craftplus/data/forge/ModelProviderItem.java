@@ -60,7 +60,7 @@ public class ModelProviderItem extends ItemModelProvider {
 
             if (entry.get() instanceof BlockItem blockItem) {
 
-                if (blockItem.getBlock() instanceof PotBlock || blockItem.getBlock() instanceof LockedLootChestBlock || blockItem.getBlock() instanceof PedastalBlock) {
+                if (blockItem.getBlock() instanceof PotBlock || blockItem.getBlock() instanceof LockedLootChestBlock) {
                     continue;
                 }
 

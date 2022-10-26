@@ -17,8 +17,13 @@ import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.common.items.TierArmorItem;
 import mc.craig.software.craftplus.util.ClientUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.PotionItem;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.threetag.palladiumcore.event.LifecycleEvents;
 import net.threetag.palladiumcore.item.PalladiumSpawnEggItem;
 import net.threetag.palladiumcore.registry.RegistrySupplier;
@@ -58,6 +63,9 @@ public class VentureCraftClient {
                     ClientUtil.addPredicate(paragliderItem, new ResourceLocation("copper_mod"), (stack, p_call_2_, livingEntity, something) -> ParagliderItem.hasCopperMod(stack) ? 1 : 0);
                 }
             }
+
+            ColorHandlerRegistry.registerItemColors((itemStack, layer) -> PotionUtils.getColor(itemStack), () -> Items.POTION);
+            ColorHandlerRegistry.registerItemColors((itemStack, layer) -> PotionUtils.getColor(itemStack), () -> Items.SPLASH_POTION);
 
             // Color Handlers
             for (RegistrySupplier<Item> entry : ModItems.ITEMS.getEntries()) {

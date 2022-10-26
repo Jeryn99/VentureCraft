@@ -1,0 +1,6 @@
+{
+  "parent": "venturecraft:block/pedastal",
+  "textures": {
+    "0": "venturecraft:block/brown_pedastal"
+  }
+}

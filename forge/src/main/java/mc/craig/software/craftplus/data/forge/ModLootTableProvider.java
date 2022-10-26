@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import mc.craig.software.craftplus.common.ModBlocks;
 import mc.craig.software.craftplus.common.ModEntities;
 import mc.craig.software.craftplus.common.ModItems;
+import mc.craig.software.craftplus.common.block.PedastalBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.data.loot.EntityLoot;
@@ -58,7 +59,7 @@ public class ModLootTableProvider extends LootTableProvider {
             this.add(ModBlocks.RUBY_ORE.get(), (block) -> createOreDrop(block, ModItems.UNREFINED_RUBY.get()));
             this.add(ModBlocks.DEEPSLATE_RUBY_ORE.get(), (block) -> createOreDrop(block, ModItems.UNREFINED_RUBY.get()));
             dropSelf(ModBlocks.POT.get());
-            dropSelf(ModBlocks.PEDASTAL.get());
+
             dropSelf(ModBlocks.CATALYST.get());
             dropSelf(ModBlocks.BELL.get());
 
@@ -70,6 +71,10 @@ public class ModLootTableProvider extends LootTableProvider {
             this.add(ModBlocks.VOID_LOOT_CHEST.get(), this::createContainerLootDrops);
             this.add(ModBlocks.GOLD_LOOT_CHEST.get(), this::createContainerLootDrops);
             this.add(ModBlocks.IRON_LOOT_CHEST.get(), this::createContainerLootDrops);
+
+            for (RegistrySupplier<Block> entry : ModBlocks.BLOCKS.getEntries()) {
+                dropSelf(entry.get());
+            }
         }
 
         private LootTable.Builder createContainerLootDrops(Block block) {

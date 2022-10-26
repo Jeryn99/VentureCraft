@@ -104,7 +104,7 @@ public class LangProviderEnglish extends LanguageProvider {
         add(ModBlocks.VOID_LOOT_CHEST.get(), "Void Loot Chest");
         add(ModBlocks.SAPPHIRE_LOOT_CHEST.get(), "Sapphire Loot Chest");
         add(ModBlocks.GOLD_LOOT_CHEST.get(), "Gold Loot Chest");
-        add(ModBlocks.PEDASTAL.get(), "Pedastal");
+
         add(ModBlocks.POT.get(), "Pot");
         add(ModBlocks.BELL.get(), "Bell");
         add(ModBlocks.TRINKET_TARDIS.get(), "Tardis Trinket");

@@ -1,6 +1,7 @@
 package mc.craig.software.craftplus.common;
 
 import mc.craig.software.craftplus.VentureCraft;
+import mc.craig.software.craftplus.common.block.PedastalBlock;
 import mc.craig.software.craftplus.common.block.VCChestTypes;
 import mc.craig.software.craftplus.common.blockentity.BigBellBlockEntity;
 import mc.craig.software.craftplus.common.blockentity.CatalystBlockEntity;
@@ -13,12 +14,14 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.threetag.palladiumcore.registry.DeferredRegister;
 import net.threetag.palladiumcore.registry.RegistrySupplier;
 
+import java.util.ArrayList;
+
 public class ModBlockEntities {
 
     public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(VentureCraft.MODID, Registry.BLOCK_ENTITY_TYPE_REGISTRY);
 
     public static RegistrySupplier<BlockEntityType<LockedLootChestBlockEntity>> LOOT_CHEST = TILES.register("loot_chest", () -> registerTiles((blockPos, state) -> new LockedLootChestBlockEntity(blockPos, state, VCChestTypes.SAPPHIRE), ModBlocks.VOID_LOOT_CHEST.get(), ModBlocks.GOLD_LOOT_CHEST.get(), ModBlocks.IRON_LOOT_CHEST.get(), ModBlocks.SAPPHIRE_LOOT_CHEST.get()));
-    public static RegistrySupplier<BlockEntityType<PedastalBlockEntity>> PEDASTAL = TILES.register("pedastal", () -> registerTiles(PedastalBlockEntity::new, ModBlocks.PEDASTAL.get()));
+    public static RegistrySupplier<BlockEntityType<PedastalBlockEntity>> PEDASTAL = TILES.register("pedastal", () -> registerTiles(PedastalBlockEntity::new, getPedastals()));
     public static RegistrySupplier<BlockEntityType<CatalystBlockEntity>> CATALYST = TILES.register("catalyst", () -> registerTiles(CatalystBlockEntity::new, ModBlocks.CATALYST.get()));
     public static RegistrySupplier<BlockEntityType<BigBellBlockEntity>> BELL = TILES.register("bell", () -> registerTiles(BigBellBlockEntity::new, ModBlocks.BELL.get()));
 
@@ -27,5 +30,15 @@ public class ModBlockEntities {
         return BlockEntityType.Builder.of(tile, validBlocks).build(null);
     }
 
+
+    private static Block[] getPedastals(){
+        ArrayList<Block> pedastals = new ArrayList<>();
+        for (RegistrySupplier<Block> entry : ModBlocks.BLOCKS.getEntries()) {
+            if(entry.get() instanceof PedastalBlock pedastalBlock){
+                pedastals.add(pedastalBlock);
+            }
+        }
+        return pedastals.toArray(new Block[0]);
+    };
 
 }
