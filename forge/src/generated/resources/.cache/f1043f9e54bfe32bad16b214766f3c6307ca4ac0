@@ -1,4 +1,4 @@
-// 1.19.2	2022-10-26T22:29:36.941902	Item Models: venturecraft
+// 1.19.2	2022-10-30T21:48:37.5018195	Item Models: venturecraft
 459eca8d379aa95d19755248034b200dcee637d5 assets/venturecraft/models/item/advanced_arrow.json
 a7d06f6bc7f277132dd68e33807bce0164e97efe assets/venturecraft/models/item/bell.json
 cc2efcbc6db5f11262f7a58a320bb21e5b0f4696 assets/venturecraft/models/item/big_key.json
@@ -47,9 +47,6 @@ d7df9e6735dc193fd483819a44053fcb08272815 assets/venturecraft/models/item/sapphir
 b11488cd85677ace9212a077b4c6181aa56e22fd assets/venturecraft/models/item/sapphire_shovel.json
 07e29745197de3d0f587b264a74f411fb51efdac assets/venturecraft/models/item/sapphire_sword.json
 3fcc5ff2368c1ce0d2c8e0e3666861e1043173af assets/venturecraft/models/item/totem.json
-653db9b07ad35123764e799dfb61458e349c15be assets/venturecraft/models/item/trinket_hoverboard.json
-7a651989798edf186061104f3b7122ad80e1f029 assets/venturecraft/models/item/trinket_liberty.json
-3f0966997d057fca78d8d4f03617e05d07837d99 assets/venturecraft/models/item/trinket_tardis.json
 3f45ce457c2e75cea0be98a6a70c4ea128c0043b assets/venturecraft/models/item/unrefined_ruby.json
 9b8f5de8de783525a427adb03c9f3f916702a0e4 assets/venturecraft/models/item/void_key.json
 3bf9c991d394175d251ca44655c876e0103a6627 assets/venturecraft/models/item/white_pedastal.json

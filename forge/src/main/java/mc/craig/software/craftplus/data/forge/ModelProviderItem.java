@@ -2,10 +2,7 @@ package mc.craig.software.craftplus.data.forge;
 
 import mc.craig.software.craftplus.VentureCraft;
 import mc.craig.software.craftplus.common.ModItems;
-import mc.craig.software.craftplus.common.block.BellBlock;
-import mc.craig.software.craftplus.common.block.LockedLootChestBlock;
-import mc.craig.software.craftplus.common.block.PedastalBlock;
-import mc.craig.software.craftplus.common.block.PotBlock;
+import mc.craig.software.craftplus.common.block.*;
 import mc.craig.software.craftplus.common.items.ClimbingGearItem;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import net.minecraft.data.DataGenerator;
@@ -60,7 +57,7 @@ public class ModelProviderItem extends ItemModelProvider {
 
             if (entry.get() instanceof BlockItem blockItem) {
 
-                if (blockItem.getBlock() instanceof PotBlock || blockItem.getBlock() instanceof LockedLootChestBlock) {
+                if (blockItem.getBlock() instanceof PotBlock || blockItem.getBlock() instanceof LockedLootChestBlock  || blockItem.getBlock() instanceof TrinketBlock) {
                     continue;
                 }
 
