@@ -4,10 +4,9 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.networking.packets.MessageSyncCap;
+import mc.craig.software.craftplus.networking.packets.SyncSkillPointsMessage;
 import mc.craig.software.craftplus.util.GliderUtil;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
@@ -20,7 +19,8 @@ import java.util.Optional;
 
 public class VenturePlayerData {
 
-    public final NonNullList<ItemStack> TOTEM_INV = NonNullList.withSize(3, ItemStack.EMPTY);
+    // TODO max xp per point might change, set to 50 for testing
+    public static final int XP_PER_SKILL_POINT = 50;
 
     @NotNull
     private final Player player;
@@ -28,6 +28,8 @@ public class VenturePlayerData {
 
     private boolean falling = false;
 
+    private int skillXP = 0;
+    private int skillPoints = 0;
     private int stamina = 200;
     private int maxStamina = 200;
 
@@ -184,6 +186,59 @@ public class VenturePlayerData {
         };
     }
 
+    public void setSkillXP(int skillXP) {
+        this.skillXP = Mth.clamp(skillXP, 0, 49);
+    }
+
+    public int getSkillXP() {
+        return this.skillXP;
+    }
+
+    public void addSkillXP(int skillXP) {
+        this.skillXP += skillXP;
+
+        while (this.skillXP >= XP_PER_SKILL_POINT) {
+            this.skillPoints++;
+            this.skillXP -= XP_PER_SKILL_POINT;
+        }
+
+        while (this.skillXP <= -XP_PER_SKILL_POINT) {
+            this.skillPoints--;
+            this.skillXP += XP_PER_SKILL_POINT;
+        }
+
+        if (this.skillXP < 0) {
+            this.skillPoints--;
+            this.skillXP = XP_PER_SKILL_POINT - Mth.abs(this.skillXP);
+        }
+
+        this.skillPoints = Mth.clamp(this.skillPoints, 0, 99);
+
+        if (this.player instanceof ServerPlayer serverPlayer) {
+            new SyncSkillPointsMessage(this.skillXP, this.skillPoints).send(serverPlayer);
+        }
+    }
+
+    public int getNeededXPForNextPoint() {
+        return XP_PER_SKILL_POINT - this.skillXP;
+    }
+
+    public void setSkillPoints(int skillPoints) {
+        this.skillPoints = Mth.clamp(skillPoints, 0, 99);
+
+        if (this.player instanceof ServerPlayer serverPlayer) {
+            new SyncSkillPointsMessage(this.skillXP, this.skillPoints).send(serverPlayer);
+        }
+    }
+
+    public int getSkillPoints() {
+        return this.skillPoints;
+    }
+
+    public void addSkillPoints(int skillPoints) {
+        this.setSkillPoints(this.getSkillPoints() + skillPoints);
+    }
+
     public void setStamina(int stamina) {
         this.stamina = Mth.clamp(stamina, 0, maxStamina);
     }
@@ -202,45 +257,19 @@ public class VenturePlayerData {
 
     public CompoundTag serializeNBT() {
         CompoundTag compoundTag = new CompoundTag();
-        compoundTag.putBoolean("isClimbing", isClimbing);
-        compoundTag.putBoolean("isFalling", falling);
-        compoundTag.putInt("stamina", stamina);
-        compoundTag.putInt("maxStamina", maxStamina);
-
-        ListTag inventory = new ListTag();
-
-        for (int k = 0; k < this.TOTEM_INV.size(); ++k) {
-            if (!this.TOTEM_INV.get(k).isEmpty()) {
-                CompoundTag itemNbt = new CompoundTag();
-                itemNbt.putByte("Slot", (byte) (k + 200));
-                this.TOTEM_INV.get(k).save(itemNbt);
-                inventory.add(itemNbt);
-            }
-        }
-
-        compoundTag.put("totems", inventory);
-
+        compoundTag.putBoolean("IsClimbing", this.isClimbing);
+        compoundTag.putBoolean("IsFalling", this.falling);
+        compoundTag.putInt("SkillPoints", this.skillPoints);
+        compoundTag.putInt("Stamina", this.stamina);
+        compoundTag.putInt("MaxStamina", this.maxStamina);
         return compoundTag;
     }
 
     public void deserializeNBT(CompoundTag nbt) {
-        isClimbing = nbt.getBoolean("isClimbing");
-        falling = nbt.getBoolean("isFalling");
-        stamina = nbt.getInt("stamina");
-        maxStamina = nbt.getInt("maxStamina");
-
-        ListTag listtag = nbt.getList("totems", 10);
-
-        for (int i = 0; i < listtag.size(); ++i) {
-            CompoundTag compoundtag = listtag.getCompound(i);
-            int slot = compoundtag.getByte("Slot") & 255;
-            ItemStack itemstack = ItemStack.of(compoundtag);
-            if (!itemstack.isEmpty()) {
-                if (slot >= 200 && slot < this.TOTEM_INV.size() + 200) {
-                    this.TOTEM_INV.set(slot - 200, itemstack);
-                }
-            }
-        }
+        this.isClimbing = nbt.getBoolean("IsClimbing");
+        this.falling = nbt.getBoolean("IsFalling");
+        this.stamina = nbt.getInt("Stamina");
+        this.maxStamina = nbt.getInt("MaxStamina");
     }
 
 }

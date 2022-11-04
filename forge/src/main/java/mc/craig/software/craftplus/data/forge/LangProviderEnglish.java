@@ -111,6 +111,18 @@ public class LangProviderEnglish extends LanguageProvider {
         addAdvancement("first_time_flyer", "Paraglide!", "...and the whole worlds at your feet");
         addAdvancement("lightning_strike", "1.21 gigawatts!", "Energize your glider!");
         addAdvancement("copper_modder", "Tinkerer!", "Mod your glider with Copper Filament!");
+
+        // ===== Commands =====
+        add("commands.venturecraft.skillpoints.add.points.success.single", "Gave %s skill xp to %s");
+        add("commands.venturecraft.skillpoints.add.points.success.multiple", "Gave %s skill xp to %s players");
+        add("commands.venturecraft.skillpoints.add.levels.success.single", "Gave %s skill points to %s");
+        add("commands.venturecraft.skillpoints.add.levels.success.multiple", "Gave %s skill points to %s players");
+        add("commands.venturecraft.skillpoints.set.points.success.single", "Set %s skill xp on %s");
+        add("commands.venturecraft.skillpoints.set.points.success.multiple", "Set %s skill xp on %s players");
+        add("commands.venturecraft.skillpoints.set.levels.success.single", "Set %s skill points on %s");
+        add("commands.venturecraft.skillpoints.set.levels.success.multiple", "Set %s skill points on %s players");
+        add("commands.venturecraft.skillpoints.query.points", "%s has %s skill xp");
+        add("commands.venturecraft.skillpoints.query.levels", "%s has %s skill points");
     }
 
     private void addSound(SoundEvent soundEvent, String subtitle) {

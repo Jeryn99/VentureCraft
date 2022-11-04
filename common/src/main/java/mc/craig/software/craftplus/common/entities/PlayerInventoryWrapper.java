@@ -67,6 +67,29 @@ public class PlayerInventoryWrapper extends Inventory {
         }
     }
 
+    @Override
+    public void setPickedItem(ItemStack stack) {
+        int i = this.findSlotMatchingItem(stack);
+        if (isHotbarSlot(i)) {
+            this.selected = i;
+        } else {
+            if (i == -1) {
+                this.selected = this.getSuitableHotbarSlot();
+                if (!this.items.get(this.selected).isEmpty()) {
+                    int j = this.getFreeSlot();
+                    if (j != -1) {
+                        this.items.set(j, this.items.get(this.selected));
+                    }
+                }
+
+                this.items.set(this.selected, stack);
+            } else {
+                this.pickSlot(i);
+            }
+
+        }
+    }
+
     private boolean hasRemainingSpaceForItem(ItemStack pDestination, ItemStack pOrigin) {
         return !pDestination.isEmpty() && ItemStack.isSameItemSameTags(pDestination, pOrigin) && pDestination.isStackable() && pDestination.getCount() < pDestination.getMaxStackSize() && pDestination.getCount() < this.getMaxStackSize();
     }

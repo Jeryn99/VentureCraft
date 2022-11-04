@@ -3,6 +3,8 @@ package mc.craig.software.craftplus.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mc.craig.software.craftplus.VentureCraft;
+import mc.craig.software.craftplus.common.entities.VenturePlayerData;
+import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -25,6 +27,7 @@ public class ExtendedInventoryScreen extends AbstractContainerScreen<InventoryMe
     public static final ResourceLocation TEXTURE = VentureCraft.id("textures/gui/inventory.png");
 
     protected final RandomSource random = RandomSource.create();
+    protected final VenturePlayerData playerData;
     protected int tickCount;
     protected int lastHealth;
     protected int displayHealth;
@@ -33,6 +36,7 @@ public class ExtendedInventoryScreen extends AbstractContainerScreen<InventoryMe
 
     public ExtendedInventoryScreen(Player player) {
         super(player.inventoryMenu, player.getInventory(), Component.translatable("container.crafting"));
+        this.playerData = VenturePlayerData.get(player).get();
         this.imageWidth = 388;
         this.imageHeight = 332;
         this.titleLabelY = -100;
@@ -73,7 +77,7 @@ public class ExtendedInventoryScreen extends AbstractContainerScreen<InventoryMe
         this.blit(pPoseStack, i + 87, j + 216, 0, 0, 212, 108);
 
         // Upgrades
-        int upgrades = (Minecraft.getInstance().player.tickCount / 20) % 4;
+        int upgrades = (this.minecraft.player.tickCount / 20) % 4;
         for (int u = 0; u < upgrades; u++) {
             this.blit(pPoseStack, i + 69 - (u * 18), j + 216, u == 0 ? 0 : 50, 108, 25, 85);
             this.blit(pPoseStack, i + 292 + (u * 18), j + 216, u == 0 ? 25 : 75, 108, 25, 85);
@@ -91,6 +95,37 @@ public class ExtendedInventoryScreen extends AbstractContainerScreen<InventoryMe
 
         // Skill XP
         this.blit(pPoseStack, i, j + 31, 100, 154, 84, 46);
+        int skillXP = this.playerData.getSkillXP();
+        int xp = (int) (skillXP / (float) VenturePlayerData.XP_PER_SKILL_POINT * 199);
+
+        if (xp > 0) {
+            int progress = Mth.clamp(xp, 0, 30);
+            this.blit(pPoseStack, i + 7 + 30 - progress, j + 31 + 5, 78 + 30 - progress, 200, progress, 5);
+            xp -= 30;
+        }
+
+        if (xp > 0) {
+            int progress = Mth.clamp(xp, 0, 34);
+            this.blit(pPoseStack, i + 6, j + 31 + 6, 68, 193, 5, progress);
+            xp -= 34;
+        }
+
+        if (xp > 0) {
+            int progress = Mth.clamp(xp, 0, 70);
+            this.blit(pPoseStack, i + 7, j + 31 + 36, 78, 205, progress, 5);
+            xp -= 70;
+        }
+
+        if (xp > 0) {
+            int progress = Mth.clamp(xp, 0, 34);
+            this.blit(pPoseStack, i + 73, j + 31 + 6 + 34 - progress, 73, 193 + 34 - progress, 5, progress);
+            xp -= 34;
+        }
+
+        if (xp > 0) {
+            int progress = Mth.clamp(xp, 0, 31);
+            this.blit(pPoseStack, i + 46 + 31 - progress, j + 31 + 5, 108 + 31 - progress, 200, progress, 5);
+        }
 
         // Crafting
         this.blit(pPoseStack, i + 304, j + 31, 100, 108, 84, 46);
@@ -99,6 +134,10 @@ public class ExtendedInventoryScreen extends AbstractContainerScreen<InventoryMe
         int xPlayer = this.imageWidth / 2;
         int yPlayer = 140;
         InventoryScreen.renderEntityInInventory(i + xPlayer, j + yPlayer, 80, (float) (i + xPlayer) - pMouseX, (float) (j + yPlayer - 18) - pMouseY, Objects.requireNonNull(this.minecraft.player));
+
+        // Skill Text
+        Component text = Component.literal("Skill: ").append(Component.literal(String.valueOf(this.playerData.getSkillPoints())).withStyle(ChatFormatting.BOLD));
+        this.font.draw(pPoseStack, text, i + 42 - this.font.width(text) / 2F, j + 31 + 19, 0xffffff);
 
         // Health
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
