@@ -89,10 +89,8 @@ public class ParagliderItem extends Item implements Wearable, Repairable, IPalla
             if(!player.isCreative()) {
                 iCap.setStamina(iCap.getStamina() - 1);
             }
-
+            
             player.resetFallDistance();
-
-            player.getAbilities().mayfly = true; // Stop Servers kicking survival players
 
             // Handle Movement
             Vec3 m = player.getDeltaMovement();

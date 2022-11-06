@@ -66,6 +66,7 @@ public class VentureCraftClient {
 
             ColorHandlerRegistry.registerItemColors((itemStack, layer) -> PotionUtils.getColor(itemStack), () -> Items.POTION);
             ColorHandlerRegistry.registerItemColors((itemStack, layer) -> PotionUtils.getColor(itemStack), () -> Items.SPLASH_POTION);
+            ColorHandlerRegistry.registerItemColors((itemStack, layer) -> PotionUtils.getColor(itemStack), () -> Items.HONEY_BOTTLE);
 
             // Color Handlers
             for (RegistrySupplier<Item> entry : ModItems.ITEMS.getEntries()) {

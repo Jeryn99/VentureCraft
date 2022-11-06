@@ -35,7 +35,7 @@ public class ModOres {
     public static RegistrySupplier<PlacedFeature> ORE_RUBY = PLACED_FEATURES.register("ore_ruby", () -> new PlacedFeature(Holder.direct(ORE_RUBY_CONFIGURED.get()), List.copyOf(commonOrePlacement(100, HeightRangePlacement.triangle(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(480))))));
     public static RegistrySupplier<PlacedFeature> ORE_SAPPHIRE_LARGE = PLACED_FEATURES.register("ore_sapphire_large", () -> new PlacedFeature(Holder.direct(ORE_SAPPHIRE_LARGE_CONFIGURED.get()), List.copyOf(rareOrePlacement(9, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(80))))));
     public static RegistrySupplier<PlacedFeature> ORE_SAPPHIRE = PLACED_FEATURES.register("ore_sapphire", () -> new PlacedFeature(Holder.direct(ORE_SAPPHIRE_CONFIGURED.get()), List.copyOf(commonOrePlacement(7, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(80))))));
-    public static RegistrySupplier<PlacedFeature> ORE_DIAMOND = PLACED_FEATURES.register("ore_diamond", () -> new PlacedFeature(Holder.direct(ORE_DIAMOND_CONFIGURED.get()), List.copyOf(commonOrePlacement(100, HeightRangePlacement.triangle(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(480))))));
+    public static RegistrySupplier<PlacedFeature> ORE_DIAMOND = PLACED_FEATURES.register("ore_diamond", () -> new PlacedFeature(Holder.direct(ORE_DIAMOND_CONFIGURED.get()), List.copyOf(rareOrePlacement(100, HeightRangePlacement.triangle(VerticalAnchor.absolute(-11), VerticalAnchor.absolute(320))))));
 
 
     private static List<PlacementModifier> orePlacement(PlacementModifier p_195347_, PlacementModifier p_195348_) {

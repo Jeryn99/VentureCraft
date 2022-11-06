@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LevelRenderer.class)
 public abstract class LevelRendererMixin {
 
-    @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;renderSnowAndRain(Lnet/minecraft/client/renderer/LightTexture;FDDD)V"))
+    @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/particle/ParticleEngine;render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;Lnet/minecraft/client/renderer/LightTexture;Lnet/minecraft/client/Camera;F)V"))
     public void renderLevel(PoseStack posestack, float partialTick, long finishNanoTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f projectionMatrix, CallbackInfo ci) {
 
         RenderBuffers bufferSource = Minecraft.getInstance().renderBuffers();
@@ -35,6 +35,7 @@ public abstract class LevelRendererMixin {
             posestack.translate(0, 2.2, -0.5);
             posestack.scale(1.5F, 1.5F, 1.5F);
             posestack.mulPose(Vector3f.XP.rotationDegrees(180));
+            posestack.mulPose(Vector3f.YP.rotationDegrees(living.getViewYRot(1F)));
 
             if (ParagliderItem.isSpaceGlider(stack)) {
                 posestack.mulPose(Vector3f.YP.rotationDegrees(180));

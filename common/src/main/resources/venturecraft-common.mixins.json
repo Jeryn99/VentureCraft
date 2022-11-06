@@ -12,7 +12,8 @@
   ],
   "mixins": [
     "AbstractContainerMenuMixin",
-    "GrindstoneMenuMixin"
+    "GrindstoneMenuMixin",
+    "ServerGamePacketListenerImplMixin"
   ],
   "injectors": {
     "defaultRequire": 1

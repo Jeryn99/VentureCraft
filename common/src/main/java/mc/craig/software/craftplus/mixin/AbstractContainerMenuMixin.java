@@ -28,7 +28,6 @@ public class AbstractContainerMenuMixin {
     @Final
     private NonNullList<ItemStack> remoteSlots;
 
-    // This is horrible, but Forge has forced my hand
     @Inject(at = @At("HEAD"), method = "addSlot(Lnet/minecraft/world/inventory/Slot;)Lnet/minecraft/world/inventory/Slot;")
     private void addSlot(Slot slot, CallbackInfoReturnable<Slot> cir) {
         if (((Object) this) instanceof GrindstoneMenu && slot.index == 0 && slot.x == 49) {
