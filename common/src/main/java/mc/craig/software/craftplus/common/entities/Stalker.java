@@ -170,11 +170,6 @@ public class Stalker extends QuantumLockedLifeform implements RangedAttackMob {
     }
 
     @Override
-    public void knockback(double p_147241_, double p_147242_, double p_147243_) {
-        // No no
-    }
-
-    @Override
     public void tick() {
 
         if(!POSES_STATE.isStarted()){
