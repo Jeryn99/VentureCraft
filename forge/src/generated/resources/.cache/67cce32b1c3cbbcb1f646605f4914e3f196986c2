@@ -1,4 +1,4 @@
-// 1.19.2	2022-10-26T22:23:07.7869342	LootTables
+// 1.19.2	2022-12-07T14:33:07.2995967	LootTables
 5c3218821603193e60a815e2604c8ca329f42cc2 data/venturecraft/loot_tables/blocks/bell.json
 6cc5f6b0cd0ad49a4f29609c0882912c21e9ff96 data/venturecraft/loot_tables/blocks/black_pedastal.json
 4cb40b71916433820ca851e9001a43b6904f19e8 data/venturecraft/loot_tables/blocks/blue_pedastal.json
@@ -17,7 +17,7 @@ cbd864972c12a4f06aee1a213bdc44a47c744961 data/venturecraft/loot_tables/blocks/li
 d1cfedd0aeee106fa97122c9967ed56320d0bcbc data/venturecraft/loot_tables/blocks/magenta_pedastal.json
 e9d1755aa06d3cf360345b9ea59d93fb41d04a61 data/venturecraft/loot_tables/blocks/orange_pedastal.json
 db2bdb2b8090d1c590145e698e22ac8cc9533bc5 data/venturecraft/loot_tables/blocks/pink_pedastal.json
-c068866186f12f39b0413074dd0e8af5763ed1f2 data/venturecraft/loot_tables/blocks/pot.json
+68b5f0d77a77e39e07aa6062795f7c19bb92354c data/venturecraft/loot_tables/blocks/pot.json
 41287cf5ee50ab9b0717ca3daa59c160b3e5047e data/venturecraft/loot_tables/blocks/purple_pedastal.json
 db35f8c242fd4767fd41e5bc00b9e1d665c157ee data/venturecraft/loot_tables/blocks/red_pedastal.json
 d0fc180e96e5c5703fd87c3d191ba0278055b8fb data/venturecraft/loot_tables/blocks/ruby_ore.json

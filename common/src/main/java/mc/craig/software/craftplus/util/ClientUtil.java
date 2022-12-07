@@ -4,6 +4,7 @@ import com.google.common.base.Supplier;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import mc.craig.software.craftplus.client.sound.MovingSound;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
+import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
@@ -34,5 +35,9 @@ public class ClientUtil {
     @ExpectPlatform
     public static void addPredicate(Item item, ResourceLocation resourceLocation, ClampedItemPropertyFunction clampedItemPropertyFunction) {
         throw new AssertionError();
+    }
+
+    public static void setPlayerPerspective(String pointOfView) {
+        Minecraft.getInstance().options.setCameraType(CameraType.valueOf(pointOfView));
     }
 }

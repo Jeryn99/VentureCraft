@@ -10,12 +10,12 @@ import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.data.loot.EntityLoot;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.valueproviders.ClampedInt;
+import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.LootTables;
-import net.minecraft.world.level.storage.loot.ValidationContext;
+import net.minecraft.world.level.storage.loot.*;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
 import net.minecraft.world.level.storage.loot.functions.LootingEnchantFunction;
@@ -58,7 +58,6 @@ public class ModLootTableProvider extends LootTableProvider {
             this.add(ModBlocks.DEEPSLATE_SAPPHIRE_ORE.get(), (block) -> createOreDrop(block, ModItems.SAPPHIRE_GEM.get()));
             this.add(ModBlocks.RUBY_ORE.get(), (block) -> createOreDrop(block, ModItems.UNREFINED_RUBY.get()));
             this.add(ModBlocks.DEEPSLATE_RUBY_ORE.get(), (block) -> createOreDrop(block, ModItems.UNREFINED_RUBY.get()));
-            dropSelf(ModBlocks.POT.get());
 
             dropSelf(ModBlocks.CATALYST.get());
             dropSelf(ModBlocks.BELL.get());
@@ -75,6 +74,103 @@ public class ModLootTableProvider extends LootTableProvider {
             for (RegistrySupplier<Block> entry : ModBlocks.BLOCKS.getEntries()) {
                 dropSelf(entry.get());
             }
+
+
+            /////
+
+            LootPool.Builder pool1 = LootPool.lootPool()
+                    .setRolls(ConstantValue.exactly(1))
+                    .add(LootItem.lootTableItem(Items.EMERALD)
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))));
+
+            LootPool.Builder pool2 = LootPool.lootPool()
+                    .setRolls(ConstantValue.exactly(1))
+                    .add(LootItem.lootTableItem(Items.BONE).setWeight(10))
+                    .add(LootItem.lootTableItem(Items.COAL)
+                            .setWeight(10))
+                    .add(LootItem.lootTableItem(Items.COBWEB)
+                            .setWeight(10)
+                    )
+                    .add(LootItem.lootTableItem(Items.PAPER)
+                            .setWeight(10)
+                    )
+                    .add(LootItem.lootTableItem(Items.LEATHER)
+                            .setWeight(10)
+                    )
+                    .add(LootItem.lootTableItem(Items.ROTTEN_FLESH)
+                            .setWeight(10)
+                    )
+                    .add(LootItem.lootTableItem(Items.ARROW)
+                            .setWeight(10)
+                    )
+                    .add(LootItem.lootTableItem(Items.COD)
+                            .setWeight(10)
+                    )
+                    .add(LootItem.lootTableItem(Items.GUNPOWDER)
+                            .setWeight(10)
+                    )
+                    .add(LootItem.lootTableItem(Items.STICK)
+                            .setWeight(10)
+                    );
+
+            LootPool.Builder pool3 = LootPool.lootPool()
+                    .setRolls(ConstantValue.exactly(1))
+                    .add(LootItem.lootTableItem(Items.FEATHER)
+                            .setWeight(2)
+                    )
+                    .add(LootItem.lootTableItem(Items.COAL_BLOCK)
+                            .setWeight(2)
+                    )
+                    .add(LootItem.lootTableItem(Items.REDSTONE)
+                            .setWeight(2)
+                    )
+                    .add(LootItem.lootTableItem(Items.GOLD_NUGGET)
+                            .setWeight(2)
+                    )
+                    .add(LootItem.lootTableItem(Items.IRON_NUGGET)
+                            .setWeight(2)
+                    );
+
+            LootPool.Builder pool4 = LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                    .add(LootItem.lootTableItem(ModItems.UNREFINED_RUBY.get())
+                            .setWeight(1)
+                    )
+                    .add(LootItem.lootTableItem(Items.IRON_INGOT)
+                            .setWeight(1)
+                    )
+                    .add(LootItem.lootTableItem(Items.GOLD_INGOT)
+                            .setWeight(1));
+
+            LootPool.Builder pool5 = LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                    .add(LootItem.lootTableItem(ModItems.SAPPHIRE_GEM.get())
+                            .setWeight(1)
+                    )
+                    .add(LootItem.lootTableItem(Items.WITHER_SKELETON_SKULL)
+                            .setWeight(1)
+                    )
+                    .add(LootItem.lootTableItem(Items.DIAMOND)
+                            .setWeight(1));
+
+            //TODO BIG KEY WILL DUNGEON KEY?
+            LootPool.Builder pool6 = LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                    .add(LootItem.lootTableItem(ModItems.BIG_KEY.get())
+                            .setWeight(1)
+                    )
+                    .add(LootItem.lootTableItem(ModItems.IRON_KEY.get())
+                            .setWeight(1));
+
+            LootTable.Builder table = LootTable.lootTable()
+                    .withPool(pool1)
+                    .withPool(pool2)
+                    .withPool(pool3)
+                    .withPool(pool4)
+                    .withPool(pool5)
+                    .withPool(pool6);
+
+            add(ModBlocks.POT.get(), table);
+
+            ////
+
         }
 
         private LootTable.Builder createContainerLootDrops(Block block) {
