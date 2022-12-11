@@ -1,10 +1,14 @@
 package mc.craig.software.craftplus.networking.packets;
 
+import mc.craig.software.craftplus.VentureCraft;
 import mc.craig.software.craftplus.common.ModSounds;
 import mc.craig.software.craftplus.common.advancement.TriggerManager;
+import mc.craig.software.craftplus.common.entities.VenturePlayerData;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.networking.VCNetwork;
 import mc.craig.software.craftplus.util.GliderUtil;
+import net.minecraft.client.CameraType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -46,6 +50,8 @@ public class MessageToggleGlide extends MessageC2S {
                 sender.level.playSound(null, sender.getX(), sender.getY(), sender.getZ(), ParagliderItem.isSpaceGlider(chestItem) ? ModSounds.SPACE_DEPLOY.get() : ModSounds.GLIDER_OPEN.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 
                 new MessagePlaySound(ParagliderItem.isSpaceGlider(chestItem) ? ModSounds.SPACE_GLIDE.get().getLocation() : SoundEvents.ELYTRA_FLYING.getLocation(), sender.getUUID()).sendToTracking(sender);
+
+                Minecraft.getInstance().options.setCameraType(VenturePlayerData.get(Minecraft.getInstance().player).get().gliderPovToggle() ? CameraType.THIRD_PERSON_BACK : Minecraft.getInstance().options.getCameraType());
 
                 // Damage Glider as used
                 chestItem.hurtAndBreak(1, sender, e -> e.broadcastBreakEvent(EquipmentSlot.CHEST));

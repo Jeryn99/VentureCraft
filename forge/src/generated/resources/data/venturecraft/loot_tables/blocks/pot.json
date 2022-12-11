@@ -83,7 +83,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:feather",
+          "name": "venturecraft:owl_feather",
           "weight": 2
         },
         {

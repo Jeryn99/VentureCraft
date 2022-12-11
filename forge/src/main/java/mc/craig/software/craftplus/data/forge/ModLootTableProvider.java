@@ -113,9 +113,8 @@ public class ModLootTableProvider extends LootTableProvider {
                             .setWeight(10)
                     );
 
-            LootPool.Builder pool3 = LootPool.lootPool()
-                    .setRolls(ConstantValue.exactly(1))
-                    .add(LootItem.lootTableItem(Items.FEATHER)
+            LootPool.Builder pool3 = LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                    .add(LootItem.lootTableItem(ModItems.OWL_FEATHER.get())
                             .setWeight(2)
                     )
                     .add(LootItem.lootTableItem(Items.COAL_BLOCK)

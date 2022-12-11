@@ -4,6 +4,7 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import mc.craig.software.craftplus.common.ModItems;
 import mc.craig.software.craftplus.common.items.ParagliderItem;
 import mc.craig.software.craftplus.networking.packets.MessageSyncCap;
+import mc.craig.software.craftplus.networking.packets.MessageToggleGlide;
 import mc.craig.software.craftplus.util.GliderUtil;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -26,7 +27,7 @@ public class VenturePlayerData {
     private final Player player;
     private boolean isClimbing = false;
 
-    private boolean falling = false;
+    private boolean falling = false, gliderPovToggle = true;
 
     private int stamina = 200;
     private int maxStamina = 200;
@@ -43,6 +44,15 @@ public class VenturePlayerData {
 
     public VenturePlayerData(@NotNull Player player) {
         this.player = player;
+    }
+
+    public VenturePlayerData setGliderPovToggle(boolean gliderPovToggle) {
+        this.gliderPovToggle = gliderPovToggle;
+        return this;
+    }
+
+    public boolean gliderPovToggle() {
+        return gliderPovToggle;
     }
 
     @ExpectPlatform
